@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
+  "os"
 	"net/http"
 
-  "isso0424/spotify-rapspi/command"
+	"isso0424/spotify-rapspi/command"
+
+	"github.com/joho/godotenv"
 	"github.com/zmb3/spotify"
 )
 
@@ -16,6 +19,12 @@ var (
 )
 
 func main() {
+  err := godotenv.Load()
+  if err != nil {
+    log.Fatal("error loading .env file")
+  }
+  auth.SetAuthInfo(os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
+
   http.HandleFunc("/callback", handler)
   http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
     log.Println("Got request for:", request.URL.String())

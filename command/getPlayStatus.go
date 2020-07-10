@@ -19,7 +19,7 @@ func GetPlayStatus(token *oauth2.Token) {
     fmt.Printf(err.Error())
     return
   }
-  buffer := make([]byte, 1024)
+  buffer := make([]byte, 8192)
   size, err := response.Body.Read(buffer)
   fmt.Printf("size: %d\ncontent: %s", size, string(buffer))
   defer response.Body.Close()
