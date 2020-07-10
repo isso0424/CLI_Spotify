@@ -5,12 +5,12 @@ import (
 	"log"
 	"net/http"
 
+  "isso0424/spotify-rapspi/command"
 	"github.com/zmb3/spotify"
-	"golang.org/x/oauth2"
 )
 
 var (
-  auth = spotify.NewAuthenticator("http://localhost:8888/callback", spotify.ScopeUserModifyPlaybackState)
+  auth = spotify.NewAuthenticator("http://localhost:8888/callback", spotify.ScopeUserModifyPlaybackState, spotify.ScopeUserReadPlaybackState)
   state = "abc123"
   ch = make (chan *spotify.Client)
 )
@@ -33,7 +33,7 @@ func main() {
     fmt.Printf(err.Error())
     return
   }
-  pause(token)
+  command.GetPlayStatus(token)
   if err != nil {
     log.Fatal(err)
   }
@@ -54,16 +54,4 @@ func handler(writer http.ResponseWriter, request *http.Request) {
   client := auth.NewClient(token)
   fmt.Fprintf(writer, "Login!!!")
   ch <- &client
-}
-
-func pause(token *oauth2.Token) {
-  request, _ := http.NewRequest("PUT", "https://api.spotify.com/v1/me/player/pause", nil)
-  request.Header.Set("Authorization", "Bearer " + token.AccessToken)
-  client := &http.Client{}
-  response, err := client.Do(request)
-  if err != nil {
-    fmt.Printf(err.Error())
-    return
-  }
-  defer response.Body.Close()
 }
