@@ -1,8 +1,12 @@
 package command
 
 import (
-  "fmt"
-  "net/http"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+
 	"golang.org/x/oauth2"
 )
 
@@ -21,6 +25,16 @@ func GetPlayStatus(token *oauth2.Token) {
   }
   buffer := make([]byte, 8192)
   size, err := response.Body.Read(buffer)
-  fmt.Printf("size: %d\ncontent: %s", size, string(buffer))
+  fmt.Printf("size: %d\ncontent: %s\n", size, string(buffer))
+
+  buffer = bytes.Trim(buffer, "\x00")
+
+  var responseBody map[string]interface{}
+  if err := json.Unmarshal(buffer, &responseBody); err != nil {
+    log.Fatal(err)
+  }
+
+  fmt.Println(responseBody["is_playing"])
+
   defer response.Body.Close()
 }
