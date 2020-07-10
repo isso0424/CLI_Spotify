@@ -49,22 +49,27 @@ func main() {
 func mainLoop(token *oauth2.Token) {
   fmt.Println("if you wanna exit, you must type 'exit'")
   for {
-    status := command.GetPlayStatus(token)
+    var commandKind string
+    fmt.Print(">>")
+    fmt.Scanln(&commandKind)
 
-    if status {
+    switch commandKind {
+    case "exit":
+      return
+    case "pause":
       command.Pause(token)
       fmt.Println("paused!!!")
-    }else {
+    case "resume":
       command.Resume(token)
       fmt.Println("resumed!!!")
-    }
-
-    var input string
-    fmt.Scanln(&input)
-
-    if input == "exit" {
-      return
-    }
+    case "status":
+      status := command.GetPlayStatus(token)
+      if status {
+        fmt.Println("now playing")
+      } else {
+        fmt.Println("pausing...")
+      }
+  }
   }
 }
 
