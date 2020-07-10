@@ -8,9 +8,11 @@ import (
 	"net/http"
 
 	"golang.org/x/oauth2"
+
+  "isso0424/spotify-rapspi/types"
 )
 
-func GetPlayStatus(token *oauth2.Token) {
+func GetPlayStatus(token *oauth2.Token) bool {
   request, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/player", nil)
   if err != nil {
     fmt.Printf(err.Error())
@@ -21,7 +23,7 @@ func GetPlayStatus(token *oauth2.Token) {
   response, err := client.Do(request)
   if err != nil {
     fmt.Printf(err.Error())
-    return
+    return false
   }
   buffer := make([]byte, 8192)
   size, err := response.Body.Read(buffer)
@@ -29,12 +31,14 @@ func GetPlayStatus(token *oauth2.Token) {
 
   buffer = bytes.Trim(buffer, "\x00")
 
-  var responseBody map[string]interface{}
+  var responseBody types.Content
   if err := json.Unmarshal(buffer, &responseBody); err != nil {
     log.Fatal(err)
   }
 
-  fmt.Println(responseBody["is_playing"])
+  fmt.Println(responseBody.IsPlaying)
 
   defer response.Body.Close()
+
+  return responseBody.IsPlaying
 }
