@@ -37,14 +37,21 @@ func main() {
   client := <-ch
 
   user, err := client.CurrentUser()
+  if err != nil {
+    log.Fatal(err)
+  }
+
   token, err := client.Token()
   if err != nil {
     fmt.Printf(err.Error())
     return
   }
-  command.GetPlayStatus(token)
-  if err != nil {
-    log.Fatal(err)
+  status := command.GetPlayStatus(token)
+
+  if status {
+    command.Pause(token)
+  }else {
+    command.Resume(token)
   }
   fmt.Println("you are logged in as:", user.ID)
 }
