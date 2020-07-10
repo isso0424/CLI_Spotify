@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
-  "os"
 	"net/http"
+	"os"
 
 	"isso0424/spotify-rapspi/command"
 
 	"github.com/joho/godotenv"
 	"github.com/zmb3/spotify"
+	"golang.org/x/oauth2"
 )
 
 var (
@@ -36,24 +37,35 @@ func main() {
 
   client := <-ch
 
-  user, err := client.CurrentUser()
-  if err != nil {
-    log.Fatal(err)
-  }
-
   token, err := client.Token()
   if err != nil {
     fmt.Printf(err.Error())
     return
   }
-  status := command.GetPlayStatus(token)
 
-  if status {
-    command.Pause(token)
-  }else {
-    command.Resume(token)
+  mainLoop(token)
+}
+
+func mainLoop(token *oauth2.Token) {
+  fmt.Println("if you wanna exit, you must type 'exit'")
+  for {
+    status := command.GetPlayStatus(token)
+
+    if status {
+      command.Pause(token)
+      fmt.Println("paused!!!")
+    }else {
+      command.Resume(token)
+      fmt.Println("resumed!!!")
+    }
+
+    var input string
+    fmt.Scanln(&input)
+
+    if input == "exit" {
+      return
+    }
   }
-  fmt.Println("you are logged in as:", user.ID)
 }
 
 func handler(writer http.ResponseWriter, request *http.Request) {

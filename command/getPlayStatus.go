@@ -26,8 +26,7 @@ func GetPlayStatus(token *oauth2.Token) bool {
     return false
   }
   buffer := make([]byte, 8192)
-  size, err := response.Body.Read(buffer)
-  fmt.Printf("size: %d\ncontent: %s\n", size, string(buffer))
+  _, err = response.Body.Read(buffer)
 
   buffer = bytes.Trim(buffer, "\x00")
 
@@ -36,7 +35,6 @@ func GetPlayStatus(token *oauth2.Token) bool {
     log.Fatal(err)
   }
 
-  fmt.Println(responseBody.IsPlaying)
 
   defer response.Body.Close()
 
