@@ -15,7 +15,7 @@ func Save() {
   util.Input("PlayListURL", &url)
   uri, err := CreateContextUri(url)
   if err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
 
@@ -28,7 +28,7 @@ func Save() {
   if checkDuplicateName(name) {
     saveToJson(list)
   } else {
-    fmt.Println("This name is duplicated.")
+    fmt.Println("Error: This name is duplicated.")
   }
 }
 
@@ -55,6 +55,7 @@ func saveToJson(target playlist) {
 
   if err != nil {
     log.Fatalln(err)
+    return
   }
 
   fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
