@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-
-	"golang.org/x/oauth2"
 )
 
-func Resume(token *oauth2.Token) {
+func Resume(token string) {
   values := url.Values{}
   values.Add("context_uri", "spotify:playlist:4Cu0w3ZsPYiPQTeElf2Tls")
   request, err := http.NewRequest("PUT", "https://api.spotify.com/v1/me/player/play", nil)
@@ -16,7 +14,7 @@ func Resume(token *oauth2.Token) {
     fmt.Printf(err.Error())
   }
 
-  request.Header.Set("Authorization", "Bearer " + token.AccessToken)
+  request.Header.Set("Authorization", "Bearer " + token)
   client := &http.Client{}
   response, err := client.Do(request)
   if err != nil {
