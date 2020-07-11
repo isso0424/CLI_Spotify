@@ -48,6 +48,8 @@ func mainLoop(token string) {
       command.PlayFromURL(token, url)
     case "save":
       command.Save()
+    case "load":
+      command.Load(token)
     case "refresh":
       token, _ = auth.GetToken(true)
   }
