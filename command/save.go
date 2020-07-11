@@ -4,23 +4,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"isso0424/spotify-rapspi/util"
 	"log"
 	"os"
 )
 
 func Save() {
-  fmt.Printf("please input playlist url\nPlayListURL|>>>")
+  fmt.Printf("please input playlist url\n")
   var url string
-  fmt.Scanln(&url)
+  util.Input("PlayListURL", &url)
   uri, err := CreateContextUri(url)
   if err != nil {
     log.Fatalln(err)
     return
   }
 
-  fmt.Printf("\nplease input playlist name\nPlayListName|>>>")
+  fmt.Printf("\nplease input playlist name\n")
   var name string
-  fmt.Scanln(&name)
+  util.Input("PlayListName", &name)
 
   list := playlist{Uri: *uri, Name: name}
 

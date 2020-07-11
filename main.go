@@ -6,6 +6,7 @@ import (
 
 	"isso0424/spotify-rapspi/auth"
 	"isso0424/spotify-rapspi/command"
+	"isso0424/spotify-rapspi/util"
 )
 
 
@@ -26,9 +27,7 @@ func mainLoop(token string) {
   command.GetPlayStatus(token)
   for {
     var commandKind string
-    fmt.Print("\nCommand|>>>")
-    fmt.Scanln(&commandKind)
-    fmt.Println()
+    util.Input("Command", &commandKind)
 
     switch commandKind {
     case "exit":
@@ -42,9 +41,9 @@ func mainLoop(token string) {
     case "status":
       command.GetPlayStatus(token)
     case "play":
-      fmt.Printf("please input playlist url\n>>>")
+      fmt.Printf("please input playlist url\n------------------------")
       var url string
-      fmt.Scanln(&url)
+      util.Input("PlayListURL", &url)
       command.PlayFromURL(token, url)
     case "save":
       command.Save()

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"isso0424/spotify-rapspi/util"
 	"log"
 )
 
@@ -23,9 +24,9 @@ func Load(token string) {
 
   json.Unmarshal(file, &playlistList)
 
-  fmt.Printf("please input playlist name\nPlayListName|>>")
+  fmt.Println("please input playlist name")
   var name string
-  fmt.Scanln(&name)
+  util.Input("PlayListName", &name)
 
   for _, target := range playlistList {
     if target.Name == name {
