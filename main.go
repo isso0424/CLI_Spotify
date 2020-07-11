@@ -3,17 +3,22 @@ package main
 import (
 	"fmt"
 
+	"isso0424/spotify-rapspi/auth"
 	"isso0424/spotify-rapspi/command"
-
-	"golang.org/x/oauth2"
 )
 
 
 func main() {
+  token, err := auth.GetToken()
+
+  if err != nil {
+    panic(err)
+  }
+
   mainLoop(token)
 }
 
-func mainLoop(token *oauth2.Token) {
+func mainLoop(token string) {
   fmt.Println("if you wanna exit, you must type 'exit'")
   for {
     var commandKind string
