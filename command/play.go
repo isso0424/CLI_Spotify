@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func playFromURL(token string, url string) {
+func PlayFromURL(token string, url string) {
   uri, err := createContextUri(url)
   if err != nil {
     log.Fatalln(err)
@@ -24,10 +24,13 @@ func playFromURL(token string, url string) {
 
   request.Header.Set("Authorization", "Bearer " + token)
   client := &http.Client{}
-  _, err = client.Do(request)
-  if err != nil {
+  if _, err = client.Do(request); err != nil {
     log.Fatalln(err)
     return
+  }
+
+  if !GetPlayStatus(token) {
+    fmt.Println("this url is invalid")
   }
 }
 
