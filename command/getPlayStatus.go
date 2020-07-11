@@ -10,7 +10,7 @@ import (
   "isso0424/spotify-rapspi/types"
 )
 
-func GetPlayStatus(token string) bool {
+func GetPlayStatus(token string) {
   request, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/player", nil)
   if err != nil {
     fmt.Printf(err.Error())
@@ -21,8 +21,9 @@ func GetPlayStatus(token string) bool {
   response, err := client.Do(request)
   if err != nil {
     fmt.Printf(err.Error())
-    return false
+    return
   }
+  defer response.Body.Close()
   buffer := make([]byte, 8192)
   _, err = response.Body.Read(buffer)
 
@@ -33,8 +34,13 @@ func GetPlayStatus(token string) bool {
     log.Fatal(err)
   }
 
+  createInfo(responseBody)
+}
 
-  defer response.Body.Close()
-
-  return responseBody.IsPlaying
+func createInfo(content types.Content) {
+  if content.IsPlaying {
+    fmt.Printf("Playing status\n--------------\nTitle: %s\nArtist: %s\n", content.Item.Name, content.Item.Artists[0].Name)
+  } else {
+    fmt.Println("Pausing")
+  }
 }
