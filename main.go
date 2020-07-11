@@ -26,8 +26,9 @@ func mainLoop(token string) {
   command.GetPlayStatus(token)
   for {
     var commandKind string
-    fmt.Print(">>>")
+    fmt.Print("\nCommand|>>>")
     fmt.Scanln(&commandKind)
+    fmt.Println()
 
     switch commandKind {
     case "exit":

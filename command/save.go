@@ -9,7 +9,7 @@ import (
 )
 
 func Save() {
-  fmt.Printf("please input playlist url\n>>>")
+  fmt.Printf("please input playlist url\nPlayListURL|>>>")
   var url string
   fmt.Scanln(&url)
   uri, err := CreateContextUri(url)
@@ -18,6 +18,7 @@ func Save() {
     return
   }
 
+  fmt.Printf("\nplease input playlist name\nPlayListName|>>>")
   var name string
   fmt.Scanln(&name)
 
@@ -28,7 +29,6 @@ func Save() {
 
 func saveToJson(target playlist) {
   var playlistList []playlist
-  fmt.Println(existFile("playlist.json"))
   if existFile("playlist.json") {
     file, err := ioutil.ReadFile("playlist.json")
     if err != nil {
@@ -37,7 +37,6 @@ func saveToJson(target playlist) {
     }
 
     json.Unmarshal(file, &playlistList)
-    fmt.Println(playlistList)
   }
   playlistList = append(playlistList, target)
 
@@ -52,6 +51,8 @@ func saveToJson(target playlist) {
   if err != nil {
     log.Fatalln(err)
   }
+
+  fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
 }
 
 func existFile(fileName string) bool {
