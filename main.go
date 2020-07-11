@@ -35,12 +35,7 @@ func mainLoop(token string) {
       command.Resume(token)
       fmt.Println("resumed!!!")
     case "status":
-      status := command.GetPlayStatus(token)
-      if status {
-        fmt.Println("now playing")
-      } else {
-        fmt.Println("pausing...")
-      }
+      command.GetPlayStatus(token)
   }
   }
 }
