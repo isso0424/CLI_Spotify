@@ -7,8 +7,8 @@ import (
 
 const tokenFile = ".token"
 
-func GetToken() (string, error) {
-  if existDotToken() {
+func GetToken(force bool) (string, error) {
+  if existDotToken() && !force {
     return readDotToken()
   }
 
