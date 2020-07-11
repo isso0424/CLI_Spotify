@@ -10,7 +10,7 @@ import (
 )
 
 func PlayFromURL(token string, url string) {
-  uri, err := createContextUri(url)
+  uri, err := CreateContextUri(url)
   if err != nil {
     log.Fatalln(err)
     return
@@ -34,7 +34,7 @@ func PlayFromURL(token string, url string) {
   }
 }
 
-func createContextUri(url string) (*string, error){
+func CreateContextUri(url string) (*string, error){
   err := &lengthError{}
   spritted := strings.Split(url, "/")
 

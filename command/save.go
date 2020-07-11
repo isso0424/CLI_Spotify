@@ -1,0 +1,65 @@
+package command
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+)
+
+func Save() {
+  fmt.Printf("please input playlist url\n>>>")
+  var url string
+  fmt.Scanln(&url)
+  uri, err := CreateContextUri(url)
+  if err != nil {
+    log.Fatalln(err)
+    return
+  }
+
+  var name string
+  fmt.Scanln(&name)
+
+  list := playlist{Uri: *uri, Name: name}
+
+  saveToJson(list)
+}
+
+func saveToJson(target playlist) {
+  var playlistList []playlist
+  fmt.Println(existFile("playlist.json"))
+  if existFile("playlist.json") {
+    file, err := ioutil.ReadFile("playlist.json")
+    if err != nil {
+      log.Fatalln("could not read playlist.json")
+      return
+    }
+
+    json.Unmarshal(file, &playlistList)
+    fmt.Println(playlistList)
+  }
+  playlistList = append(playlistList, target)
+
+  jsonFile, err := json.Marshal(playlistList)
+  if err != nil {
+    log.Fatalln(err)
+    return
+  }
+
+  err = ioutil.WriteFile("playlist.json", jsonFile, 0666)
+
+  if err != nil {
+    log.Fatalln(err)
+  }
+}
+
+func existFile(fileName string) bool {
+  _, err := os.Stat(fileName)
+  return err == nil
+}
+
+type playlist struct {
+  Uri string `json:"uri"`
+  Name string `json:"name"`
+}

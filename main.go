@@ -45,6 +45,8 @@ func mainLoop(token string) {
       var url string
       fmt.Scanln(&url)
       command.PlayFromURL(token, url)
+    case "save":
+      command.Save()
     case "refresh":
       token, _ = auth.GetToken(true)
   }
