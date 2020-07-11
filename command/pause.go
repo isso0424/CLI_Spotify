@@ -9,5 +9,7 @@ func Pause(token string) {
 
   if err != nil {
     fmt.Println(err)
+    return
   }
+  fmt.Println("paused!!!")
 }

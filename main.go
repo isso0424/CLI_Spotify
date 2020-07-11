@@ -34,17 +34,12 @@ func mainLoop(token string) {
       return
     case "pause":
       command.Pause(token)
-      fmt.Println("paused!!!")
     case "resume":
       command.Resume(token)
-      fmt.Println("resumed!!!")
     case "status":
       command.GetPlayStatus(token)
     case "play":
-      fmt.Printf("please input playlist url\n------------------------")
-      var url string
-      util.Input("PlayListURL", &url)
-      command.PlayFromURL(token, url)
+      command.PlayFromURL(token)
     case "save":
       command.Save()
     case "load":

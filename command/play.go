@@ -4,12 +4,16 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"isso0424/spotify-rapspi/util"
 	"log"
 	"net/http"
 	"strings"
 )
 
-func PlayFromURL(token string, url string) {
+func PlayFromURL(token string) {
+  fmt.Printf("please input playlist url\n------------------------")
+  var url string
+  util.Input("PlayListURL", &url)
   uri, err := CreateContextUri(url)
   if err != nil {
     log.Fatalln(err)

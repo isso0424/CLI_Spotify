@@ -9,5 +9,7 @@ func Resume(token string) {
 
   if err != nil {
     fmt.Println(err)
+    return
   }
+  fmt.Println("resumed!!!")
 }
