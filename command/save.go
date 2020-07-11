@@ -24,7 +24,11 @@ func Save() {
 
   list := playlist{Uri: *uri, Name: name}
 
-  saveToJson(list)
+  if checkDuplicateName(name) {
+    saveToJson(list)
+  } else {
+    fmt.Println("This name is duplicated.")
+  }
 }
 
 func saveToJson(target playlist) {
@@ -53,6 +57,29 @@ func saveToJson(target playlist) {
   }
 
   fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
+}
+
+func checkDuplicateName(name string) bool {
+  if !existFile("playlist.json") {
+    return true
+  }
+  file, err := ioutil.ReadFile("playlist.json")
+  if err != nil {
+    log.Fatalln("could not read playlist.json")
+    return false
+  }
+
+  var playlistList []playlist
+
+  json.Unmarshal(file, &playlistList)
+
+  for _, content := range playlistList {
+    if content.Name == name {
+      return false
+    }
+  }
+
+  return true
 }
 
 func existFile(fileName string) bool {
