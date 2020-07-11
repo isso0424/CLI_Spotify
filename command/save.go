@@ -2,10 +2,9 @@ package command
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"isso0424/spotify-rapspi/util"
-	"log"
+	"fmt"
 	"os"
 )
 
@@ -37,7 +36,7 @@ func saveToJson(target playlist) {
   if existFile("playlist.json") {
     file, err := ioutil.ReadFile("playlist.json")
     if err != nil {
-      log.Fatalln("could not read playlist.json")
+      fmt.Println("Error: could not read playlist.json")
       return
     }
 
@@ -47,14 +46,14 @@ func saveToJson(target playlist) {
 
   jsonFile, err := json.Marshal(playlistList)
   if err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
 
   err = ioutil.WriteFile("playlist.json", jsonFile, 0666)
 
   if err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
 
@@ -67,7 +66,7 @@ func checkDuplicateName(name string) bool {
   }
   file, err := ioutil.ReadFile("playlist.json")
   if err != nil {
-    log.Fatalln("could not read playlist.json")
+    fmt.Println("Error: could not read playlist.json")
     return false
   }
 

@@ -12,7 +12,7 @@ import (
 func GetPlayStatus(token string) bool {
   response, err := createRequest(token, "GET", "https://api.spotify.com/v1/me/player")
   if err != nil {
-    fmt.Println(err)
+    fmt.Println("Error: ", err)
     return false
   }
   buffer := make([]byte, 8192)
@@ -22,7 +22,7 @@ func GetPlayStatus(token string) bool {
 
   var responseBody types.Content
   if err := json.Unmarshal(buffer, &responseBody); err != nil {
-    log.Fatal(err)
+    fmt.Println("Error: ", err)
   }
 
   createInfo(responseBody)

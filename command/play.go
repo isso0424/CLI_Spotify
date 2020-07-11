@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify-rapspi/util"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -16,7 +15,7 @@ func PlayFromURL(token string) {
   util.Input("PlayListURL", &url)
   uri, err := CreateContextUri(url)
   if err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
   play(token, *uri)
@@ -26,14 +25,14 @@ func play(token string, uri string) {
   values, err := json.Marshal(playJson{ContextUri: uri})
   request, err := http.NewRequest("PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
   if err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
 
   request.Header.Set("Authorization", "Bearer " + token)
   client := &http.Client{}
   if _, err = client.Do(request); err != nil {
-    log.Fatalln(err)
+    fmt.Println("Error: ", err)
     return
   }
 

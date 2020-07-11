@@ -9,13 +9,13 @@ import (
 
 func Show() {
   if !existFile("playlist.json") {
-    fmt.Println("first, you have to save playlist")
+    fmt.Println("Error: first, you have to save playlist")
     return
   }
 
   file, err := ioutil.ReadFile("playlist.json")
   if err != nil {
-    log.Fatalln("could not read playlist.json")
+    fmt.Println("Error: could not read playlist.json")
     return
   }
 

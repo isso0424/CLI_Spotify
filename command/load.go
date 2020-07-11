@@ -10,13 +10,13 @@ import (
 
 func Load(token string) {
   if !existFile("playlist.json") {
-    fmt.Println("first, you have to save playlist")
+    fmt.Println("Error: first, you have to save playlist")
     return
   }
 
   file, err := ioutil.ReadFile("playlist.json")
   if err != nil {
-    log.Fatalln("could not read playlist.json")
+    fmt.Println("Error: could not read playlist.json")
     return
   }
 
@@ -36,5 +36,5 @@ func Load(token string) {
     }
   }
 
-  fmt.Printf("%s is not found.", name)
+  fmt.Printf("Error: %s is not found.", name)
 }
