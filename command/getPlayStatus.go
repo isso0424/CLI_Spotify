@@ -8,14 +8,29 @@ import (
 )
 
 func GetPlayStatus(token string) (bool, string) {
-	response, newToken, err := createRequest(token, "GET", "https://api.spotify.com/v1/me/player")
+  status, newToken, err := getStatus(token)
+  if err != nil {
+    fmt.Println("Error: ", err)
+    return false, newToken
+  }
+
+  if status == nil {
+    return false, newToken
+  }
+
+	createInfo(*status)
+
+	return status.IsPlaying && len(status.Item.Artists) != 0, newToken
+}
+
+func getStatus(token string) (status *selfMadeTypes.Content, newToken string, err error) {
+	response, newToken, err := createRequest(token, "GET", "https://api.spotify.com/v1/me/player", nil)
 	if err != nil {
-		fmt.Println("Error: ", err)
-		return false, newToken
+		return
 	}
 	if response.StatusCode == 204 {
 		fmt.Println("You have to play on spotify client before use this `CLI client`.")
-		return false, newToken
+		return
 	}
 
 	buffer := make([]byte, 8192)
@@ -23,14 +38,11 @@ func GetPlayStatus(token string) (bool, string) {
 
 	buffer = bytes.Trim(buffer, "\x00")
 
-	var responseBody selfMadeTypes.Content
-	if err := json.Unmarshal(buffer, &responseBody); err != nil {
+	if err := json.Unmarshal(buffer, &status); err != nil {
 		fmt.Println("Error: ", err)
 	}
 
-	createInfo(responseBody)
-
-	return responseBody.IsPlaying && len(responseBody.Item.Artists) != 0, newToken
+  return
 }
 
 func createInfo(content selfMadeTypes.Content) {

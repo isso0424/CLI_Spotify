@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/util"
-	"net/http"
 	"strings"
 )
 
-func PlayFromURL(token string) {
+func PlayFromURL(token string) (newToken string) {
+  newToken = token
 	fmt.Printf("please input playlist url\n------------------------")
 	var url string
 	util.Input("PlayListURL", &url)
@@ -18,7 +18,9 @@ func PlayFromURL(token string) {
 		fmt.Println("Error: ", err)
 		return
 	}
-	play(token, *uri)
+	newToken = play(token, *uri)
+
+  return
 }
 
 func play(token string, uri string) (newToken string){
@@ -29,18 +31,7 @@ func play(token string, uri string) (newToken string){
 		return
 	}
 
-	request, err := http.NewRequest("PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
-	if err != nil {
-		fmt.Println("Error: ", err)
-		return
-	}
-
-	request.Header.Set("Authorization", "Bearer "+token)
-	client := &http.Client{}
-	if _, err = client.Do(request); err != nil {
-		fmt.Println("Error: ", err)
-		return
-	}
+  _, newToken, err = createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
 
   nowPlaying, newToken := GetPlayStatus(token)
   if !nowPlaying {
