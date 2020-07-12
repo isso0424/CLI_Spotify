@@ -55,6 +55,8 @@ func mainLoop(token string) {
 			token = command.Prev(token)
 		case "repeat":
 			token = command.Repeat(token)
+		case "shuffle":
+			token = command.Shuffle(token)
 		}
 	}
 }
