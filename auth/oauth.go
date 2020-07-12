@@ -17,10 +17,10 @@ var (
 	ch    = make(chan *spotify.Client)
 )
 
-func oauth() (string, error) {
+func oauth() (*string, error) {
 	err := godotenv.Load()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	auth.SetAuthInfo(os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
 
@@ -38,12 +38,12 @@ func oauth() (string, error) {
 	token, err := client.Token()
 	if err != nil {
 		fmt.Printf(err.Error())
-		return "", err
+		return nil, err
 	}
 
-	createDotToken(token.AccessToken)
+	createDotToken(token.RefreshToken)
 
-	return token.AccessToken, nil
+	return &token.AccessToken, nil
 }
 
 func createDotToken(token string) error {

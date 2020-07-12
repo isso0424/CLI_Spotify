@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	token, err := auth.GetToken(false)
+	token, err := auth.GetToken()
 
 	fmt.Println(strings.Split("https://open.spotify.com/playlist/2EKvIPR0K0rvpNnyhKdsd6?si=nUEPESAtSiywv8GkWAHYjg", "/")[3])
 
@@ -18,7 +18,7 @@ func main() {
 		panic(err)
 	}
 
-	mainLoop(token)
+	mainLoop(*token)
 }
 
 func mainLoop(token string) {
@@ -46,7 +46,7 @@ func mainLoop(token string) {
 		case "show":
 			command.Show()
 		case "refresh":
-			token, _ = auth.GetToken(true)
+			token, _ = auth.GetToken()
 		case "random":
 			command.Random(token)
     case "next":
