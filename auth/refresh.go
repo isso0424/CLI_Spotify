@@ -6,21 +6,29 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
+	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func refresh(token string) (newToken *string, err error) {
-  refreshToken := refreshTokenStruct{ GrantType: "refresh_token", RefreshToken: token }
-	values, err := json.Marshal(refreshToken)
+	err = godotenv.Load()
 	if err != nil {
-		return
+		return nil, err
 	}
 
-  request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", bytes.NewBuffer(values))
+  form := url.Values{}
+  form.Add("grant_type", "refresh_token")
+  form.Add("refresh_token", token)
+
+  request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
 
   encoded := createEncodedID()
 
   request.Header.Set("Authorization", fmt.Sprintf("Basic %s", encoded))
+  request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
   client := &http.Client{}
 
   response, err := client.Do(request)
@@ -34,9 +42,12 @@ func refresh(token string) (newToken *string, err error) {
     return
   }
 
+	buffer = bytes.Trim(buffer, "\x00")
+
   var responseBody refreshTokenResponse
 	if err := json.Unmarshal(buffer, &responseBody); err != nil {
 		fmt.Println("Error: ", err)
+    return nil, err
 	}
 
   newToken = &responseBody.AccessToken

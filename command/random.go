@@ -8,7 +8,8 @@ import (
 	"time"
 )
 
-func Random(token string) {
+func Random(token string) (newToken string) {
+  newToken = token
 	playlists, err := util.LoadPlayList()
 	if err != nil {
 		fmt.Println("Error", err)
@@ -17,7 +18,9 @@ func Random(token string) {
 
 	playlist := choice(playlists)
 
-	play(token, playlist.Uri)
+	newToken = play(token, playlist.Uri)
+
+  return
 }
 
 func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
