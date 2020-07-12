@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"isso0424/spotify-rapspi/selfMadeTypes"
+	"isso0424/spotify_CLI/selfMadeTypes"
 )
 
 func GetPlayStatus(token string) bool {

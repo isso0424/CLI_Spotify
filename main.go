@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"isso0424/spotify-rapspi/auth"
-	"isso0424/spotify-rapspi/command"
-	"isso0424/spotify-rapspi/util"
+	"isso0424/spotify_CLI/auth"
+	"isso0424/spotify_CLI/command"
+	"isso0424/spotify_CLI/util"
 )
 
 func main() {

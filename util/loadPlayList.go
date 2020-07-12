@@ -3,7 +3,7 @@ package util
 import (
 	"encoding/json"
 	"io/ioutil"
-	"isso0424/spotify-rapspi/selfMadeTypes"
+	"isso0424/spotify_CLI/selfMadeTypes"
 	"os"
 )
 

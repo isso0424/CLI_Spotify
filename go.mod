@@ -1,4 +1,4 @@
-module isso0424/spotify-rapspi
+module isso0424/spotify_CLI
 
 go 1.14
 

@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"isso0424/spotify-rapspi/util"
+	"isso0424/spotify_CLI/util"
 )
 
 func Show() {

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"isso0424/spotify-rapspi/util"
+	"isso0424/spotify_CLI/util"
 	"net/http"
 	"strings"
 )
