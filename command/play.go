@@ -23,6 +23,11 @@ func PlayFromURL(token string) {
 
 func play(token string, uri string) {
   values, err := json.Marshal(playJson{ContextUri: uri})
+  if err != nil {
+    fmt.Println("Error: ", err)
+    return
+  }
+
   request, err := http.NewRequest("PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
   if err != nil {
     fmt.Println("Error: ", err)
@@ -38,6 +43,7 @@ func play(token string, uri string) {
 
   if !GetPlayStatus(token) {
     fmt.Println("this url is invalid")
+    return
   }
 }
 
