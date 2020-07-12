@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"isso0424/spotify-rapspi/util"
-	"log"
 )
 
 func Load(token string) {
