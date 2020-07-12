@@ -1,15 +1,15 @@
 package command
 
 import (
-  "fmt"
+	"fmt"
 )
 
 func Pause(token string) {
-  _, err := createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/pause")
+	_, err := createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/pause")
 
-  if err != nil {
-    fmt.Println("Error: ", err)
-    return
-  }
-  fmt.Println("paused!!!")
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	fmt.Println("paused!!!")
 }

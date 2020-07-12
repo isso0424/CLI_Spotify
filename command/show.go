@@ -6,9 +6,9 @@ import (
 )
 
 func Show() {
-  playlistList, _ := util.LoadPlayList()
+	playlistList, _ := util.LoadPlayList()
 
-  for index, target := range playlistList {
-    fmt.Printf("%d\n------------------------------------------------\nname: %s\nuri: %s\n\n", index, target.Name, target.Uri)
-  }
+	for index, target := range playlistList {
+		fmt.Printf("%d\n------------------------------------------------\nname: %s\nuri: %s\n\n", index, target.Name, target.Uri)
+	}
 }

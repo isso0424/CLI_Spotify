@@ -9,20 +9,20 @@ import (
 )
 
 func Random(token string) {
-  playlists, err := util.LoadPlayList()
-  if err != nil {
-    fmt.Println("Error", err)
-    return
-  }
+	playlists, err := util.LoadPlayList()
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
 
-  playlist := choice(playlists)
+	playlist := choice(playlists)
 
-  play(token, playlist.Uri)
+	play(token, playlist.Uri)
 }
 
 func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
-  rand.Seed(time.Now().UnixNano())
-  index := rand.Intn(len(playlists))
+	rand.Seed(time.Now().UnixNano())
+	index := rand.Intn(len(playlists))
 
-  return playlists[index]
+	return playlists[index]
 }
