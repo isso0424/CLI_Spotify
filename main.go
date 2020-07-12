@@ -49,6 +49,10 @@ func mainLoop(token string) {
 			token, _ = auth.GetToken(true)
 		case "random":
 			command.Random(token)
+    case "next":
+      command.Next(token)
+    case "prev":
+      command.Prev(token)
 		}
 	}
 }
