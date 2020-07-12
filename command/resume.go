@@ -13,5 +13,5 @@ func Resume(token string) (newToken string) {
 	}
 	fmt.Println("resumed!!!")
 
-  return
+	return
 }

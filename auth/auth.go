@@ -9,11 +9,11 @@ const tokenFile = ".token"
 
 func GetToken() (*string, error) {
 	if existDotToken() {
-    token, err := readDotToken()
-    if err != nil {
-      return nil, err
-    }
-    return refresh(token)
+		token, err := readDotToken()
+		if err != nil {
+			return nil, err
+		}
+		return refresh(token)
 	}
 
 	return oauth()

@@ -13,5 +13,5 @@ func Pause(token string) (newToken string) {
 	}
 	fmt.Println("paused!!!")
 
-  return
+	return
 }

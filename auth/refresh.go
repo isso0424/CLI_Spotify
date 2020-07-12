@@ -19,56 +19,56 @@ func refresh(token string) (newToken *string, err error) {
 		return nil, err
 	}
 
-  form := url.Values{}
-  form.Add("grant_type", "refresh_token")
-  form.Add("refresh_token", token)
+	form := url.Values{}
+	form.Add("grant_type", "refresh_token")
+	form.Add("refresh_token", token)
 
-  request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
+	request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
 
-  encoded := createEncodedID()
+	encoded := createEncodedID()
 
-  request.Header.Set("Authorization", fmt.Sprintf("Basic %s", encoded))
-  request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-  client := &http.Client{}
+	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", encoded))
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	client := &http.Client{}
 
-  response, err := client.Do(request)
-  if err != nil {
-    return
-  }
+	response, err := client.Do(request)
+	if err != nil {
+		return
+	}
 
-  buffer := make([]byte, 1024)
-  _, err = response.Body.Read(buffer)
-  if err != nil {
-    return
-  }
+	buffer := make([]byte, 1024)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
 
 	buffer = bytes.Trim(buffer, "\x00")
 
-  var responseBody refreshTokenResponse
+	var responseBody refreshTokenResponse
 	if err := json.Unmarshal(buffer, &responseBody); err != nil {
 		fmt.Println("Error: ", err)
-    return nil, err
+		return nil, err
 	}
 
-  newToken = &responseBody.AccessToken
+	newToken = &responseBody.AccessToken
 
-  return
+	return
 }
 
 func createEncodedID() string {
-  ids := fmt.Sprintf("%s:%s", os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
+	ids := fmt.Sprintf("%s:%s", os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
 
-  return base64.StdEncoding.EncodeToString([]byte(ids))
+	return base64.StdEncoding.EncodeToString([]byte(ids))
 }
 
 type refreshTokenStruct struct {
-  GrantType string `json:"grant_type"`
-  RefreshToken string `json:"refresh_token"`
+	GrantType    string `json:"grant_type"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 type refreshTokenResponse struct {
-  AccessToken string `json:"access_token"`
-  TokenType string `json:"token_type"`
-  Scope string `json:"scope"`
-  ExpiresIn int32 `json:"expires_in"`
+	AccessToken string `json:"access_token"`
+	TokenType   string `json:"token_type"`
+	Scope       string `json:"scope"`
+	ExpiresIn   int32  `json:"expires_in"`
 }

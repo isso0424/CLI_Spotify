@@ -7,7 +7,7 @@ import (
 )
 
 func createRequest(token string, method string, url string, body io.Reader) (response *http.Response, newToken string, err error) {
-  newToken = token
+	newToken = token
 	request, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return
@@ -21,13 +21,13 @@ func createRequest(token string, method string, url string, body io.Reader) (res
 	}
 
 	if response.StatusCode == 401 {
-    newTokenPtr, Err := auth.GetToken()
-    if err != nil {
-      err = Err
-      return
-    }
+		newTokenPtr, Err := auth.GetToken()
+		if err != nil {
+			err = Err
+			return
+		}
 
-    newToken = *newTokenPtr
+		newToken = *newTokenPtr
 	}
 
 	return

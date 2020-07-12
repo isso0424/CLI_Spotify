@@ -6,11 +6,11 @@ import (
 )
 
 func Refresh() string {
-  tokenPtr, err := auth.GetToken()
-  if err != nil {
-    fmt.Println("Error: ", err)
-    return ""
-  }
+	tokenPtr, err := auth.GetToken()
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return ""
+	}
 
-  return *tokenPtr
+	return *tokenPtr
 }

@@ -8,15 +8,15 @@ import (
 )
 
 func GetPlayStatus(token string) (bool, string) {
-  status, newToken, err := getStatus(token)
-  if err != nil {
-    fmt.Println("Error: ", err)
-    return false, newToken
-  }
+	status, newToken, err := getStatus(token)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return false, newToken
+	}
 
-  if status == nil {
-    return false, newToken
-  }
+	if status == nil {
+		return false, newToken
+	}
 
 	createInfo(*status)
 
@@ -42,7 +42,7 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 		fmt.Println("Error: ", err)
 	}
 
-  return
+	return
 }
 
 func createInfo(content selfMadeTypes.Content) {
