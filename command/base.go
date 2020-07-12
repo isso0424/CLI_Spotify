@@ -1,13 +1,14 @@
 package command
 
 import (
+	"io"
 	"isso0424/spotify_CLI/auth"
 	"net/http"
 )
 
-func createRequest(token string, method string, url string) (response *http.Response, newToken string, err error) {
-  newToken = token
-	request, err := http.NewRequest(method, url, nil)
+func createRequest(token string, method string, url string, body io.Reader) (response *http.Response, newToken string, err error) {
+	newToken = token
+	request, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return
 	}
@@ -20,13 +21,13 @@ func createRequest(token string, method string, url string) (response *http.Resp
 	}
 
 	if response.StatusCode == 401 {
-    newTokenPtr, Err := auth.GetToken()
-    if err != nil {
-      err = Err
-      return
-    }
+		newTokenPtr, Err := auth.GetToken()
+		if err != nil {
+			err = Err
+			return
+		}
 
-    newToken = *newTokenPtr
+		newToken = *newTokenPtr
 	}
 
 	return

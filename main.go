@@ -32,13 +32,13 @@ func mainLoop(token string) {
 		case "exit":
 			return
 		case "pause":
-			command.Pause(token)
+			token = command.Pause(token)
 		case "resume":
-			command.Resume(token)
+			token = command.Resume(token)
 		case "status":
-			command.GetPlayStatus(token)
+			_, token = command.GetPlayStatus(token)
 		case "play":
-			command.PlayFromURL(token)
+			token = command.PlayFromURL(token)
 		case "save":
 			command.Save()
 		case "load":
@@ -48,11 +48,15 @@ func mainLoop(token string) {
 		case "refresh":
 			token = command.Refresh()
 		case "random":
-			command.Random(token)
-    case "next":
-      command.Next(token)
-    case "prev":
-      command.Prev(token)
+			token = command.Random(token)
+		case "next":
+			token = command.Next(token)
+		case "prev":
+			token = command.Prev(token)
+		case "repeat":
+			token = command.Repeat(token)
+		case "shuffle":
+			token = command.Shuffle(token)
 		}
 	}
 }

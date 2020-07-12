@@ -9,7 +9,7 @@ import (
 )
 
 func Random(token string) (newToken string) {
-  newToken = token
+	newToken = token
 	playlists, err := util.LoadPlayList()
 	if err != nil {
 		fmt.Println("Error", err)
@@ -20,7 +20,7 @@ func Random(token string) (newToken string) {
 
 	newToken = play(token, playlist.Uri)
 
-  return
+	return
 }
 
 func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {

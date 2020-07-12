@@ -5,7 +5,7 @@ import (
 )
 
 func Pause(token string) (newToken string) {
-	_, newToken, err := createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/pause")
+	_, newToken, err := createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/pause", nil)
 
 	if err != nil {
 		fmt.Println("Error: ", err)
@@ -13,5 +13,5 @@ func Pause(token string) (newToken string) {
 	}
 	fmt.Println("paused!!!")
 
-  return
+	return
 }
