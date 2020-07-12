@@ -14,6 +14,11 @@ func GetPlayStatus(token string) bool {
     fmt.Println("Error: ", err)
     return false
   }
+  if response.StatusCode == 204 {
+    fmt.Println("You have to play on spotify client before use this `CLI client`.")
+    return false
+  }
+
   buffer := make([]byte, 8192)
   _, err = response.Body.Read(buffer)
 
