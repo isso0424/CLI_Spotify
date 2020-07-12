@@ -4,8 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-
-  "isso0424/spotify-rapspi/types"
+	"isso0424/spotify-rapspi/selfMadeTypes"
 )
 
 func GetPlayStatus(token string) bool {
@@ -24,7 +23,7 @@ func GetPlayStatus(token string) bool {
 
   buffer = bytes.Trim(buffer, "\x00")
 
-  var responseBody types.Content
+  var responseBody selfMadeTypes.Content
   if err := json.Unmarshal(buffer, &responseBody); err != nil {
     fmt.Println("Error: ", err)
   }
@@ -34,7 +33,7 @@ func GetPlayStatus(token string) bool {
   return responseBody.IsPlaying && len(responseBody.Item.Artists) != 0
 }
 
-func createInfo(content types.Content) {
+func createInfo(content selfMadeTypes.Content) {
   if content.IsPlaying && len(content.Item.Artists) != 0 {
     fmt.Printf("Playing status\n--------------\nTitle: %s\nArtist: %s\n", content.Item.Name, content.Item.Artists[0].Name)
   } else {
