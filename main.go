@@ -46,7 +46,7 @@ func mainLoop(token string) {
 		case "show":
 			command.Show()
 		case "refresh":
-			token, _ = auth.GetToken()
+			token = command.Refresh()
 		case "random":
 			command.Random(token)
     case "next":
