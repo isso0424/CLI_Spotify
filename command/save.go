@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"isso0424/spotify-rapspi/selfMadeTypes"
-	"isso0424/spotify-rapspi/util"
+	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/util"
 )
 
 func Save() {
