@@ -44,11 +44,12 @@ func mainLoop(token string) {
       command.Save()
     case "load":
       command.Load(token)
-    case "show":
-      command.Show()
+    case "show": command.Show()
     case "refresh":
       token, _ = auth.GetToken(true)
-  }
+    case "random":
+      command.Random(token)
+    }
   }
 }
 
