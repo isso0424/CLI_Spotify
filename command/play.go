@@ -21,7 +21,8 @@ func PlayFromURL(token string) {
 	play(token, *uri)
 }
 
-func play(token string, uri string) {
+func play(token string, uri string) (newToken string){
+  newToken = token
 	values, err := json.Marshal(playJson{ContextUri: uri})
 	if err != nil {
 		fmt.Println("Error: ", err)
@@ -41,10 +42,12 @@ func play(token string, uri string) {
 		return
 	}
 
-	if !GetPlayStatus(token) {
+  nowPlaying, newToken := GetPlayStatus(token)
+  if !nowPlaying {
 		fmt.Println("this url is invalid")
-		return
 	}
+
+  return
 }
 
 func CreateContextUri(url string) (*string, error) {

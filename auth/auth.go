@@ -7,9 +7,13 @@ import (
 
 const tokenFile = ".token"
 
-func GetToken(force bool) (string, error) {
-	if existDotToken() && !force {
-		return readDotToken()
+func GetToken() (*string, error) {
+	if existDotToken() {
+    token, err := readDotToken()
+    if err != nil {
+      return nil, err
+    }
+    return refresh(token)
 	}
 
 	return oauth()

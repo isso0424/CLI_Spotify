@@ -1,11 +1,12 @@
 package command
 
 import (
-	"fmt"
+	"isso0424/spotify_CLI/auth"
 	"net/http"
 )
 
-func createRequest(token string, method string, url string) (response *http.Response, err error) {
+func createRequest(token string, method string, url string) (response *http.Response, newToken string, err error) {
+  newToken = token
 	request, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		return
@@ -19,7 +20,13 @@ func createRequest(token string, method string, url string) (response *http.Resp
 	}
 
 	if response.StatusCode == 401 {
-		fmt.Println("token is invalid\nyou have to execute `refresh` command")
+    newTokenPtr, Err := auth.GetToken()
+    if err != nil {
+      err = Err
+      return
+    }
+
+    newToken = *newTokenPtr
 	}
 
 	return
