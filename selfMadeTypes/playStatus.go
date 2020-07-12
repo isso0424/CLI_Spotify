@@ -1,8 +1,4 @@
-package types
-
-type Parent struct {
-  Content Content `json:"content"`
-}
+package selfMadeTypes
 
 type Content struct {
   IsPlaying bool `json:"is_playing"`
