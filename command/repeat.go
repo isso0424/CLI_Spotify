@@ -5,13 +5,12 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func repeat(token string) (newToken string) {
+func repeat(token string) (newToken string, err error) {
 	newToken = token
 
 	status, newToken, err := getStatus(token)
 
-	if status == nil {
-		fmt.Println("Error: Failed to get playing status")
+	if err != nil {
 		return
 	}
 

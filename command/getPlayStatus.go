@@ -8,20 +8,19 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func getPlayStatus(token string) (bool, string) {
+func getPlayStatus(token string) (bool, string, error) {
 	status, newToken, err := getStatus(token)
 	if err != nil {
-		fmt.Println("Error: ", err)
-		return false, newToken
+		return false, newToken, err
 	}
 
 	if status == nil {
-		return false, newToken
+		return false, newToken, nil
 	}
 
 	createInfo(*status)
 
-	return status.IsPlaying && len(status.Item.Artists) != 0, newToken
+	return status.IsPlaying && len(status.Item.Artists) != 0, newToken, nil
 }
 
 func getStatus(token string) (status *selfMadeTypes.Content, newToken string, err error) {
@@ -30,7 +29,7 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 		return
 	}
 	if response.StatusCode == 204 {
-		fmt.Println("You have to play on spotify client before use this `CLI client`.")
+    err = &selfMadeTypes.FailedGetError{Target: "playing status"}
 		return
 	}
 
@@ -39,9 +38,7 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 
 	buffer = bytes.Trim(buffer, "\x00")
 
-	if err := json.Unmarshal(buffer, &status); err != nil {
-		fmt.Println("Error: ", err)
-	}
+	err = json.Unmarshal(buffer, &status)
 
 	return
 }

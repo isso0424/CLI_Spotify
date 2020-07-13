@@ -2,15 +2,20 @@ package command
 
 import (
 	"fmt"
+	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 )
 
-func load(token string) {
+func load(token string) (err error) {
 	fmt.Println("please input playlist name")
 	var name string
 	util.Input("PlayListName", &name)
 
-	playlistList, _ := util.LoadPlayList()
+	playlistList, err := util.LoadPlayList()
+
+  if err != nil {
+    return
+  }
 
 	for _, target := range playlistList {
 		if target.Name == name {
@@ -20,5 +25,7 @@ func load(token string) {
 		}
 	}
 
-	fmt.Printf("Error: %s is not found.", name)
+  err = &selfMadeTypes.NotFound{Target: name}
+
+  return
 }

@@ -1,24 +1,22 @@
 package command
 
 import (
-	"fmt"
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 	"math/rand"
 	"time"
 )
 
-func random(token string) (newToken string) {
+func random(token string) (newToken string, err error) {
 	newToken = token
 	playlists, err := util.LoadPlayList()
 	if err != nil {
-		fmt.Println("Error", err)
 		return
 	}
 
 	playlist := choice(playlists)
 
-	newToken = play(token, playlist.Uri)
+	newToken, err = play(token, playlist.Uri)
 
 	return
 }

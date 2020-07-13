@@ -7,6 +7,7 @@ import (
 
 
 func MainLoop(token string) {
+  var err error
 	fmt.Println("if you wanna exit, you must type 'exit'")
 	getPlayStatus(token)
 	for {
@@ -16,39 +17,44 @@ func MainLoop(token string) {
     if commandName == "exit" {
       break
     }
-    token = command(token, commandName)
+    token, err = command(token, commandName)
+
+    if err != nil {
+      fmt.Printf("Error: %s", err)
+      err = nil
+    }
 	}
 }
 
-func command(token string, commandName string) (newToken string) {
+func command(token string, commandName string) (newToken string, err error) {
   newToken = token
 	switch commandName {
 	case "pause":
-		newToken = pause(newToken)
+		newToken, err = pause(newToken)
 	case "resume":
-		newToken = resume(newToken)
+		newToken, err = resume(newToken)
 	case "status":
-		_, newToken = getPlayStatus(newToken)
+		_, newToken, err = getPlayStatus(newToken)
 	case "play":
-		newToken = playFromURL(newToken)
+		newToken, err = playFromURL(newToken)
 	case "save":
-		save()
+		err = save()
 	case "load":
-		load(newToken)
+		err = load(newToken)
 	case "show":
-		show()
+		err = show()
 	case "refresh":
-		newToken = refresh()
+		newToken, err = refresh(token)
 	case "random":
-		newToken = random(newToken)
+		newToken, err = random(newToken)
 	case "next":
-		newToken = next(newToken)
+		newToken, err = next(newToken)
 	case "prev":
-		newToken = prev(newToken)
+		newToken, err = prev(newToken)
 	case "repeat":
-		newToken = repeat(newToken)
+		newToken, err = repeat(newToken)
 	case "shuffle":
-		newToken = shuffle(newToken)
+		newToken, err = shuffle(newToken)
 	}
 
   return
