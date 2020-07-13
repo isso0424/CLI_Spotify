@@ -7,6 +7,7 @@ import (
 
 
 func MainLoop(token string) {
+  var err error
 	fmt.Println("if you wanna exit, you must type 'exit'")
 	getPlayStatus(token)
 	for {
@@ -16,7 +17,12 @@ func MainLoop(token string) {
     if commandName == "exit" {
       break
     }
-    token = command(token, commandName)
+    token, err = command(token, commandName)
+
+    if err != nil {
+      fmt.Printf("Error: %s", err)
+      err = nil
+    }
 	}
 }
 
@@ -38,7 +44,7 @@ func command(token string, commandName string) (newToken string, err error) {
 	case "show":
 		err = show()
 	case "refresh":
-		newToken, err = refresh()
+		newToken, err = refresh(token)
 	case "random":
 		newToken, err = random(newToken)
 	case "next":

@@ -8,17 +8,18 @@ import (
 	"strings"
 )
 
-func playFromURL(token string) (newToken string) {
+func playFromURL(token string) (newToken string, err error) {
 	newToken = token
+
 	fmt.Printf("please input playlist url\n------------------------")
 	var url string
 	util.Input("PlayListURL", &url)
+
 	uri, err := CreateContextUri(url)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return
 	}
-	newToken = play(token, *uri)
+	newToken, err = play(token, *uri)
 
 	return
 }
