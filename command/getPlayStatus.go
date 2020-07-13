@@ -75,7 +75,7 @@ func createInfo(content selfMadeTypes.Content, token string) error {
       return err
     }
 
-    fmt.Printf("Playing status\n--------------\nTitle: %s\nArtist: %s\n\nPlayList: %s\nOwner: %s\n", content.Item.Name, content.Item.Artists[0].Name, playlist.Name, playlist.Owner.DisplayName)
+    fmt.Printf("Playing status\n--------------\nTitle: %s\nArtist: %s\n\nPlayList Infomation\n-------------------\nPlayList: %s\nOwner: %s\n", content.Item.Name, content.Item.Artists[0].Name, playlist.Name, playlist.Owner.DisplayName)
 	} else {
 		fmt.Println("Pausing")
 	}
