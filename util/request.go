@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func createRequest(token string, method string, url string, body io.Reader) (response *http.Response, newToken string, err error) {
+func CreateRequest(token string, method string, url string, body io.Reader) (response *http.Response, newToken string, err error) {
 	newToken = token
 	request, err := http.NewRequest(method, url, body)
 	if err != nil {

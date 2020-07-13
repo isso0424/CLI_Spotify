@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/util"
 )
 
 func GetPlayStatus(token string) (bool, string) {
@@ -24,7 +25,7 @@ func GetPlayStatus(token string) (bool, string) {
 }
 
 func getStatus(token string) (status *selfMadeTypes.Content, newToken string, err error) {
-	response, newToken, err := createRequest(token, "GET", "https://api.spotify.com/v1/me/player", nil)
+	response, newToken, err := util.CreateRequest(token, "GET", "https://api.spotify.com/v1/me/player", nil)
 	if err != nil {
 		return
 	}

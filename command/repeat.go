@@ -1,6 +1,9 @@
 package command
 
-import "fmt"
+import (
+	"fmt"
+	"isso0424/spotify_CLI/util"
+)
 
 func Repeat(token string) (newToken string) {
 	newToken = token
@@ -14,7 +17,7 @@ func Repeat(token string) (newToken string) {
 
 	state := switchRepeatState(status.RepeatState)
 
-	_, newToken, err = createRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/repeat?state=%s", state), nil)
+	_, newToken, err = util.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		fmt.Println("Error: ", err)

@@ -31,7 +31,7 @@ func play(token string, uri string) (newToken string) {
 		return
 	}
 
-	_, newToken, err = createRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
+	_, newToken, err = util.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
 
 	nowPlaying, newToken := GetPlayStatus(token)
 	if !nowPlaying {

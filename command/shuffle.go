@@ -1,6 +1,9 @@
 package command
 
-import "fmt"
+import (
+	"fmt"
+	"isso0424/spotify_CLI/util"
+)
 
 func Shuffle(token string) (newToken string) {
 	newToken = token
@@ -18,7 +21,7 @@ func Shuffle(token string) (newToken string) {
 
 	state := switchShuffleState(status.ShuffleState)
 
-	_, newToken, err = createRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/shuffle?state=%v", state), nil)
+	_, newToken, err = util.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/shuffle?state=%v", state), nil)
 
 	if err != nil {
 		fmt.Println("Error ", err)
