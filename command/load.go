@@ -13,9 +13,9 @@ func load(token string) (err error) {
 
 	playlistList, err := util.LoadPlayList()
 
-  if err != nil {
-    return
-  }
+	if err != nil {
+		return
+	}
 
 	for _, target := range playlistList {
 		if target.Name == name {
@@ -25,7 +25,7 @@ func load(token string) (err error) {
 		}
 	}
 
-  err = &selfMadeTypes.NotFound{Target: name}
+	err = &selfMadeTypes.NotFound{Target: name}
 
-  return
+	return
 }

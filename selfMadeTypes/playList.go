@@ -6,6 +6,6 @@ type PlayList struct {
 }
 
 type PlayListFromRequest struct {
-  Name string `json:"name"`
-  Owner user `json:"owner"`
+	Name  string `json:"name"`
+	Owner user   `json:"owner"`
 }

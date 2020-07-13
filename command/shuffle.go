@@ -11,7 +11,7 @@ func shuffle(token string) (newToken string, err error) {
 	status, newToken, err := getStatus(token)
 
 	if err != nil {
-    return
+		return
 	}
 
 	state := switchShuffleState(status.ShuffleState)
@@ -19,7 +19,7 @@ func shuffle(token string) (newToken string, err error) {
 	_, newToken, err = util.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/shuffle?state=%v", state), nil)
 
 	if err != nil {
-    return
+		return
 	}
 
 	fmt.Printf("Switch shuffle state to %v\n", state)
