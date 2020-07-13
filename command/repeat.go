@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Repeat(token string) (newToken string) {
+func repeat(token string) (newToken string) {
 	newToken = token
 
 	status, newToken, err := getStatus(token)

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func Random(token string) (newToken string) {
+func random(token string) (newToken string) {
 	newToken = token
 	playlists, err := util.LoadPlayList()
 	if err != nil {

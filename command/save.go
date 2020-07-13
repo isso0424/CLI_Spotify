@@ -8,7 +8,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Save() {
+func save() {
 	fmt.Printf("please input playlist url\n")
 	var url string
 	util.Input("PlayListURL", &url)

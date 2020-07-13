@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Next(token string) (newToken string) {
+func next(token string) (newToken string) {
 	_, newToken, err := util.CreateRequest(token, "POST", "https://api.spotify.com/v1/me/player/next", nil)
 
 	if err != nil {
@@ -13,7 +13,7 @@ func Next(token string) (newToken string) {
 		return
 	}
 
-	GetPlayStatus(token)
+	getPlayStatus(token)
 
 	return
 }

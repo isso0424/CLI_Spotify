@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func PlayFromURL(token string) (newToken string) {
+func playFromURL(token string) (newToken string) {
 	newToken = token
 	fmt.Printf("please input playlist url\n------------------------")
 	var url string
@@ -33,7 +33,7 @@ func play(token string, uri string) (newToken string) {
 
 	_, newToken, err = util.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
 
-	nowPlaying, newToken := GetPlayStatus(token)
+	nowPlaying, newToken := getPlayStatus(token)
 	if !nowPlaying {
 		fmt.Println("this url is invalid")
 	}

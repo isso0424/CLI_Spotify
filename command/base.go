@@ -8,7 +8,7 @@ import (
 
 func MainLoop(token string) {
 	fmt.Println("if you wanna exit, you must type 'exit'")
-	GetPlayStatus(token)
+	getPlayStatus(token)
 	for {
 		var commandName string
 		util.Input("Command", &commandName)
@@ -24,31 +24,31 @@ func command(token string, commandName string) (newToken string) {
   newToken = token
 	switch commandName {
 	case "pause":
-		newToken = Pause(newToken)
+		newToken = pause(newToken)
 	case "resume":
-		newToken = Resume(newToken)
+		newToken = resume(newToken)
 	case "status":
-		_, newToken = GetPlayStatus(newToken)
+		_, newToken = getPlayStatus(newToken)
 	case "play":
-		newToken = PlayFromURL(newToken)
+		newToken = playFromURL(newToken)
 	case "save":
-		Save()
+		save()
 	case "load":
-		Load(newToken)
+		load(newToken)
 	case "show":
-		Show()
+		show()
 	case "refresh":
-		newToken = Refresh()
+		newToken = refresh()
 	case "random":
-		newToken = Random(newToken)
+		newToken = random(newToken)
 	case "next":
-		newToken = Next(newToken)
+		newToken = next(newToken)
 	case "prev":
-		newToken = Prev(newToken)
+		newToken = prev(newToken)
 	case "repeat":
-		newToken = Repeat(newToken)
+		newToken = repeat(newToken)
 	case "shuffle":
-		newToken = Shuffle(newToken)
+		newToken = shuffle(newToken)
 	}
 
   return

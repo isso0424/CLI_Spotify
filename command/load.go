@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Load(token string) {
+func load(token string) {
 	fmt.Println("please input playlist name")
 	var name string
 	util.Input("PlayListName", &name)

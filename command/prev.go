@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Prev(token string) (newToken string) {
+func prev(token string) (newToken string) {
 	_, newToken, err := util.CreateRequest(token, "POST", "https://api.spotify.com/v1/me/player/previous", nil)
 
 	if err != nil {
@@ -13,7 +13,7 @@ func Prev(token string) (newToken string) {
 		return
 	}
 
-	_, newToken = GetPlayStatus(token)
+	_, newToken = getPlayStatus(token)
 
 	return
 }

@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Shuffle(token string) (newToken string) {
+func shuffle(token string) (newToken string) {
 	newToken = token
 
 	status, newToken, err := getStatus(token)

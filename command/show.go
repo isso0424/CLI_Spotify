@@ -5,7 +5,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func Show() {
+func show() {
 	playlistList, _ := util.LoadPlayList()
 
 	for index, target := range playlistList {

@@ -8,7 +8,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func GetPlayStatus(token string) (bool, string) {
+func getPlayStatus(token string) (bool, string) {
 	status, newToken, err := getStatus(token)
 	if err != nil {
 		fmt.Println("Error: ", err)
