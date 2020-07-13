@@ -13,7 +13,7 @@ func save() (err error) {
 	var url string
 	util.Input("PlayListURL", &url)
 
-	uri, err := CreateContextUri(url)
+	uri, err := createContextUri(url)
 	if err != nil {
 		return
 	}
