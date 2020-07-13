@@ -8,13 +8,13 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func save() {
+func save() (err error) {
 	fmt.Printf("please input playlist url\n")
 	var url string
 	util.Input("PlayListURL", &url)
+
 	uri, err := CreateContextUri(url)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return
 	}
 
@@ -25,30 +25,32 @@ func save() {
 	list := selfMadeTypes.PlayList{Uri: *uri, Name: name}
 
 	if checkDuplicateName(name) {
-		saveToJson(list)
+		err = saveToJson(list)
 	} else {
-		fmt.Println("Error: This name is duplicated.")
+    err = &selfMadeTypes.NameDuplicateError{name}
 	}
+
+  return
 }
 
-func saveToJson(target selfMadeTypes.PlayList) {
+func saveToJson(target selfMadeTypes.PlayList) (err error) {
 	playlistList, _ := util.LoadPlayList()
 	playlistList = append(playlistList, target)
 
 	jsonFile, err := json.Marshal(playlistList)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return
 	}
 
 	err = ioutil.WriteFile("playlist.json", jsonFile, 0666)
 
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return
 	}
 
 	fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
+
+  return
 }
 
 func checkDuplicateName(name string) bool {
