@@ -5,29 +5,28 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-
 func MainLoop(token string) {
-  var err error
+	var err error
 	fmt.Println("if you wanna exit, you must type 'exit'")
 	getPlayStatus(token)
 	for {
 		var commandName string
 		util.Input("Command", &commandName)
 
-    if commandName == "exit" {
-      break
-    }
-    token, err = command(token, commandName)
+		if commandName == "exit" {
+			break
+		}
+		token, err = command(token, commandName)
 
-    if err != nil {
-      fmt.Printf("Error: %s", err)
-      err = nil
-    }
+		if err != nil {
+			fmt.Printf("Error: %s", err)
+			err = nil
+		}
 	}
 }
 
 func command(token string, commandName string) (newToken string, err error) {
-  newToken = token
+	newToken = token
 	switch commandName {
 	case "pause":
 		newToken, err = pause(newToken)
@@ -57,5 +56,5 @@ func command(token string, commandName string) (newToken string, err error) {
 		newToken, err = shuffle(newToken)
 	}
 
-  return
+	return
 }

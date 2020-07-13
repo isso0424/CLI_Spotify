@@ -15,7 +15,7 @@ func playFromURL(token string) (newToken string, err error) {
 	var url string
 	util.Input("PlayListURL", &url)
 
-	uri, err := CreateContextUri(url)
+	uri, err := createContextUri(url)
 	if err != nil {
 		return
 	}
@@ -35,9 +35,9 @@ func play(token string, uri string) (newToken string, err error) {
 
 	nowPlaying, newToken, err := getPlayStatus(token)
 
-  if err != nil {
-    return
-  }
+	if err != nil {
+		return
+	}
 
 	if !nowPlaying {
 		fmt.Println("this url is invalid")
@@ -46,7 +46,7 @@ func play(token string, uri string) (newToken string, err error) {
 	return
 }
 
-func CreateContextUri(url string) (*string, error) {
+func createContextUri(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 

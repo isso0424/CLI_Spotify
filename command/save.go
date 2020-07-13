@@ -13,7 +13,7 @@ func save() (err error) {
 	var url string
 	util.Input("PlayListURL", &url)
 
-	uri, err := CreateContextUri(url)
+	uri, err := createContextUri(url)
 	if err != nil {
 		return
 	}
@@ -27,10 +27,10 @@ func save() (err error) {
 	if checkDuplicateName(name) {
 		err = saveToJson(list)
 	} else {
-    err = &selfMadeTypes.NameDuplicateError{name}
+		err = &selfMadeTypes.NameDuplicateError{name}
 	}
 
-  return
+	return
 }
 
 func saveToJson(target selfMadeTypes.PlayList) (err error) {
@@ -50,7 +50,7 @@ func saveToJson(target selfMadeTypes.PlayList) (err error) {
 
 	fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
 
-  return
+	return
 }
 
 func checkDuplicateName(name string) bool {
