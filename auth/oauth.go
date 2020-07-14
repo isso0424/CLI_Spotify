@@ -28,7 +28,11 @@ func oauth() (*string, error) {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		log.Println("Got request for:", request.URL.String())
 	})
-	go http.ListenAndServe(":8888", nil)
+
+	go func() {
+    err := http.ListenAndServe(":8888", nil)
+    fmt.Println("Error: ", err)
+  }()
 
 	authUrl := auth.AuthURL(state)
 	fmt.Println("Please log in to Spotify by visiting the following page in your browser:", authUrl)
@@ -37,11 +41,14 @@ func oauth() (*string, error) {
 
 	token, err := client.Token()
 	if err != nil {
-		fmt.Printf(err.Error())
 		return nil, err
 	}
 
-	createDotToken(token.RefreshToken)
+	err = createDotToken(token.RefreshToken)
+
+  if err != nil {
+    return nil, err
+  }
 
 	return &token.AccessToken, nil
 }
