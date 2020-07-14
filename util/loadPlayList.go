@@ -17,7 +17,7 @@ func LoadPlayList() (playlistList []selfMadeTypes.PlayList, err error) {
 		return
 	}
 
-	json.Unmarshal(file, &playlistList)
+	err = json.Unmarshal(file, &playlistList)
 
 	return
 }

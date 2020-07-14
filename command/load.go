@@ -20,7 +20,7 @@ func load(token string) (err error) {
 	for _, target := range playlistList {
 		if target.Name == name {
 			fmt.Printf("play %s\n", target.Name)
-			play(token, target.Uri)
+			_, err = play(token, target.Uri)
 			return
 		}
 	}

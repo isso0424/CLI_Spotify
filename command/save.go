@@ -27,7 +27,7 @@ func save() (err error) {
 	if checkDuplicateName(name) {
 		err = saveToJson(list)
 	} else {
-		err = &selfMadeTypes.NameDuplicateError{name}
+    err = &selfMadeTypes.NameDuplicateError{Target: name}
 	}
 
 	return

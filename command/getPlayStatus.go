@@ -40,6 +40,9 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 
 	buffer := make([]byte, 8192)
 	_, err = response.Body.Read(buffer)
+  if err != nil {
+    return
+  }
 
 	buffer = bytes.Trim(buffer, "\x00")
 

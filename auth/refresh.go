@@ -25,6 +25,10 @@ func refresh(token string) (newToken *string, err error) {
 
 	request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
 
+  if err != nil {
+    return nil, err
+  }
+
 	encoded := createEncodedID()
 
 	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", encoded))
@@ -59,11 +63,6 @@ func createEncodedID() string {
 	ids := fmt.Sprintf("%s:%s", os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
 
 	return base64.StdEncoding.EncodeToString([]byte(ids))
-}
-
-type refreshTokenStruct struct {
-	GrantType    string `json:"grant_type"`
-	RefreshToken string `json:"refresh_token"`
 }
 
 type refreshTokenResponse struct {
