@@ -11,7 +11,7 @@ func next(token string) (newToken string, err error) {
 		return
 	}
 
-	getPlayStatus(token)
+	_, newToken, err = getPlayStatus(token)
 
 	return
 }

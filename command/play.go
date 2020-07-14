@@ -33,6 +33,10 @@ func play(token string, uri string) (newToken string, err error) {
 
 	_, newToken, err = util.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
 
+  if err != nil {
+    return
+  }
+
 	nowPlaying, newToken, err := getPlayStatus(token)
 
 	if err != nil {

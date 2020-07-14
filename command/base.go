@@ -6,9 +6,13 @@ import (
 )
 
 func MainLoop(token string) {
-	var err error
 	fmt.Println("if you wanna exit, you must type 'exit'")
-	getPlayStatus(token)
+  _, _, err := getPlayStatus(token)
+
+  if err != nil {
+    fmt.Println("Error: ", err)
+  }
+
 	for {
 		var commandName string
 		util.Input("Command", &commandName)
@@ -16,11 +20,11 @@ func MainLoop(token string) {
 		if commandName == "exit" {
 			break
 		}
-		token, err = command(token, commandName)
+    newToken, err := command(token, commandName)
+    token = newToken
 
 		if err != nil {
 			fmt.Printf("Error: %s", err)
-			err = nil
 		}
 	}
 }
