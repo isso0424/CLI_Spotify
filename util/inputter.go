@@ -2,8 +2,8 @@ package util
 
 import "fmt"
 
-func Input(hint string, getValiable *string) {
-	fmt.Printf("\n%s|>>>", hint)
+func Input(message string, hint string, getValiable *string) {
+	fmt.Printf("%s\n%s|>>>", message, hint)
 	fmt.Scanln(getValiable)
 	fmt.Println()
 }

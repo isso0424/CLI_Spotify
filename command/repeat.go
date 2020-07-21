@@ -35,8 +35,6 @@ func switchRepeatState(state string) string {
 		return "track"
 	case "off":
 		return "context"
-  default:
-    return "invalid"
 	}
 
 	return "off"

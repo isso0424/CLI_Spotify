@@ -8,9 +8,8 @@ import (
 )
 
 func load(token string) (err error) {
-	fmt.Println("please input playlist name")
 	var name string
-	util.Input("PlayListName", &name)
+	util.Input("please input playlist name", "PlayListName", &name)
 
 	playlistList, err := file.LoadPlayList()
 

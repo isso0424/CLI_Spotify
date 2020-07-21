@@ -1,7 +1,6 @@
 package command
 
 import (
-	"fmt"
 	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/selfMadeTypes"
@@ -9,18 +8,16 @@ import (
 )
 
 func save() (err error) {
-	fmt.Printf("please input playlist url\n")
 	var url string
-	util.Input("PlayListURL", &url)
+	util.Input("please input playlist url\n", "PlayListURL", &url)
 
 	uri, err := parse.CreateContextUri(url)
 	if err != nil {
 		return
 	}
 
-	fmt.Printf("\nplease input playlist name\n")
 	var name string
-	util.Input("PlayListName", &name)
+	util.Input("\nplease input playlist name\n", "PlayListName", &name)
 
 	list := selfMadeTypes.PlayList{Uri: *uri, Name: name}
 

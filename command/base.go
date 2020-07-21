@@ -15,7 +15,7 @@ func MainLoop(token string) {
 
 	for {
 		var commandName string
-		util.Input("Command", &commandName)
+		util.Input("", "Command", &commandName)
 
 		if commandName == "exit" {
 			break

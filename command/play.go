@@ -12,9 +12,8 @@ import (
 func playFromURL(token string) (newToken string, err error) {
 	newToken = token
 
-	fmt.Printf("please input playlist url\n------------------------")
 	var url string
-	util.Input("PlayListURL", &url)
+	util.Input("please input playlist url\n------------------------", "PlayListURL", &url)
 
 	uri, err := parse.CreateContextUri(url)
 	if err != nil {
