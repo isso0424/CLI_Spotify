@@ -31,7 +31,7 @@ func getPlayStatus(token string) (bool, string, error) {
     return false, newToken, err
   }
 
-	fmt.Println(parse.CreatePlayingStatus(*status, *playListStatus, token))
+	fmt.Println(parse.CreatePlayingStatus(*status, playListStatus, token))
 
 	return status.IsPlaying && len(status.Item.Artists) != 0, newToken, nil
 }

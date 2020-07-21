@@ -7,8 +7,6 @@ type user struct {
 	Id           string       `json:"id"`
 	Type         string       `json:"type"`
 	Uri          string       `json:"uri"`
-	Images       []image      `json:"images"`
-	Followers    followers    `json:"followers"`
 }
 
 type followers struct {

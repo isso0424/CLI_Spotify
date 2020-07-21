@@ -37,7 +37,7 @@ func CreateRequest(token string, method string, url string, body io.Reader) (res
 	return
 }
 
-func GetPlayListStatus(token string, playlistID *string) (status *selfMadeTypes.PlayListFromRequest, err error) {
+func GetPlayListStatus(token string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
 		response, _, err := CreateRequest(token, "GET", fmt.Sprintf("https://api.spotify.com/v1/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
 		if err != nil {
 			return
@@ -51,7 +51,7 @@ func GetPlayListStatus(token string, playlistID *string) (status *selfMadeTypes.
 
 		buffer = bytes.Trim(buffer, "\x00")
 
-		err = json.Unmarshal(buffer, status)
+		err = json.Unmarshal(buffer, &status)
 		if err != nil {
 			return
 		}
