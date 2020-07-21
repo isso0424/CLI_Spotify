@@ -13,7 +13,7 @@ func show() (err error) {
 	}
 
 	for index, target := range playlistList {
-		fmt.Printf("%d\n------------------------------------------------\nname: %s\nuri: %s\n\n", index, target.Name, target.Uri)
+    fmt.Printf("id: %d\n------------------------------------------------\nname: %s\nuri: %s\n\n", index, target.Name, target.Uri)
 	}
 
 	return
