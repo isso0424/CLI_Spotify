@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"isso0424/spotify_CLI/command/parse"
+	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/util"
-	"strings"
 )
 
 func playFromURL(token string) (newToken string, err error) {
@@ -15,7 +16,7 @@ func playFromURL(token string) (newToken string, err error) {
 	var url string
 	util.Input("PlayListURL", &url)
 
-	uri, err := createContextUri(url)
+	uri, err := parse.CreateContextUri(url)
 	if err != nil {
 		return
 	}
@@ -31,7 +32,7 @@ func play(token string, uri string) (newToken string, err error) {
 		return
 	}
 
-	_, newToken, err = util.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
+	_, newToken, err = request.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
 
   if err != nil {
     return
@@ -48,29 +49,6 @@ func play(token string, uri string) (newToken string, err error) {
 	}
 
 	return
-}
-
-func createContextUri(url string) (*string, error) {
-	err := &lengthError{}
-	spritted := strings.Split(url, "/")
-
-	if len(spritted) < 5 {
-		return nil, err
-	}
-	kind := spritted[3]
-	tmp := spritted[4]
-
-	id := strings.Split(tmp, "?")[0]
-
-	context_uri := fmt.Sprintf("spotify:%s:%s", kind, id)
-	return &context_uri, nil
-}
-
-func (e *lengthError) Error() string {
-	return "too short length"
-}
-
-type lengthError struct {
 }
 
 type playJson struct {
