@@ -2,16 +2,16 @@ package command
 
 import (
 	"fmt"
+	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 )
 
 func load(token string) (err error) {
-	fmt.Println("please input playlist name")
 	var name string
-	util.Input("PlayListName", &name)
+	util.Input("please input playlist name", "PlayListName", &name)
 
-	playlistList, err := util.LoadPlayList()
+	playlistList, err := file.LoadPlayList()
 
 	if err != nil {
 		return

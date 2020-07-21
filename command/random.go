@@ -1,15 +1,15 @@
 package command
 
 import (
+	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/selfMadeTypes"
-	"isso0424/spotify_CLI/util"
 	"math/rand"
 	"time"
 )
 
 func random(token string) (newToken string, err error) {
 	newToken = token
-	playlists, err := util.LoadPlayList()
+	playlists, err := file.LoadPlayList()
 	if err != nil {
 		return
 	}

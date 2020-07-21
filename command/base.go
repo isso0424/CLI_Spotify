@@ -7,21 +7,21 @@ import (
 
 func MainLoop(token string) {
 	fmt.Println("if you wanna exit, you must type 'exit'")
-  _, _, err := getPlayStatus(token)
+	_, _, err := getPlayStatus(token)
 
-  if err != nil {
-    fmt.Println("Error: ", err)
-  }
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
 
 	for {
 		var commandName string
-		util.Input("Command", &commandName)
+		util.Input("", "Command", &commandName)
 
 		if commandName == "exit" {
 			break
 		}
-    newToken, err := command(token, commandName)
-    token = newToken
+		newToken, err := command(token, commandName)
+		token = newToken
 
 		if err != nil {
 			fmt.Printf("Error: %s", err)
