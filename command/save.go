@@ -24,7 +24,7 @@ func save() (err error) {
 	if checkDuplicateName(name) {
 		err = file.SavePlayList(list)
 	} else {
-    err = &selfMadeTypes.NameDuplicateError{Target: name}
+		err = &selfMadeTypes.NameDuplicateError{Target: name}
 	}
 
 	return

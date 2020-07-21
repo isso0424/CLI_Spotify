@@ -19,7 +19,7 @@ func repeat(token string) (newToken string, err error) {
 	_, newToken, err = request.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
-    return
+		return
 	}
 
 	fmt.Printf("Repeat state change to `%s`\n", state)

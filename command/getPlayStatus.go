@@ -25,11 +25,11 @@ func getPlayStatus(token string) (bool, string, error) {
 		return false, newToken, err
 	}
 
-  playListStatus, err := request.GetPlayListStatus(newToken, playlistID)
+	playListStatus, err := request.GetPlayListStatus(newToken, playlistID)
 
-  if err != nil {
-    return false, newToken, err
-  }
+	if err != nil {
+		return false, newToken, err
+	}
 
 	fmt.Println(parse.CreatePlayingStatus(*status, playListStatus, token))
 
@@ -48,9 +48,9 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 
 	buffer := make([]byte, 8192)
 	_, err = response.Body.Read(buffer)
-  if err != nil {
-    return
-  }
+	if err != nil {
+		return
+	}
 
 	buffer = bytes.Trim(buffer, "\x00")
 
@@ -58,4 +58,3 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 
 	return
 }
-

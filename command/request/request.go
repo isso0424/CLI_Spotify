@@ -38,23 +38,23 @@ func CreateRequest(token string, method string, url string, body io.Reader) (res
 }
 
 func GetPlayListStatus(token string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
-		response, _, err := CreateRequest(token, "GET", fmt.Sprintf("https://api.spotify.com/v1/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
-		if err != nil {
-			return
-		}
+	response, _, err := CreateRequest(token, "GET", fmt.Sprintf("https://api.spotify.com/v1/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
+	if err != nil {
+		return
+	}
 
-		buffer := make([]byte, 1024)
-		_, err = response.Body.Read(buffer)
-		if err != nil {
-			return
-		}
+	buffer := make([]byte, 1024)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
 
-		buffer = bytes.Trim(buffer, "\x00")
+	buffer = bytes.Trim(buffer, "\x00")
 
-		err = json.Unmarshal(buffer, &status)
-		if err != nil {
-			return
-		}
+	err = json.Unmarshal(buffer, &status)
+	if err != nil {
+		return
+	}
 
-    return
+	return
 }
