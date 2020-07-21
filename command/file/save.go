@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"isso0424/spotify_CLI/selfMadeTypes"
-	"isso0424/spotify_CLI/util"
 )
 
 func SavePlayList(target selfMadeTypes.PlayList) (err error) {
-	playlistList, _ := util.LoadPlayList()
+	playlistList, _ := LoadPlayList()
 	playlistList = append(playlistList, target)
 
 	jsonFile, err := json.Marshal(playlistList)

@@ -3,6 +3,7 @@ package parse
 import (
 	"fmt"
 	"isso0424/spotify_CLI/selfMadeTypes"
+	"strings"
 )
 func CreatePlayingStatus(content selfMadeTypes.Content, playlist selfMadeTypes.PlayListFromRequest, token string) (status string) {
 	if content.IsPlaying && len(content.Item.Artists) != 0 {

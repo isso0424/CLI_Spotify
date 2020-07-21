@@ -34,7 +34,7 @@ func save() (err error) {
 }
 
 func checkDuplicateName(name string) bool {
-	playlistList, err := util.LoadPlayList()
+	playlistList, err := file.LoadPlayList()
 	if err != nil {
 		return true
 	}

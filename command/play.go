@@ -38,11 +38,12 @@ func play(token string, uri string) (newToken string, err error) {
     return
   }
 
-	isNowPlaying, newToken, err := getPlayStatus(token)
+	nowPlaying, newToken, err := getPlayStatus(token)
+
 	if err != nil {
 		return
 	}
-	if !isNowPlaying {
+	if !nowPlaying {
 		fmt.Println("this url is invalid")
 	}
 

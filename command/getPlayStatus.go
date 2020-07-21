@@ -7,7 +7,6 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfMadeTypes"
-	"strings"
 )
 
 func getPlayStatus(token string) (bool, string, error) {
@@ -20,7 +19,7 @@ func getPlayStatus(token string) (bool, string, error) {
 		return false, newToken, nil
 	}
 	playlistUrl := status.Context.ExternalUrls.Spotify
-	playlistID, err := getPlaylistID(playlistUrl)
+	playlistID, err := parse.GetPlaylistID(playlistUrl)
 
 	if err != nil {
 		return false, newToken, err

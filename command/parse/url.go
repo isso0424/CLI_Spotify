@@ -21,3 +21,16 @@ func CreateContextUri(url string) (*string, error) {
 	return &context_uri, nil
 }
 
+func GetPlaylistID(url string) (*string, error) {
+	err := &lengthError{}
+	spritted := strings.Split(url, "/")
+
+	if len(spritted) < 5 {
+		return nil, err
+	}
+	tmp := spritted[4]
+
+	id := strings.Split(tmp, "?")[0]
+
+	return &id, nil
+}
