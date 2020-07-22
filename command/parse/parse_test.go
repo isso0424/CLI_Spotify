@@ -39,3 +39,15 @@ func TestPlayingStatus(t *testing.T) {
 
   assert.Equal(t, CreatePlayingStatus(content, playList), "Playing status\n--------------\nTitle: name\nArtist: artist\n\nPlayList Infomation\n-------------------\nPlayList: playList\nOwner: user\n")
 }
+
+func TestCreateContextUriSuccess(t *testing.T) {
+  url := "https://open.spotify.com/playlist/37i9dQZF1DXd8cPo2t5Hqf?si=X4SkTg0BTHKclOIlM0D8lA"
+  uri, _ := CreateContextUri(url)
+  assert.Equal(t, *uri, "spotify:playlist:37i9dQZF1DXd8cPo2t5Hqf")
+}
+
+func TestCreateContextUriFailed(t *testing.T) {
+  url := "https://open.spotify.com/"
+  _, err := CreateContextUri(url)
+  assert.EqualError(t, err, "too short length")
+}
