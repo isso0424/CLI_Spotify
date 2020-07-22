@@ -21,7 +21,13 @@ func save() (err error) {
 
 	list := selfMadeTypes.PlayList{Uri: *uri, Name: name}
 
-	if checkDuplicateName(name) {
+	playlistList, err := file.LoadPlayList()
+
+  if err != nil {
+    return
+  }
+
+	if checkDuplicateName(name, playlistList) {
 		err = file.SavePlayList(list)
 	} else {
 		err = &selfMadeTypes.NameDuplicateError{Target: name}
@@ -30,12 +36,7 @@ func save() (err error) {
 	return
 }
 
-func checkDuplicateName(name string) bool {
-	playlistList, err := file.LoadPlayList()
-	if err != nil {
-		return true
-	}
-
+func checkDuplicateName(name string, playlistList []selfMadeTypes.PlayList) bool {
 	for _, content := range playlistList {
 		if content.Name == name {
 			return false
