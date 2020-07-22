@@ -7,6 +7,20 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
+func random(token string) (newToken string, err error) {
+	newToken = token
+	playlists, err := file.LoadPlayList()
+	if err != nil {
+		return
+	}
+
+	playlist := choice(playlists)
+
+	newToken, err = play(token, playlist.Uri)
+
+	return
+}
+
 func load(token string) (err error) {
 	var name string
 	util.Input("please input playlist name", "PlayListName", &name)
