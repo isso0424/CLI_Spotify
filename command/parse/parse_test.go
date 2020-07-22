@@ -63,3 +63,8 @@ func TestGetPlaylistIDFailed(t *testing.T) {
   _, err := GetPlaylistID(url)
   assert.EqualError(t, err, "too short length")
 }
+
+func TestLengthError(t *testing.T) {
+  err := &lengthError{}
+  assert.EqualError(t, err, "too short length")
+}
