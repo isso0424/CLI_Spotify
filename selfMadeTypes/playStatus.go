@@ -7,7 +7,7 @@ type Content struct {
 	RepeatState          string                 `json:"repeat_state"`
 	Timestamp            int64                  `json:"timestamp"`
 	ProgressMs           int32                  `json:"progress_ms"`
-	Item                 item                   `json:"item"`
+	Item                 Item                   `json:"item"`
 	CurrentlyPlayingType string                 `json:"currently_playing_type"`
 	Action               map[string]interface{} `json:"actions"`
 	Context              context                `json:"context"`
@@ -34,9 +34,9 @@ type externalUrls struct {
 	Spotify string `json:"spotify"`
 }
 
-type item struct {
+type Item struct {
 	Album            album        `json:"album"`
-	Artists          []artists    `json:"artists"`
+	Artists          []Artists    `json:"artists"`
 	AvailableMarkets []string     `json:"available_markets"`
 	DiscNumber       int32        `json:"disc_number"`
 	DurationsMs      int64        `json:"duration_ms"`
@@ -60,7 +60,7 @@ type externalIds struct {
 
 type album struct {
 	AlbumType            string       `json:"album_type"`
-	Artists              []artists    `json:"artists"`
+	Artists              []Artists    `json:"artists"`
 	AvailableMarkets     []string     `json:"available_markets"`
 	ExternalUrls         externalUrls `json:"external_urls"`
 	Href                 string       `json:"href"`
@@ -80,7 +80,7 @@ type image struct {
 	Width  int32  `json:"width"`
 }
 
-type artists struct {
+type Artists struct {
 	ExternalUrls externalUrls `json:"external_urls"`
 	Href         string       `json:"href"`
 	Id           string       `json:"id"`

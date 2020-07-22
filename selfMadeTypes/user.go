@@ -1,6 +1,6 @@
 package selfMadeTypes
 
-type user struct {
+type User struct {
 	DisplayName  string       `json:"display_name"`
 	ExternalUrls externalUrls `json:"external_urls"`
 	Href         string       `json:"href"`
