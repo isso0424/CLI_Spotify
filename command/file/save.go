@@ -5,10 +5,26 @@ import (
 	"fmt"
 	"io/ioutil"
 	"isso0424/spotify_CLI/selfMadeTypes"
+	"os"
 )
 
+var (
+  writeFile func(string, []byte, os.FileMode) error
+  loadFile func() (playlistList []selfMadeTypes.PlayList, err error)
+)
+
+func init() {
+  writeFile = func(fileName string, fileDetail []byte, permission os.FileMode) error {
+    return ioutil.WriteFile(fileName, fileDetail, permission)
+  }
+
+  loadFile = func() (playlistList []selfMadeTypes.PlayList, err error) {
+    return LoadPlayList()
+  }
+}
+
 func SavePlayList(target selfMadeTypes.PlayList) (err error) {
-	playlistList, _ := LoadPlayList()
+	playlistList, _ := loadFile()
 	playlistList = append(playlistList, target)
 
 	jsonFile, err := json.Marshal(playlistList)
@@ -16,7 +32,7 @@ func SavePlayList(target selfMadeTypes.PlayList) (err error) {
 		return
 	}
 
-	err = ioutil.WriteFile("playlist.json", jsonFile, 0666)
+	err = writeFile("playlist.json", jsonFile, 0666)
 
 	if err != nil {
 		return
