@@ -24,7 +24,10 @@ func init() {
 }
 
 func SavePlayList(target selfMadeTypes.PlayList) (err error) {
-	playlistList, _ := loadFile()
+	playlistList, err := loadFile()
+  if err != nil {
+    return
+  }
 	playlistList = append(playlistList, target)
 
 	jsonFile, err := json.Marshal(playlistList)

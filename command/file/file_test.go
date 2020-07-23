@@ -77,7 +77,7 @@ func TestLoadPlayListFail(t *testing.T) {
   reset()
 }
 
-func TestSavePlayList(t *testing.T) {
+func TestSavePlayListSuccess(t *testing.T) {
   reset := setSavePlayList(
     func(fileName string, fileDetail []byte, permission os.FileMode) error {
       return nil
@@ -101,6 +101,50 @@ func TestSavePlayList(t *testing.T) {
     },
   )
   assert.Equal(t, nil, err)
+}
+
+func TestSavePlayListFail(t *testing.T) {
+  reset := setSavePlayList(
+    func(fileName string, fileDetail []byte, permission os.FileMode) error {
+      return errors.New("cannot write a file")
+    },
+    func() ([]selfMadeTypes.PlayList, error) {
+      playlistList := []selfMadeTypes.PlayList{
+        {
+          Name: "PlayList",
+          Uri: "URI",
+        },
+      }
+      return playlistList, nil
+    },
+  )
+
+  err := SavePlayList(
+    selfMadeTypes.PlayList{
+      Name: "PlayList2",
+      Uri: "URI",
+    },
+  )
+  assert.EqualError(t, err, "cannot write a file")
+  reset()
+
+  reset = setSavePlayList(
+    func(fileName string, fileDetail []byte, permission os.FileMode) error {
+      return nil
+    },
+    func() ([]selfMadeTypes.PlayList, error) {
+      return nil, errors.New("cannot load a file")
+    },
+  )
+
+  err = SavePlayList(
+    selfMadeTypes.PlayList{
+      Name: "PlayList2",
+      Uri: "URI",
+    },
+  )
+  assert.EqualError(t, err, "cannot load a file")
+  reset()
 }
 
 type files struct {
