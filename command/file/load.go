@@ -36,3 +36,15 @@ func LoadPlayList() (playlistList []selfMadeTypes.PlayList, err error) {
 
 	return
 }
+
+func SetLoadPlayList(fileExistFunc func(string) (os.FileInfo, error), readFileFunc func(string) ([]byte, error)) (func()) {
+  tmpFileExist := fileExist
+  tmpReadFile := readFile
+  fileExist = fileExistFunc
+  readFile = readFileFunc
+
+  return func() {
+    fileExist = tmpFileExist
+    readFile = tmpReadFile
+  }
+}
