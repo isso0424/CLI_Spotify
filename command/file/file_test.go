@@ -11,7 +11,7 @@ import (
 )
 
 func TestLoadPlayList(t *testing.T) {
-  reset := SetLoadPlayList(
+  reset := setLoadPlayList(
     func(fileName string) (os.FileInfo, error) {
       fileInfo := files{}
       return fileInfo, nil
@@ -39,6 +39,32 @@ func TestLoadPlayList(t *testing.T) {
     },
     successResult,
   )
+}
+
+func TestSavePlayList(t *testing.T) {
+  reset := setSavePlayList(
+    func(fileName string, fileDetail []byte, permission os.FileMode) error {
+      return nil
+    },
+    func() ([]selfMadeTypes.PlayList, error) {
+      playlistList := []selfMadeTypes.PlayList{
+        {
+          Name: "PlayList",
+          Uri: "URI",
+        },
+      }
+      return playlistList, nil
+    },
+  )
+  defer reset()
+
+  err := SavePlayList(
+    selfMadeTypes.PlayList{
+      Name: "PlayList2",
+      Uri: "URI",
+    },
+  )
+  assert.Equal(t, nil, err)
 }
 
 type files struct {
