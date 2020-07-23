@@ -2,6 +2,7 @@ package file
 
 import (
 	"encoding/json"
+	"errors"
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"os"
 	"testing"
@@ -10,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLoadPlayList(t *testing.T) {
+func TestLoadPlayListSuccess(t *testing.T) {
   reset := setLoadPlayList(
     func(fileName string) (os.FileInfo, error) {
       fileInfo := files{}
@@ -39,6 +40,41 @@ func TestLoadPlayList(t *testing.T) {
     },
     successResult,
   )
+}
+
+func TestLoadPlayListFail(t *testing.T) {
+  reset := setLoadPlayList(
+    func(fileName string) (os.FileInfo, error) {
+      return nil, errors.New("file not exist")
+    },
+    func(fileName string) ([]byte, error) {
+      playlistList := []selfMadeTypes.PlayList{
+        {
+          Name: "PlayList",
+          Uri: "URI",
+        },
+      }
+	    return json.Marshal(playlistList)
+    },
+  )
+
+  _, err := LoadPlayList()
+  assert.EqualError(t, err, "file not exist")
+  reset()
+
+  reset = setLoadPlayList(
+    func(fileName string) (os.FileInfo, error) {
+      fileInfo := files{}
+      return fileInfo, nil
+    },
+    func(fileName string) ([]byte, error) {
+	    return nil, errors.New("cannot read file")
+    },
+  )
+
+  _, err = LoadPlayList()
+  assert.EqualError(t, err, "cannot read file")
+  reset()
 }
 
 func TestSavePlayList(t *testing.T) {
