@@ -10,9 +10,11 @@ import (
 	"net/http"
 )
 
+const baseURL = "https://api.spotify.com/v1"
+
 func CreateRequest(token string, method string, url string, body io.Reader) (response *http.Response, newToken string, err error) {
 	newToken = token
-	request, err := http.NewRequest(method, url, body)
+	request, err := http.NewRequest(method, baseURL + url, body)
 	if err != nil {
 		return
 	}
@@ -38,7 +40,7 @@ func CreateRequest(token string, method string, url string, body io.Reader) (res
 }
 
 func GetPlayListStatus(token string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
-	response, _, err := CreateRequest(token, "GET", fmt.Sprintf("https://api.spotify.com/v1/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
+	response, _, err := CreateRequest(token, "GET", fmt.Sprintf("/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
 	if err != nil {
 		return
 	}
