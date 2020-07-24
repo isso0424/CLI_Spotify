@@ -40,7 +40,7 @@ func getPlayStatus(token string) (bool, string, error) {
 }
 
 func getStatus(token string) (status *selfMadeTypes.Content, newToken string, err error) {
-	response, newToken, err := request.CreateRequest(token, "GET", "https://api.spotify.com/v1/me/player", nil)
+	response, newToken, err := request.CreateRequest(token, "GET", "/me/player", nil)
 	if err != nil {
 		return
 	}
@@ -63,7 +63,7 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 }
 
 func next(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, "POST", "https://api.spotify.com/v1/me/player/next", nil)
+	_, newToken, err = request.CreateRequest(token, "POST", "/me/player/next", nil)
 
 	if err != nil {
 		return
@@ -75,7 +75,7 @@ func next(token string) (newToken string, err error) {
 }
 
 func pause(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/pause", nil)
+	_, newToken, err = request.CreateRequest(token, "PUT", "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -107,7 +107,7 @@ func play(token string, uri string) (newToken string, err error) {
 		return
 	}
 
-	_, newToken, err = request.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", bytes.NewBuffer(values))
+	_, newToken, err = request.CreateRequest(token, "PUT", "/me/player/play", bytes.NewBuffer(values))
 
 	if err != nil {
 		return
@@ -126,7 +126,7 @@ func play(token string, uri string) (newToken string, err error) {
 }
 
 func prev(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, "POST", "https://api.spotify.com/v1/me/player/previous", nil)
+	_, newToken, err = request.CreateRequest(token, "POST", "/me/player/previous", nil)
 
 	if err != nil {
 		return
@@ -158,7 +158,7 @@ func repeat(token string) (newToken string, err error) {
 
 	state := switchRepeatState(status.RepeatState)
 
-	_, newToken, err = request.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/repeat?state=%s", state), nil)
+	_, newToken, err = request.CreateRequest(token, "PUT", fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -183,7 +183,7 @@ func switchRepeatState(state string) string {
 }
 
 func resume(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, "PUT", "https://api.spotify.com/v1/me/player/play", nil)
+	_, newToken, err = request.CreateRequest(token, "PUT", "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -203,7 +203,7 @@ func shuffle(token string) (newToken string, err error) {
 
 	state := !status.ShuffleState
 
-	_, newToken, err = request.CreateRequest(token, "PUT", fmt.Sprintf("https://api.spotify.com/v1/me/player/shuffle?state=%v", state), nil)
+	_, newToken, err = request.CreateRequest(token, "PUT", fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
