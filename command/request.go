@@ -12,35 +12,35 @@ import (
 	"time"
 )
 
-func getPlayStatus(token string) (bool, string, error) {
-	status, newToken, err := getStatus(token)
+func getPlayStatus(token *string) (bool, error) {
+	status, err := getStatus(token)
 	if err != nil {
-		return false, newToken, err
+		return false, err
 	}
 
 	if status == nil {
-		return false, newToken, nil
+		return false, nil
 	}
 	playlistUrl := status.Context.ExternalUrls.Spotify
 	playlistID, err := parse.GetPlaylistID(playlistUrl)
 
 	if err != nil {
-		return false, newToken, err
+		return false, err
 	}
 
-	playListStatus, err := request.GetPlayListStatus(newToken, playlistID)
+	playListStatus, err := request.GetPlayListStatus(token, playlistID)
 
 	if err != nil {
-		return false, newToken, err
+		return false, err
 	}
 
 	fmt.Println(parse.CreatePlayingStatus(*status, playListStatus))
 
-	return status.IsPlaying && len(status.Item.Artists) != 0, newToken, nil
+	return status.IsPlaying && len(status.Item.Artists) != 0, nil
 }
 
-func getStatus(token string) (status *selfMadeTypes.Content, newToken string, err error) {
-	response, newToken, err := request.CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
+func getStatus(token *string) (status *selfMadeTypes.Content, err error) {
+	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
@@ -62,20 +62,20 @@ func getStatus(token string) (status *selfMadeTypes.Content, newToken string, er
 	return
 }
 
-func next(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
+func next(token *string) (err error) {
+	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
 
 	if err != nil {
 		return
 	}
 
-	_, newToken, err = getPlayStatus(token)
+	_, err = getPlayStatus(token)
 
 	return
 }
 
-func pause(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
+func pause(token *string) (err error) {
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -85,9 +85,7 @@ func pause(token string) (newToken string, err error) {
 	return
 }
 
-func playFromURL(token string) (newToken string, err error) {
-	newToken = token
-
+func playFromURL(token *string) (err error) {
 	var url string
 	util.Input("please input playlist url\n------------------------", "PlayListURL", &url)
 
@@ -95,25 +93,24 @@ func playFromURL(token string) (newToken string, err error) {
 	if err != nil {
 		return
 	}
-	newToken, err = play(token, *uri)
+	err = play(token, *uri)
 
 	return
 }
 
-func play(token string, uri string) (newToken string, err error) {
-	newToken = token
+func play(token *string, uri string) (err error) {
 	values, err := json.Marshal(playJson{ContextUri: uri})
 	if err != nil {
 		return
 	}
 
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 
 	if err != nil {
 		return
 	}
 
-	nowPlaying, newToken, err := getPlayStatus(token)
+	nowPlaying, err := getPlayStatus(token)
 
 	if err != nil {
 		return
@@ -125,14 +122,14 @@ func play(token string, uri string) (newToken string, err error) {
 	return
 }
 
-func prev(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
+func prev(token *string) (err error) {
+	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
 
 	if err != nil {
 		return
 	}
 
-	_, newToken, err = getPlayStatus(token)
+	_, err = getPlayStatus(token)
 
 	return
 }
@@ -147,10 +144,8 @@ func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
 
 	return playlists[index]
 }
-func repeat(token string) (newToken string, err error) {
-	newToken = token
-
-	status, newToken, err := getStatus(token)
+func repeat(token *string) (err error) {
+	status, err := getStatus(token)
 
 	if err != nil {
 		return
@@ -158,7 +153,7 @@ func repeat(token string) (newToken string, err error) {
 
 	state := switchRepeatState(status.RepeatState)
 
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -182,8 +177,8 @@ func switchRepeatState(state string) string {
 	return "off"
 }
 
-func resume(token string) (newToken string, err error) {
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
+func resume(token *string) (err error) {
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -193,17 +188,15 @@ func resume(token string) (newToken string, err error) {
 	return
 }
 
-func shuffle(token string) (newToken string, err error) {
-	newToken = token
-
-	status, newToken, err := getStatus(token)
+func shuffle(token *string) (err error) {
+	status, err := getStatus(token)
 	if err != nil {
 		return
 	}
 
 	state := !status.ShuffleState
 
-	_, newToken, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
