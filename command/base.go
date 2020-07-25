@@ -51,7 +51,7 @@ func MainLoop(token string) {
 		err := execute(&token, commandName, requestCommands, loadfileCommands, requestAndLoadfileCommands)
 
 		if err != nil {
-			fmt.Printf("Error: %s", err, requestCommands)
+			fmt.Printf("Error: %s", err)
 		}
 	}
 }
