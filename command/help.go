@@ -89,3 +89,27 @@ func(cmd show) GetHelp() selfMadeTypes.CommandHelp {
     Explain: "show saved all playlists",
   }
 }
+
+func(cmd random) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "requestAndLoadfile",
+    Explain: "play random playlist from play",
+  }
+}
+
+func(cmd load) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "requestAndLoadfile",
+    Explain: "play saved playlist",
+  }
+}
+
+func(cmd refresh) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "request",
+    Explain: "refresh access token",
+  }
+}

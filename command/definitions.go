@@ -76,3 +76,24 @@ type show struct {
 func(_ show) GetCommandName() string {
   return "show"
 }
+
+type random struct {
+}
+
+func(_ random) GetCommandName() string {
+  return "random"
+}
+
+type load struct {
+}
+
+func(_ load) GetCommandName() string {
+  return "load"
+}
+
+type refresh struct {
+}
+
+func(_ refresh) GetCommandName() string {
+  return "refresh"
+}
