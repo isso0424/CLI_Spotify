@@ -253,4 +253,21 @@ func (_ search) Execute(token *string) (err error) {
   keyword = strings.Replace(keyword, " ", "%20", -1)
 
   response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kinds), nil)
+	buffer := make([]byte, 8192)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
+
+	buffer = bytes.Trim(buffer, "\x00")
+
+	var searchResponse selfMadeTypes.SearchResponse
+	err = json.Unmarshal(buffer, &searchResponse)
+	if err != nil {
+		return
+	}
+
+  fmt.Printf("%v", searchResponse)
+
+  return
 }
