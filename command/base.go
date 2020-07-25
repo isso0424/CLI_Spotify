@@ -8,6 +8,10 @@ import (
 func MainLoop(token string) {
 	fmt.Println("if you wanna exit, you must type 'exit'")
   err := welcome(&token)
+  if err != nil {
+    fmt.Println("Error: ", err)
+  }
+
 	_, err = getPlayStatus(&token)
 
 	if err != nil {
