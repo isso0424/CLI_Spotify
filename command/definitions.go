@@ -52,5 +52,13 @@ func(_ resume) getCommandName() string {
 type shuffle struct {
 }
 
+func(_ shuffle) getCommandName() string {
+  return "shuffle"
+}
+
 type welcome struct {
+}
+
+func(_ welcome) getCommandName() string {
+  return "welcome"
 }

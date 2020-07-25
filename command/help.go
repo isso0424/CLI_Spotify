@@ -57,3 +57,19 @@ func(cmd resume) getHelp() selfMadeTypes.CommandHelp {
     Explain: "resume stopping track",
   }
 }
+
+func(cmd shuffle) getHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.getCommandName(),
+    Kind: "request",
+    Explain: "switch shuffle state",
+  }
+}
+
+func(cmd welcome) getHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.getCommandName(),
+    Kind: "request",
+    Explain: "switch shuffle state",
+  }
+}
