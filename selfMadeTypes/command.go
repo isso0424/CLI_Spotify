@@ -25,7 +25,6 @@ type CommandHelp struct {
 }
 
 type Command interface {
-  Execute(interface{}) error
   GetCommandName() string
   GetHelp() CommandHelp
 }
