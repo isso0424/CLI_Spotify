@@ -11,6 +11,7 @@ import (
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 	"math/rand"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -251,9 +252,14 @@ func (_ search) Execute(token *string) (err error) {
   var keyword string
   util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
   keyword = strings.Replace(keyword, " ", "%20", -1)
+  keyword = url.QueryEscape(keyword)
 
-  response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kinds), nil)
-	buffer := make([]byte, 8192)
+  response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kind), nil)
+  if err != nil {
+    return
+  }
+
+	buffer := make([]byte, 65536)
 	_, err = response.Body.Read(buffer)
 	if err != nil {
 		return
@@ -264,10 +270,10 @@ func (_ search) Execute(token *string) (err error) {
 	var searchResponse selfMadeTypes.SearchResponse
 	err = json.Unmarshal(buffer, &searchResponse)
 	if err != nil {
+    fmt.Println("unchi2")
 		return
 	}
 
-  fmt.Printf("%v", searchResponse)
-
+  searchResponse.ParseAndPrint(kinds)
   return
 }
