@@ -41,19 +41,19 @@ func MainLoop(token string) {
 		random{},
 	}
 
-  allCommands := joinCommandList(
-    requestCommands,
-    loadfileCommands,
-    requestAndLoadfileCommands,
-  )
+	allCommands := joinCommandList(
+		requestCommands,
+		loadfileCommands,
+		requestAndLoadfileCommands,
+	)
 
 	for {
 		var commandName string
 		util.Input("", "Command", &commandName)
 
-    if commandName == "help" {
-      help(allCommands)
-    }
+		if commandName == "help" {
+			help(allCommands)
+		}
 
 		if commandName == "exit" {
 			break
@@ -68,11 +68,11 @@ func MainLoop(token string) {
 }
 
 func execute(
-  token *string,
-  commandName string,
-  requestCommandList []selfMadeTypes.RequestCommand,
-  loadfileCommandList []selfMadeTypes.FileloadCommand,
-  requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
+	token *string,
+	commandName string,
+	requestCommandList []selfMadeTypes.RequestCommand,
+	loadfileCommandList []selfMadeTypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
 ) (err error) {
 	for _, command := range requestCommandList {
 		if command.GetCommandName() == commandName {
@@ -99,21 +99,21 @@ func execute(
 }
 
 func joinCommandList(
-  requestCommandList []selfMadeTypes.RequestCommand,
-  loadfileCommandList []selfMadeTypes.FileloadCommand,
-  requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
+	requestCommandList []selfMadeTypes.RequestCommand,
+	loadfileCommandList []selfMadeTypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
 ) (commandList []selfMadeTypes.Command) {
 	for _, command := range requestCommandList {
-    commandList = append(commandList, command)
+		commandList = append(commandList, command)
 	}
 
 	for _, command := range loadfileCommandList {
-    commandList = append(commandList, command)
+		commandList = append(commandList, command)
 	}
 
 	for _, command := range requestAndLoadfileCommandList {
-    commandList = append(commandList, command)
+		commandList = append(commandList, command)
 	}
 
-  return
+	return
 }

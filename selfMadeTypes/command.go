@@ -25,6 +25,6 @@ type CommandHelp struct {
 }
 
 type Command interface {
-  GetCommandName() string
-  GetHelp() CommandHelp
+	GetCommandName() string
+	GetHelp() CommandHelp
 }

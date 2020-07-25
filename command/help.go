@@ -6,10 +6,10 @@ import (
 )
 
 func help(commands []selfMadeTypes.Command) {
-  for _, command := range(commands) {
-    commandHelp := command.GetHelp()
-    fmt.Printf("-------------------------------\n%s\n-------------------------------\nKind: %s\nDescription: %s\n\n", commandHelp.Name, commandHelp.Kind, commandHelp.Explain)
-  }
+	for _, command := range commands {
+		commandHelp := command.GetHelp()
+		fmt.Printf("-------------------------------\n%s\n-------------------------------\nKind: %s\nDescription: %s\n\n", commandHelp.Name, commandHelp.Kind, commandHelp.Explain)
+	}
 }
 
 func (cmd status) GetHelp() selfMadeTypes.CommandHelp {
