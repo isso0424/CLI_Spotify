@@ -73,3 +73,19 @@ func(cmd welcome) GetHelp() selfMadeTypes.CommandHelp {
     Explain: "switch shuffle state",
   }
 }
+
+func(cmd save) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "loadfile",
+    Explain: "save playlist to file",
+  }
+}
+
+func(cmd show) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "loadfile",
+    Explain: "show saved all playlists",
+  }
+}

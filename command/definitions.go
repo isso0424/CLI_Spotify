@@ -62,3 +62,17 @@ type welcome struct {
 func(_ welcome) GetCommandName() string {
   return "welcome"
 }
+
+type save struct {
+}
+
+func(_ save) GetCommandName() string {
+  return "save"
+}
+
+type show struct {
+}
+
+func(_ show) GetCommandName() string {
+  return "show"
+}

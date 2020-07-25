@@ -8,7 +8,7 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-func save() (err error) {
+func(_ save) Execute() (err error) {
 	var url string
 	util.Input("please input playlist url\n", "PlayListURL", &url)
 
@@ -47,7 +47,7 @@ func checkDuplicateName(name string, playlistList []selfMadeTypes.PlayList) bool
 	return true
 }
 
-func show() (err error) {
+func(_ show) Execute() (err error) {
 	playlistList, err := file.LoadPlayList()
 
 	if err != nil {
