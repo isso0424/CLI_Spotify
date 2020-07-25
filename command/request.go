@@ -11,7 +11,9 @@ import (
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 	"math/rand"
+	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -223,16 +225,55 @@ func (_ volume) Execute(token *string) (err error) {
 	var percent string
 	util.Input("please volume percent\n------------------------", "Volume", &percent)
 
-  percentInt, err := strconv.Atoi(percent)
-  if err != nil {
-    return
-  }
+	percentInt, err := strconv.Atoi(percent)
+	if err != nil {
+		return
+	}
 
-  if percentInt < 0 || percentInt > 100 {
-    return errors.New("percent range is 0 to 100")
-  }
+	if percentInt < 0 || percentInt > 100 {
+		return errors.New("percent range is 0 to 100")
+	}
 
-  _, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
 
-  return
+	return
+}
+
+func (_ search) Execute(token *string) (err error) {
+	var kind string
+	util.Input("please input search kind\n\nsearch kinds: album artist playlist track show episode\n\nif input over 2 types, please enter with a colon\n------------------------", "Kind", &kind)
+	kinds := strings.Split(kind, ",")
+	for _, kind := range kinds {
+		if kind != "album" && kind != "artist" && kind != "playlist" && kind != "track" && kind != "show" && kind != "episode" {
+			return fmt.Errorf("search type %s is not found", kind)
+		}
+	}
+
+	var keyword string
+	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
+	keyword = strings.Replace(keyword, " ", "%20", -1)
+	keyword = url.QueryEscape(keyword)
+
+	response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kind), nil)
+	if err != nil {
+		return
+	}
+
+	buffer := make([]byte, 65536)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
+
+	buffer = bytes.Trim(buffer, "\x00")
+
+	var searchResponse selfMadeTypes.SearchResponse
+	err = json.Unmarshal(buffer, &searchResponse)
+	if err != nil {
+		fmt.Println("unchi2")
+		return
+	}
+
+	searchResponse.ParseAndPrint(kinds)
+	return
 }

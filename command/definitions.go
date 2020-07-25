@@ -102,5 +102,11 @@ type volume struct {
 }
 
 func (_ volume) GetCommandName() string {
-  return "volume"
+	return "volume"
+}
+
+type search struct{}
+
+func (_ search) GetCommandName() string {
+	return "search"
 }

@@ -12,8 +12,8 @@ import (
 
 const baseURL = "https://api.spotify.com/v1"
 
-func CreateRequest(token *string, method selfMadeTypes.Method, url string, body io.Reader) (response *http.Response, err error) {
-	request, err := http.NewRequest(method.String(), baseURL+url, body)
+func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (response *http.Response, err error) {
+	request, err := http.NewRequest(method.String(), baseURL+requestUrl, body)
 	if err != nil {
 		return
 	}

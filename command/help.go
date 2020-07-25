@@ -125,9 +125,17 @@ func (cmd refresh) GetHelp() selfMadeTypes.CommandHelp {
 }
 
 func (cmd volume) GetHelp() selfMadeTypes.CommandHelp {
-  return selfMadeTypes.CommandHelp{
-    Name: cmd.GetCommandName(),
-    Kind: "request",
-    Explain: "set volume percent",
-  }
+	return selfMadeTypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "set volume percent",
+	}
+}
+
+func (cmd search) GetHelp() selfMadeTypes.CommandHelp {
+	return selfMadeTypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "search with spotify",
+		Kind:    "request",
+	}
 }
