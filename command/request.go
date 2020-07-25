@@ -245,7 +245,7 @@ func (_ search) Execute(token *string) (err error) {
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
 		if kind != "album" && kind != "artist" && kind != "playlist" && kind != "track" && kind != "show" && kind != "episode" {
-			return errors.New(fmt.Sprintf("search type %s is not found", kind))
+			return fmt.Errorf("search type %s is not found", kind)
 		}
 	}
 
