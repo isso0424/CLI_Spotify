@@ -12,6 +12,7 @@ import (
 	"isso0424/spotify_CLI/util"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -235,4 +236,21 @@ func (_ volume) Execute(token *string) (err error) {
   _, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
 
   return
+}
+
+func (_ search) Execute(token *string) (err error) {
+	var kind string
+  util.Input("please input search kind\n\nsearch kinds: album artist playlist track show episode\n\nif input over 2 types, please enter with a colon\n------------------------", "Kind", &kind)
+  kinds := strings.Split(kind, ",")
+  for _, kind := range(kinds) {
+    if kind != "album" && kind != "artist" && kind != "playlist" && kind != "track" && kind != "show" && kind != "episode" {
+      return errors.New(fmt.Sprintf("search type %s is not found", kind))
+    }
+  }
+
+  var keyword string
+  util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
+  keyword = strings.Replace(keyword, " ", "%20", -1)
+
+  response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kinds), nil)
 }
