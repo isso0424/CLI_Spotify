@@ -123,3 +123,11 @@ func (cmd refresh) GetHelp() selfMadeTypes.CommandHelp {
 		Explain: "refresh access token",
 	}
 }
+
+func (cmd volume) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name: cmd.GetCommandName(),
+    Kind: "request",
+    Explain: "set volume percent",
+  }
+}

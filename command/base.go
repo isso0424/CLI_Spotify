@@ -29,6 +29,7 @@ func MainLoop(token string) {
 		repeat{},
 		shuffle{},
 		refresh{},
+    volume{},
 	}
 
 	loadfileCommands := []selfMadeTypes.FileloadCommand{

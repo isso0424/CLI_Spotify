@@ -97,3 +97,10 @@ type refresh struct {
 func (_ refresh) GetCommandName() string {
 	return "refresh"
 }
+
+type volume struct {
+}
+
+func (_ volume) GetCommandName() string {
+  return "volume"
+}
