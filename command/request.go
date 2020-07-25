@@ -3,6 +3,7 @@ package command
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/parse"
@@ -10,6 +11,7 @@ import (
 	"isso0424/spotify_CLI/selfMadeTypes"
 	"isso0424/spotify_CLI/util"
 	"math/rand"
+	"strconv"
 	"time"
 )
 
@@ -215,4 +217,22 @@ func (_ refresh) Execute(token *string) error {
 	*token = *tokenPtr
 
 	return nil
+}
+
+func (_ volume) Execute(token *string) (err error) {
+	var percent string
+	util.Input("please volume percent\n------------------------", "Volume", &percent)
+
+  percentInt, err := strconv.Atoi(percent)
+  if err != nil {
+    return
+  }
+
+  if percentInt < 0 || percentInt > 100 {
+    return errors.New("percent range is 0 to 100")
+  }
+
+  _, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
+
+  return
 }
