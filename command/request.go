@@ -12,31 +12,31 @@ import (
 	"time"
 )
 
-func(_ getPlayStatus) execute(token *string) (bool, error) {
+func(_ status) execute(token *string) (error) {
 	status, err := request.GetStatus(token)
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	if status == nil {
-		return false, nil
+		return nil
 	}
 	playlistUrl := status.Context.ExternalUrls.Spotify
 	playlistID, err := parse.GetPlaylistID(playlistUrl)
 
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	playListStatus, err := request.GetPlayListStatus(token, playlistID)
 
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	fmt.Println(parse.CreatePlayingStatus(*status, playListStatus))
 
-	return status.IsPlaying && len(status.Item.Artists) != 0, nil
+	return nil
 }
 
 
@@ -47,7 +47,7 @@ func(_ next) execute(token *string) (err error) {
 		return
 	}
 
-	_, err = getPlayStatus{}.execute(token)
+	err = status{}.execute(token)
 
 	return
 }
@@ -88,13 +88,10 @@ func playFromURL(token *string, uri string) (err error) {
 		return
 	}
 
-	nowPlaying, err := getPlayStatus{}.execute(token)
+	err = status{}.execute(token)
 
 	if err != nil {
 		return
-	}
-	if !nowPlaying {
-		fmt.Println("this url is invalid")
 	}
 
 	return
@@ -107,7 +104,7 @@ func(_ prev) execute(token *string) (err error) {
 		return
 	}
 
-	_, err = getPlayStatus{}.execute(token)
+	err = status{}.execute(token)
 
 	return
 }
