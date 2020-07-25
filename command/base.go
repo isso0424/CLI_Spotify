@@ -41,13 +41,24 @@ func MainLoop(token string) {
 		random{},
 	}
 
+	allCommands := joinCommandList(
+		requestCommands,
+		loadfileCommands,
+		requestAndLoadfileCommands,
+	)
+
 	for {
 		var commandName string
 		util.Input("", "Command", &commandName)
 
+		if commandName == "help" {
+			help(allCommands)
+		}
+
 		if commandName == "exit" {
 			break
 		}
+
 		err := execute(&token, commandName, requestCommands, loadfileCommands, requestAndLoadfileCommands)
 
 		if err != nil {
@@ -56,7 +67,13 @@ func MainLoop(token string) {
 	}
 }
 
-func execute(token *string, commandName string, requestCommandList []selfMadeTypes.RequestCommand, loadfileCommandList []selfMadeTypes.FileloadCommand, requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand) (err error) {
+func execute(
+	token *string,
+	commandName string,
+	requestCommandList []selfMadeTypes.RequestCommand,
+	loadfileCommandList []selfMadeTypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
+) (err error) {
 	for _, command := range requestCommandList {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
@@ -76,6 +93,26 @@ func execute(token *string, commandName string, requestCommandList []selfMadeTyp
 			err = command.Execute(token)
 			return
 		}
+	}
+
+	return
+}
+
+func joinCommandList(
+	requestCommandList []selfMadeTypes.RequestCommand,
+	loadfileCommandList []selfMadeTypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
+) (commandList []selfMadeTypes.Command) {
+	for _, command := range requestCommandList {
+		commandList = append(commandList, command)
+	}
+
+	for _, command := range loadfileCommandList {
+		commandList = append(commandList, command)
+	}
+
+	for _, command := range requestAndLoadfileCommandList {
+		commandList = append(commandList, command)
 	}
 
 	return
