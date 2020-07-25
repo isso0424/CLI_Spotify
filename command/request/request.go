@@ -59,3 +59,26 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.
 
 	return
 }
+
+func GetStatus(token *string) (status *selfMadeTypes.Content, err error) {
+	response, err := CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
+	if err != nil {
+		return
+	}
+	if response.StatusCode == 204 {
+		err = &selfMadeTypes.FailedGetError{Target: "playing status"}
+		return
+	}
+
+	buffer := make([]byte, 8192)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
+
+	buffer = bytes.Trim(buffer, "\x00")
+
+	err = json.Unmarshal(buffer, &status)
+
+	return
+}
