@@ -42,7 +42,7 @@ func command(token *string, commandName string) (err error) {
 	case "status":
 		_, err = getPlayStatus(token)
 	case "play":
-		err = playFromURL(token)
+		err = play(token)
 	case "save":
 		err = save()
 	case "load":

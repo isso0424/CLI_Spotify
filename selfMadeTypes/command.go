@@ -1,18 +1,21 @@
-package selfMadeType
+package selfMadeTypes
 
 type RequestCommand interface {
-  Execute(*string) error
-  GetHelp() string
+  execute(*string) error
+  getCommandName() string
+  getHelp() CommandHelp
 }
 
 type FileloadCommand interface {
-  Execute() error
-  GetHelp() string
+  execute() error
+  getCommandName() string
+  getHelp() CommandHelp
 }
 
 type RequestAndFileloadCommand interface {
-  Execute(*string) error
-  GetHelp() string
+  execute(*string) error
+  getCommandName() string
+  getHelp() CommandHelp
 }
 
 type CommandHelp struct {
