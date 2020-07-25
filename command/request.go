@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfMadeTypes"
@@ -204,4 +205,15 @@ func(_ welcome) Execute(token *string) (err error) {
 	fmt.Printf("ようこそ! %sさん!\n", userInfo.DisplayName)
 
 	return
+}
+
+func(_ refresh) Execute(token *string) error {
+	tokenPtr, err := auth.GetToken()
+	if err != nil {
+		return err
+	}
+
+	*token = *tokenPtr
+
+	return nil
 }

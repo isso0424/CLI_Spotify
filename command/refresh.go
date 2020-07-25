@@ -4,7 +4,7 @@ import (
 	"isso0424/spotify_CLI/auth"
 )
 
-func refresh(token *string) error {
+func(_ refresh) Execute(token *string) error {
 	tokenPtr, err := auth.GetToken()
 	if err != nil {
 		return err
