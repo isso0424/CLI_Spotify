@@ -30,6 +30,11 @@ func MainLoop(token string) {
     shuffle{},
   }
 
+  loadfileCommands := []selfMadeTypes.FileloadCommand{
+    save{},
+    show{},
+  }
+
 	for {
 		var commandName string
 		util.Input("", "Command", &commandName)
@@ -37,7 +42,7 @@ func MainLoop(token string) {
 		if commandName == "exit" {
 			break
 		}
-		err := execute(&token, commandName, requestCommands)
+		err := execute(&token, commandName, requestCommands, loadfileCommands)
 
 		if err != nil {
 			fmt.Printf("Error: %s", err, requestCommands)
@@ -45,19 +50,23 @@ func MainLoop(token string) {
 	}
 }
 
-func execute(token *string, commandName string, requestCommandList []selfMadeTypes.RequestCommand) (err error) {
+func execute(token *string, commandName string, requestCommandList []selfMadeTypes.RequestCommand, loadfileCommandList []selfMadeTypes.FileloadCommand) (err error) {
   for _, command := range(requestCommandList) {
     if command.GetCommandName() == commandName {
-      command.Execute(token)
+      err = command.Execute(token)
+      return
+    }
+  }
+
+  for _, command := range(loadfileCommandList) {
+    if command.GetCommandName() == commandName {
+      err = command.Execute()
+      return
     }
   }
 	switch commandName {
-	case "save":
-		err = save()
 	case "load":
 		err = load(token)
-	case "show":
-		err = show()
 	case "refresh":
 		err = refresh(token)
 	case "random":
