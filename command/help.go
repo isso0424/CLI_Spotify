@@ -2,73 +2,73 @@ package command
 
 import "isso0424/spotify_CLI/selfMadeTypes"
 
-func(cmd status) getHelp() selfMadeTypes.CommandHelp {
+func(cmd status) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "get playing status in spotify",
   }
 }
 
-func(cmd next) getHelp() selfMadeTypes.CommandHelp {
+func(cmd next) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "play next queuing track",
   }
 }
 
-func(cmd pause) getHelp() selfMadeTypes.CommandHelp {
+func(cmd pause) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "stop playing track",
   }
 }
 
-func(cmd play) getHelp() selfMadeTypes.CommandHelp {
+func(cmd play) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "play track from url",
   }
 }
 
-func (cmd prev) getHelp() selfMadeTypes.CommandHelp {
+func (cmd prev) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "play previous track",
   }
 }
 
-func(cmd repeat) getHelp() selfMadeTypes.CommandHelp {
+func(cmd repeat) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "switch repeat mode",
   }
 }
 
-func(cmd resume) getHelp() selfMadeTypes.CommandHelp {
+func(cmd resume) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "resume stopping track",
   }
 }
 
-func(cmd shuffle) getHelp() selfMadeTypes.CommandHelp {
+func(cmd shuffle) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "switch shuffle state",
   }
 }
 
-func(cmd welcome) getHelp() selfMadeTypes.CommandHelp {
+func(cmd welcome) GetHelp() selfMadeTypes.CommandHelp {
   return selfMadeTypes.CommandHelp{
-    Name: cmd.getCommandName(),
+    Name: cmd.GetCommandName(),
     Kind: "request",
     Explain: "switch shuffle state",
   }
