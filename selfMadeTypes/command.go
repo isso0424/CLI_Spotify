@@ -23,3 +23,9 @@ type CommandHelp struct {
 	Kind    string
 	Explain string
 }
+
+type Command interface {
+  Execute(interface{}) error
+  GetCommandName() string
+  GetHelp() CommandHelp
+}
