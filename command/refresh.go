@@ -4,13 +4,13 @@ import (
 	"isso0424/spotify_CLI/auth"
 )
 
-func refresh(token *string) (error) {
+func refresh(token *string) error {
 	tokenPtr, err := auth.GetToken()
 	if err != nil {
 		return err
 	}
 
-  *token = *tokenPtr
+	*token = *tokenPtr
 
 	return nil
 }

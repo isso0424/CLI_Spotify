@@ -24,9 +24,9 @@ func save() (err error) {
 
 	playlistList, err := file.LoadPlayList()
 
-  if err != nil {
-    return
-  }
+	if err != nil {
+		return
+	}
 
 	if checkDuplicateName(name, playlistList) {
 		err = file.SavePlayList(list)

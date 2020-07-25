@@ -13,12 +13,12 @@ import (
 const baseURL = "https://api.spotify.com/v1"
 
 func CreateRequest(token *string, method selfMadeTypes.Method, url string, body io.Reader) (response *http.Response, err error) {
-	request, err := http.NewRequest(method.String(), baseURL + url, body)
+	request, err := http.NewRequest(method.String(), baseURL+url, body)
 	if err != nil {
 		return
 	}
 
-	request.Header.Set("Authorization", "Bearer " + *token)
+	request.Header.Set("Authorization", "Bearer "+*token)
 	client := &http.Client{}
 	response, err = client.Do(request)
 	if err != nil {
