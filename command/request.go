@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func(_ status) Execute(token *string) (error) {
+func (_ status) Execute(token *string) error {
 	status, err := request.GetStatus(token)
 	if err != nil {
 		return err
@@ -40,8 +40,7 @@ func(_ status) Execute(token *string) (error) {
 	return nil
 }
 
-
-func(_ next) Execute(token *string) (err error) {
+func (_ next) Execute(token *string) (err error) {
 	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
 
 	if err != nil {
@@ -53,7 +52,7 @@ func(_ next) Execute(token *string) (err error) {
 	return
 }
 
-func(cmd pause) Execute(token *string) (err error) {
+func (cmd pause) Execute(token *string) (err error) {
 	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
 
 	if err != nil {
@@ -64,7 +63,7 @@ func(cmd pause) Execute(token *string) (err error) {
 	return
 }
 
-func(_ play) Execute(token *string) (err error) {
+func (_ play) Execute(token *string) (err error) {
 	var url string
 	util.Input("please input playlist url\n------------------------", "PlayListURL", &url)
 
@@ -98,7 +97,7 @@ func playFromURL(token *string, uri string) (err error) {
 	return
 }
 
-func(_ prev) Execute(token *string) (err error) {
+func (_ prev) Execute(token *string) (err error) {
 	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
 
 	if err != nil {
@@ -120,7 +119,7 @@ func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
 
 	return playlists[index]
 }
-func(_ repeat) Execute(token *string) (err error) {
+func (_ repeat) Execute(token *string) (err error) {
 	status, err := request.GetStatus(token)
 
 	if err != nil {
@@ -153,7 +152,7 @@ func switchRepeatState(state string) string {
 	return "off"
 }
 
-func(_ resume) Execute(token *string) (err error) {
+func (_ resume) Execute(token *string) (err error) {
 	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
 
 	if err != nil {
@@ -164,7 +163,7 @@ func(_ resume) Execute(token *string) (err error) {
 	return
 }
 
-func(_ shuffle) Execute(token *string) (err error) {
+func (_ shuffle) Execute(token *string) (err error) {
 	status, err := request.GetStatus(token)
 	if err != nil {
 		return
@@ -182,7 +181,7 @@ func(_ shuffle) Execute(token *string) (err error) {
 	return
 }
 
-func(_ welcome) Execute(token *string) (err error) {
+func (_ welcome) Execute(token *string) (err error) {
 	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
 	if err != nil {
 		return
@@ -207,7 +206,7 @@ func(_ welcome) Execute(token *string) (err error) {
 	return
 }
 
-func(_ refresh) Execute(token *string) error {
+func (_ refresh) Execute(token *string) error {
 	tokenPtr, err := auth.GetToken()
 	if err != nil {
 		return err

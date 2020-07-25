@@ -19,27 +19,27 @@ func MainLoop(token string) {
 		fmt.Println("Error: ", err)
 	}
 
-  requestCommands := []selfMadeTypes.RequestCommand{
-    play{},
-    pause{},
-    status{},
-    resume{},
-    next{},
-    prev{},
-    repeat{},
-    shuffle{},
-    refresh{},
-  }
+	requestCommands := []selfMadeTypes.RequestCommand{
+		play{},
+		pause{},
+		status{},
+		resume{},
+		next{},
+		prev{},
+		repeat{},
+		shuffle{},
+		refresh{},
+	}
 
-  loadfileCommands := []selfMadeTypes.FileloadCommand{
-    save{},
-    show{},
-  }
+	loadfileCommands := []selfMadeTypes.FileloadCommand{
+		save{},
+		show{},
+	}
 
-  requestAndLoadfileCommands := []selfMadeTypes.RequestAndFileloadCommand{
-    load{},
-    random{},
-  }
+	requestAndLoadfileCommands := []selfMadeTypes.RequestAndFileloadCommand{
+		load{},
+		random{},
+	}
 
 	for {
 		var commandName string
@@ -57,26 +57,26 @@ func MainLoop(token string) {
 }
 
 func execute(token *string, commandName string, requestCommandList []selfMadeTypes.RequestCommand, loadfileCommandList []selfMadeTypes.FileloadCommand, requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand) (err error) {
-  for _, command := range(requestCommandList) {
-    if command.GetCommandName() == commandName {
-      err = command.Execute(token)
-      return
-    }
-  }
+	for _, command := range requestCommandList {
+		if command.GetCommandName() == commandName {
+			err = command.Execute(token)
+			return
+		}
+	}
 
-  for _, command := range(loadfileCommandList) {
-    if command.GetCommandName() == commandName {
-      err = command.Execute()
-      return
-    }
-  }
+	for _, command := range loadfileCommandList {
+		if command.GetCommandName() == commandName {
+			err = command.Execute()
+			return
+		}
+	}
 
-  for _, command := range(requestAndLoadfileCommandList) {
-    if command.GetCommandName() == commandName {
-      err = command.Execute(token)
-      return
-    }
-  }
+	for _, command := range requestAndLoadfileCommandList {
+		if command.GetCommandName() == commandName {
+			err = command.Execute(token)
+			return
+		}
+	}
 
 	return
 }

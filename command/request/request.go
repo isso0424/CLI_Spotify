@@ -82,4 +82,3 @@ func GetStatus(token *string) (status *selfMadeTypes.Content, err error) {
 
 	return
 }
-
