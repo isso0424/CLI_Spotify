@@ -8,18 +8,18 @@ import (
 )
 
 var (
-  fileExist func(string) (os.FileInfo, error)
-  readFile func(string) ([]byte, error)
+	fileExist func(string) (os.FileInfo, error)
+	readFile  func(string) ([]byte, error)
 )
 
 func init() {
-  fileExist = func (fileName string) (os.FileInfo, error) {
-    return os.Stat(fileName)
-  }
+	fileExist = func(fileName string) (os.FileInfo, error) {
+		return os.Stat(fileName)
+	}
 
-  readFile = func (fileName string) ([]byte, error) {
-    return ioutil.ReadFile(fileName)
-  }
+	readFile = func(fileName string) ([]byte, error) {
+		return ioutil.ReadFile(fileName)
+	}
 }
 
 func LoadPlayList() (playlistList []selfMadeTypes.PlayList, err error) {
@@ -37,14 +37,14 @@ func LoadPlayList() (playlistList []selfMadeTypes.PlayList, err error) {
 	return
 }
 
-func setLoadPlayList(fileExistFunc func(string) (os.FileInfo, error), readFileFunc func(string) ([]byte, error)) (func()) {
-  tmpFileExist := fileExist
-  tmpReadFile := readFile
-  fileExist = fileExistFunc
-  readFile = readFileFunc
+func setLoadPlayList(fileExistFunc func(string) (os.FileInfo, error), readFileFunc func(string) ([]byte, error)) func() {
+	tmpFileExist := fileExist
+	tmpReadFile := readFile
+	fileExist = fileExistFunc
+	readFile = readFileFunc
 
-  return func() {
-    fileExist = tmpFileExist
-    readFile = tmpReadFile
-  }
+	return func() {
+		fileExist = tmpFileExist
+		readFile = tmpReadFile
+	}
 }

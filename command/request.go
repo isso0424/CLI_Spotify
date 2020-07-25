@@ -207,10 +207,10 @@ func shuffle(token *string) (err error) {
 }
 
 func welcome(token *string) (err error) {
-  response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
-  if err != nil {
-    return
-  }
+	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
+	if err != nil {
+		return
+	}
 
 	buffer := make([]byte, 8192)
 	_, err = response.Body.Read(buffer)
@@ -220,13 +220,13 @@ func welcome(token *string) (err error) {
 
 	buffer = bytes.Trim(buffer, "\x00")
 
-  var userInfo selfMadeTypes.User
-  err = json.Unmarshal(buffer, &userInfo)
-  if err != nil {
-    return
-  }
+	var userInfo selfMadeTypes.User
+	err = json.Unmarshal(buffer, &userInfo)
+	if err != nil {
+		return
+	}
 
-  fmt.Printf("ようこそ! %sさん!\n", userInfo.DisplayName)
+	fmt.Printf("ようこそ! %sさん!\n", userInfo.DisplayName)
 
-  return
+	return
 }

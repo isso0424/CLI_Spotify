@@ -9,25 +9,25 @@ import (
 )
 
 var (
-  writeFile func(string, []byte, os.FileMode) error
-  loadFile func() (playlistList []selfMadeTypes.PlayList, err error)
+	writeFile func(string, []byte, os.FileMode) error
+	loadFile  func() (playlistList []selfMadeTypes.PlayList, err error)
 )
 
 func init() {
-  writeFile = func(fileName string, fileDetail []byte, permission os.FileMode) error {
-    return ioutil.WriteFile(fileName, fileDetail, permission)
-  }
+	writeFile = func(fileName string, fileDetail []byte, permission os.FileMode) error {
+		return ioutil.WriteFile(fileName, fileDetail, permission)
+	}
 
-  loadFile = func() (playlistList []selfMadeTypes.PlayList, err error) {
-    return LoadPlayList()
-  }
+	loadFile = func() (playlistList []selfMadeTypes.PlayList, err error) {
+		return LoadPlayList()
+	}
 }
 
 func SavePlayList(target selfMadeTypes.PlayList) (err error) {
 	playlistList, err := loadFile()
-  if err != nil {
-    return
-  }
+	if err != nil {
+		return
+	}
 	playlistList = append(playlistList, target)
 
 	jsonFile, err := json.Marshal(playlistList)
@@ -47,13 +47,13 @@ func SavePlayList(target selfMadeTypes.PlayList) (err error) {
 }
 
 func setSavePlayList(writeFileFunc func(string, []byte, os.FileMode) error, loadFileFunc func() ([]selfMadeTypes.PlayList, error)) func() {
-  tmpWriteFile := writeFile
-  tmpLoadFile := loadFile
-  writeFile = writeFileFunc
-  loadFile = loadFileFunc
+	tmpWriteFile := writeFile
+	tmpLoadFile := loadFile
+	writeFile = writeFileFunc
+	loadFile = loadFileFunc
 
-  return func() {
-    writeFile = tmpWriteFile
-    loadFile = tmpLoadFile
-  }
+	return func() {
+		writeFile = tmpWriteFile
+		loadFile = tmpLoadFile
+	}
 }

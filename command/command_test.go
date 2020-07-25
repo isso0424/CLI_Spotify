@@ -8,34 +8,34 @@ import (
 )
 
 func TestSwitchRepeat(t *testing.T) {
-  var result string
-  result = switchRepeatState("off")
-  assert.Equal(t, result, "context")
+	var result string
+	result = switchRepeatState("off")
+	assert.Equal(t, result, "context")
 
-  result = switchRepeatState("track")
-  assert.Equal(t, result, "off")
+	result = switchRepeatState("track")
+	assert.Equal(t, result, "off")
 
-  result = switchRepeatState("context")
-  assert.Equal(t, result, "track")
+	result = switchRepeatState("context")
+	assert.Equal(t, result, "track")
 }
 
 func TestCheckDuplicateName(t *testing.T) {
-  var playlistList []selfMadeTypes.PlayList
-  var result bool
-  playlistList = []selfMadeTypes.PlayList{
-    {
-      Name: "playlist",
-      Uri: "hogefuga",
-    },
-    {
-      Name: "playlist2",
-      Uri: "unchi",
-    },
-  }
+	var playlistList []selfMadeTypes.PlayList
+	var result bool
+	playlistList = []selfMadeTypes.PlayList{
+		{
+			Name: "playlist",
+			Uri:  "hogefuga",
+		},
+		{
+			Name: "playlist2",
+			Uri:  "unchi",
+		},
+	}
 
-  result = checkDuplicateName("playlist", playlistList)
-  assert.Equal(t, result, false)
+	result = checkDuplicateName("playlist", playlistList)
+	assert.Equal(t, result, false)
 
-  result = checkDuplicateName("not found", playlistList)
-  assert.Equal(t, result, true)
+	result = checkDuplicateName("not found", playlistList)
+	assert.Equal(t, result, true)
 }
