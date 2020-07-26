@@ -275,33 +275,33 @@ func (_ search) Execute(token *string) (err error) {
 		return
 	}
 
-  searchResultItems := searchResponse.ParseAndPrint(kinds)
+	searchResultItems := searchResponse.ParseAndPrint(kinds)
 
-  var isSave string
-  util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
+	var isSave string
+	util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
 
-  if isSave != "yes" {
-    return
-  }
+	if isSave != "yes" {
+		return
+	}
 
-  var rawIndex string
-  util.Input("Please input index\n------------------------", "Index", &rawIndex)
+	var rawIndex string
+	util.Input("Please input index\n------------------------", "Index", &rawIndex)
 
-  index, err := strconv.Atoi(rawIndex)
-  if err != nil {
-    return
-  }
+	index, err := strconv.Atoi(rawIndex)
+	if err != nil {
+		return
+	}
 
-  if index >= len(searchResultItems) {
-    return errors.New("index is out of range")
-  }
+	if index >= len(searchResultItems) {
+		return errors.New("index is out of range")
+	}
 
-  item := searchResultItems[index]
+	item := searchResultItems[index]
 
-  err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
-  if err != nil {
-    return
-  }
+	err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
+	if err != nil {
+		return
+	}
 
 	return
 }

@@ -12,45 +12,45 @@ type SearchResponse struct {
 }
 
 func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
-  searchResults := []SearchResultItem {}
+	searchResults := []SearchResultItem{}
 	for _, kind := range kinds {
 		switch kind {
 		case "album":
 			fmt.Println("-----Albums-----")
-      searchResults = toProcessResponse(response.Album, searchResults)
+			searchResults = toProcessResponse(response.Album, searchResults)
 		case "artist":
 			fmt.Println("-----Artists-----")
-      searchResults = toProcessResponse(response.Artists, searchResults)
+			searchResults = toProcessResponse(response.Artists, searchResults)
 		case "track":
 			fmt.Println("-----Tracks-----")
-      searchResults = toProcessResponse(response.Track, searchResults)
+			searchResults = toProcessResponse(response.Track, searchResults)
 		case "playlist":
 			fmt.Println("-----Playlists-----")
-      searchResults = toProcessResponse(response.Playlist, searchResults)
+			searchResults = toProcessResponse(response.Playlist, searchResults)
 		case "show":
 			fmt.Println("-----Shows-----")
-      searchResults = toProcessResponse(response.Show, searchResults)
+			searchResults = toProcessResponse(response.Show, searchResults)
 		case "episode":
 			fmt.Println("-----Episodes-----")
-      searchResults = toProcessResponse(response.Episode, searchResults)
+			searchResults = toProcessResponse(response.Episode, searchResults)
 		}
 	}
 
-  return searchResults
+	return searchResults
 }
 
 func toProcessResponse(items searchItem, resultSlice []SearchResultItem) []SearchResultItem {
-  for _, item := range(items.Item) {
-    index := len(resultSlice)
-    fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.Uri)
-    resultSlice = append(resultSlice, item)
-  }
+	for _, item := range items.Item {
+		index := len(resultSlice)
+		fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.Uri)
+		resultSlice = append(resultSlice, item)
+	}
 
-  return resultSlice
+	return resultSlice
 }
 
 type searchItem struct {
-  Item []SearchResultItem `json:"items"`
+	Item []SearchResultItem `json:"items"`
 }
 
 type SearchResultItem struct {
