@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"isso0424/spotify_CLI/auth"
+	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfMadeTypes"
@@ -274,6 +275,33 @@ func (_ search) Execute(token *string) (err error) {
 		return
 	}
 
-	searchResponse.ParseAndPrint(kinds)
+  searchResultItems := searchResponse.ParseAndPrint(kinds)
+
+  var isSave string
+  util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
+
+  if isSave != "yes" {
+    return
+  }
+
+  var rawIndex string
+  util.Input("Please input index\n------------------------", "Index", &rawIndex)
+
+  index, err := strconv.Atoi(rawIndex)
+  if err != nil {
+    return
+  }
+
+  if index >= len(searchResultItems) {
+    return errors.New("index is out of range")
+  }
+
+  item := searchResultItems[index]
+
+  err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
+  if err != nil {
+    return
+  }
+
 	return
 }

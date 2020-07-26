@@ -11,8 +11,8 @@ type SearchResponse struct {
 	Episode  searchItem `json:"episodes"`
 }
 
-func (response SearchResponse) ParseAndPrint(kinds []string) []searchResultItem {
-  searchResults := []searchResultItem {}
+func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
+  searchResults := []SearchResultItem {}
 	for _, kind := range kinds {
 		switch kind {
 		case "album":
@@ -39,7 +39,7 @@ func (response SearchResponse) ParseAndPrint(kinds []string) []searchResultItem 
   return searchResults
 }
 
-func toProcessResponse(items searchItem, resultSlice []searchResultItem) []searchResultItem {
+func toProcessResponse(items searchItem, resultSlice []SearchResultItem) []SearchResultItem {
   for _, item := range(items.Item) {
     index := len(resultSlice)
     fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.Uri)
@@ -50,10 +50,10 @@ func toProcessResponse(items searchItem, resultSlice []searchResultItem) []searc
 }
 
 type searchItem struct {
-  Item []searchResultItem `json:"items"`
+  Item []SearchResultItem `json:"items"`
 }
 
-type searchResultItem struct {
+type SearchResultItem struct {
 	Name string `json:"name"`
 	Uri  string `json:"uri"`
 }
