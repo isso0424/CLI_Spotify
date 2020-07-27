@@ -309,9 +309,6 @@ func (_ search) Execute(token *string) (err error) {
 	item := searchResultItems[index]
 
 	err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
-	if err != nil {
-		return
-	}
 
 	return
 }
