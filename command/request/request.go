@@ -1,3 +1,4 @@
+// Package request is submit request package.
 package request
 
 import (
@@ -18,7 +19,16 @@ const (
 
 // CreateRequest is new request and submit request function.
 // Get response value.
-func CreateRequest(token *string, method selfmadetypes.Method, requestURL string, body io.Reader) (responseArray []byte, statusCode int, err error) {
+func CreateRequest(
+	token *string,
+	method fmt.Stringer,
+	requestURL string,
+	body io.Reader,
+) (
+	responseArray []byte,
+	statusCode int,
+	err error,
+) {
 	request, err := http.NewRequest(method.String(), baseURL+requestURL, body)
 	if err != nil {
 		return

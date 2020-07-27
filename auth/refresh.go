@@ -62,7 +62,7 @@ func refresh(token string) (newToken *string, err error) {
 
 	newToken = &responseBody.AccessToken
 
-	return
+	return newToken, err
 }
 
 func createEncodedID() string {

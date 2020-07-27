@@ -313,6 +313,12 @@ func (cmd search) Execute(token *string) (err error) {
 
 	searchResultItems := searchResponse.ParseAndPrint(kinds)
 
+	err = saveSearchResult(searchResultItems)
+
+	return err
+}
+
+func saveSearchResult(searchResults []selfmadetypes.SearchResultItem) (err error) {
 	var isSave string
 	util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
 
@@ -328,15 +334,15 @@ func (cmd search) Execute(token *string) (err error) {
 		return
 	}
 
-	if index >= len(searchResultItems) {
+	if index >= len(searchResults) {
 		return errors.New("index is out of range")
 	}
 
-	item := searchResultItems[index]
+	item := searchResults[index]
 
 	err = file.SavePlayList(selfmadetypes.PlayList{Name: item.Name, URI: item.URI})
 
-	return err
+	return
 }
 
 func existTarget(target string, judgeTargets []string) bool {

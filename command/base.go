@@ -6,21 +6,8 @@ import (
 	"isso0424/spotify_CLI/util"
 )
 
-// MainLoop is function that is application's root loop.
-func MainLoop(token string) {
-	fmt.Println("if you wanna exit, you must type 'exit'")
-	err := welcome{}.Execute(&token)
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-
-	err = status{}.Execute(&token)
-
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-
-	requestCommands := []selfmadetypes.RequestCommand{
+var (
+	requestCommands = []selfmadetypes.RequestCommand{
 		play{},
 		pause{},
 		status{},
@@ -35,14 +22,29 @@ func MainLoop(token string) {
 		favoriteTrack{},
 	}
 
-	loadfileCommands := []selfmadetypes.FileloadCommand{
+	loadfileCommands = []selfmadetypes.FileloadCommand{
 		save{},
 		show{},
 	}
 
-	requestAndLoadfileCommands := []selfmadetypes.RequestAndFileloadCommand{
+	requestAndLoadfileCommands = []selfmadetypes.RequestAndFileloadCommand{
 		load{},
 		random{},
+	}
+)
+
+// MainLoop is function that is application's root loop.
+func MainLoop(token string) {
+	fmt.Println("if you wanna exit, you must type 'exit'")
+	err := welcome{}.Execute(&token)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	err = status{}.Execute(&token)
+
+	if err != nil {
+		fmt.Println("Error: ", err)
 	}
 
 	allCommands := joinCommandList(
@@ -63,7 +65,7 @@ func MainLoop(token string) {
 			break
 		}
 
-		err := execute(&token, commandName, requestCommands, loadfileCommands, requestAndLoadfileCommands)
+		err := execute(&token, commandName)
 
 		if err != nil {
 			fmt.Printf("Error: %s", err)
@@ -74,25 +76,22 @@ func MainLoop(token string) {
 func execute(
 	token *string,
 	commandName string,
-	requestCommandList []selfmadetypes.RequestCommand,
-	loadfileCommandList []selfmadetypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfmadetypes.RequestAndFileloadCommand,
 ) (err error) {
-	for _, command := range requestCommandList {
+	for _, command := range requestCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
 			return
 		}
 	}
 
-	for _, command := range loadfileCommandList {
+	for _, command := range loadfileCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute()
 			return
 		}
 	}
 
-	for _, command := range requestAndLoadfileCommandList {
+	for _, command := range requestAndLoadfileCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
 			return
