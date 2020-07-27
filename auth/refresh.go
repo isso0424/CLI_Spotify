@@ -26,7 +26,7 @@ func refresh(token string) (newToken *string, err error) {
 	request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
 
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	encoded := createEncodedID()

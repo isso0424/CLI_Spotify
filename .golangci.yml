@@ -9,3 +9,4 @@ linters:
     - "wsl"
     - "maligned"
     - "goerr113"
+    - "gochecknoinits"
