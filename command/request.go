@@ -270,7 +270,6 @@ func (_ search) Execute(token *string) (err error) {
 	var searchResponse selfMadeTypes.SearchResponse
 	err = json.Unmarshal(buffer, &searchResponse)
 	if err != nil {
-		fmt.Println("unchi2")
 		return
 	}
 
@@ -303,4 +302,29 @@ func (_ search) Execute(token *string) (err error) {
 	}
 
 	return
+}
+
+func (_ favoriteTrack) Execute(token *string) (err error) {
+  response, err := request.CreateRequest(token, selfMadeTypes.GET,  "/me/player/currently-playing", nil)
+  if err != nil {
+    return
+  }
+
+	buffer := make([]byte, 65536)
+	_, err = response.Body.Read(buffer)
+	if err != nil {
+		return
+	}
+
+  var playingStatus selfMadeTypes.CurrentPlayStatus
+
+	buffer = bytes.Trim(buffer, "\x00")
+	err = json.Unmarshal(buffer, &playingStatus)
+	if err != nil {
+		return
+	}
+
+  fmt.Printf("%v\n", playingStatus)
+
+  return
 }
