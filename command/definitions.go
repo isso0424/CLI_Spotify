@@ -110,3 +110,9 @@ type search struct{}
 func (_ search) GetCommandName() string {
 	return "search"
 }
+
+type favoriteTrack struct{}
+
+func (_ favoriteTrack) GetCommandName() string {
+	return "favoriteTrack"
+}
