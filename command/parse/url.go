@@ -5,11 +5,13 @@ import (
 	"strings"
 )
 
+const urlMinimamLength = 5
+
 func CreateContextUri(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 
-	if len(spritted) < 5 {
+	if len(spritted) < urlMinimamLength {
 		return nil, err
 	}
 	kind := spritted[3]
@@ -25,7 +27,7 @@ func GetPlaylistID(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 
-	if len(spritted) < 5 {
+	if len(spritted) < urlMinimamLength {
 		return nil, err
 	}
 	tmp := spritted[4]

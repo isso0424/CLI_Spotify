@@ -159,7 +159,8 @@ func (f files) Size() int64 {
 }
 
 func (f files) Mode() os.FileMode {
-	return 0600
+	const permission os.FileMode = 0600
+	return permission
 }
 
 func (f files) ModTime() time.Time {
