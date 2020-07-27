@@ -247,17 +247,32 @@ func (_ volume) Execute(token *string) (err error) {
 		return errors.New("percent range is 0 to 100")
 	}
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
+	_, err = request.CreateRequest(
+    token,
+    selfMadeTypes.PUT,
+    fmt.Sprintf(
+    "/me/player/volume?volume_percent=%s",
+    percent,
+  ),
+  nil,
+)
 
 	return
 }
 
 func (_ search) Execute(token *string) (err error) {
 	var kind string
-	util.Input("please input search kind\n\nsearch kinds: album artist playlist track show episode\n\nif input over 2 types, please enter with a colon\n------------------------", "Kind", &kind)
+	util.Input(
+    "please input search kind\n\n" +
+    "search kinds: album artist playlist track show episode\n\n" +
+    "if input over 2 types, please enter with a colon\n" +
+    "------------------------",
+    "Kind",
+    &kind,
+  )
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
-		if kind != "album" && kind != "artist" && kind != "playlist" && kind != "track" && kind != "show" && kind != "episode" {
+		if existTarget(kind, []string{"album", "artist", "playlist", "track", "show", "episode"}) {
 			return fmt.Errorf("search type %s is not found", kind)
 		}
 	}
@@ -266,7 +281,16 @@ func (_ search) Execute(token *string) (err error) {
 	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
 	keyword = url.QueryEscape(keyword)
 
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kind), nil)
+	response, err := request.CreateRequest(
+    token,
+    selfMadeTypes.GET,
+    fmt.Sprintf(
+      "/search?q=%s&type=%s",
+      keyword,
+      kind,
+    ),
+    nil,
+  )
 	if err != nil {
 		return
 	}
@@ -311,6 +335,16 @@ func (_ search) Execute(token *string) (err error) {
 	err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
 
 	return
+}
+
+func existTarget(target string, judgeTargets []string) bool {
+  for _, judgeTarget := range(judgeTargets) {
+    if judgeTarget == target {
+      return true
+    }
+  }
+
+  return false
 }
 
 func (_ favoriteTrack) Execute(token *string) (err error) {
