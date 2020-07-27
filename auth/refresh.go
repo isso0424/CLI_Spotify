@@ -49,9 +49,9 @@ func refresh(token string) (newToken *string, err error) {
 	buffer = bytes.Trim(buffer, "\x00")
 
 	var responseBody refreshTokenResponse
-	if err := json.Unmarshal(buffer, &responseBody); err != nil {
-		fmt.Println("Error: ", err)
-		return nil, err
+	err = json.Unmarshal(buffer, &responseBody)
+	if err != nil {
+		return
 	}
 
 	newToken = &responseBody.AccessToken

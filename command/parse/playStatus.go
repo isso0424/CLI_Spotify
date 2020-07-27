@@ -12,7 +12,7 @@ func CreatePlayingStatus(content selfMadeTypes.Content, playlist selfMadeTypes.P
 				"--------------\n"+
 				"Title: %s\n"+
 				"Artist: %s\n\n"+
-				"PlayList Infomation\n"+
+				"PlayList Information\n"+
 				"-------------------\n"+
 				"PlayList: %s\n"+
 				"Owner: %s\n",

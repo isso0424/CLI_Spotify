@@ -44,7 +44,7 @@ func TestPlayingStatus(t *testing.T) {
 			"--------------\n"+
 			"Title: name\n"+
 			"Artist: artist\n\n"+
-			"PlayList Infomation\n"+
+			"PlayList Information\n"+
 			"-------------------\n"+
 			"PlayList: playList\n"+
 			"Owner: user\n",
