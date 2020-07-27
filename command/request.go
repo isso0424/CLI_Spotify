@@ -18,6 +18,11 @@ import (
 	"time"
 )
 
+const(
+	track = "track"
+	off   = "off"
+)
+
 func (_ status) Execute(token *string) error {
 	status, err := request.GetStatus(token)
 	if err != nil {
@@ -84,7 +89,7 @@ func (_ play) Execute(token *string) (err error) {
 func playFromURL(token *string, uri string) (err error) {
 	uriKind := strings.Split(uri, ":")[1]
 	var values []byte
-	if uriKind == "track" {
+	if uriKind == track {
 		values, err = json.Marshal(playJson{Uris: []string{uri}})
 	} else {
 		values, err = json.Marshal(playListJson{ContextUri: uri})
@@ -158,15 +163,15 @@ func (_ repeat) Execute(token *string) (err error) {
 
 func switchRepeatState(state string) string {
 	switch state {
-	case "track":
-		return "off"
+	case track:
+		return off
 	case "context":
-		return "track"
-	case "off":
+		return track
+	case off:
 		return "context"
 	}
 
-	return "off"
+	return off
 }
 
 func (_ resume) Execute(token *string) (err error) {
@@ -248,13 +253,13 @@ func (_ volume) Execute(token *string) (err error) {
 	}
 
 	_, err = request.CreateRequest(
-    token,
-    selfMadeTypes.PUT,
-    fmt.Sprintf(
-    "/me/player/volume?volume_percent=%s",
-    percent,
-  ),
-  nil,
+		token,
+		selfMadeTypes.PUT,
+		fmt.Sprintf(
+		"/me/player/volume?volume_percent=%s",
+		percent,
+	),
+	nil,
 )
 
 	return
@@ -263,13 +268,13 @@ func (_ volume) Execute(token *string) (err error) {
 func (_ search) Execute(token *string) (err error) {
 	var kind string
 	util.Input(
-    "please input search kind\n\n" +
-    "search kinds: album artist playlist track show episode\n\n" +
-    "if input over 2 types, please enter with a colon\n" +
-    "------------------------",
-    "Kind",
-    &kind,
-  )
+		"please input search kind\n\n" +
+		"search kinds: album artist playlist track show episode\n\n" +
+		"if input over 2 types, please enter with a colon\n" +
+		"------------------------",
+		"Kind",
+		&kind,
+	)
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
 		if existTarget(kind, []string{"album", "artist", "playlist", "track", "show", "episode"}) {
@@ -282,15 +287,15 @@ func (_ search) Execute(token *string) (err error) {
 	keyword = url.QueryEscape(keyword)
 
 	response, err := request.CreateRequest(
-    token,
-    selfMadeTypes.GET,
-    fmt.Sprintf(
-      "/search?q=%s&type=%s",
-      keyword,
-      kind,
-    ),
-    nil,
-  )
+		token,
+		selfMadeTypes.GET,
+		fmt.Sprintf(
+			"/search?q=%s&type=%s",
+			keyword,
+			kind,
+		),
+		nil,
+	)
 	if err != nil {
 		return
 	}
@@ -334,17 +339,17 @@ func (_ search) Execute(token *string) (err error) {
 
 	err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
 
-	return
+	return err
 }
 
 func existTarget(target string, judgeTargets []string) bool {
-  for _, judgeTarget := range(judgeTargets) {
-    if judgeTarget == target {
-      return true
-    }
-  }
+	for _, judgeTarget := range(judgeTargets) {
+		if judgeTarget == target {
+			return true
+		}
+	}
 
-  return false
+	return false
 }
 
 func (_ favoriteTrack) Execute(token *string) (err error) {

@@ -56,11 +56,11 @@ func (_ show) Execute() (err error) {
 
 	for index, target := range playlistList {
 		fmt.Printf(
-      "id: %d\n------------------------------------------------\nname: %s\nuri: %s\n\n",
-      index,
-      target.Name,
-      target.Uri,
-    )
+			"id: %d\n------------------------------------------------\nname: %s\nuri: %s\n\n",
+			index,
+			target.Name,
+			target.Uri,
+		)
 	}
 
 	return
