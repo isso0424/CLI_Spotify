@@ -46,7 +46,10 @@ func SavePlayList(target selfMadeTypes.PlayList) (err error) {
 	return
 }
 
-func setSavePlayList(writeFileFunc func(string, []byte, os.FileMode) error, loadFileFunc func() ([]selfMadeTypes.PlayList, error)) func() {
+func setSavePlayList(
+	writeFileFunc func(string, []byte, os.FileMode) error,
+	loadFileFunc func() ([]selfMadeTypes.PlayList, error),
+) func() {
 	tmpWriteFile := writeFile
 	tmpLoadFile := loadFile
 	writeFile = writeFileFunc

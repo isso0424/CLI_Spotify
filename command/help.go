@@ -8,7 +8,16 @@ import (
 func help(commands []selfMadeTypes.Command) {
 	for _, command := range commands {
 		commandHelp := command.GetHelp()
-		fmt.Printf("-------------------------------\n%s\n-------------------------------\nKind: %s\nDescription: %s\n\n", commandHelp.Name, commandHelp.Kind, commandHelp.Explain)
+		fmt.Printf(
+			"-------------------------------\n"+
+				"%s\n"+
+				"-------------------------------\n"+
+				"Kind: %s\n"+
+				"Description: %s\n\n",
+			commandHelp.Name,
+			commandHelp.Kind,
+			commandHelp.Explain,
+		)
 	}
 }
 

@@ -11,9 +11,9 @@ import (
 )
 
 const (
-  baseURL = "https://api.spotify.com/v1"
-  noContent = 204
-  unAuthorized = 401
+	baseURL      = "https://api.spotify.com/v1"
+	noContent    = 204
+	unAuthorized = 401
 )
 
 func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (response *http.Response, err error) {
@@ -43,7 +43,15 @@ func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string
 }
 
 func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
-	response, err := CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/playlists/%s?fields=name%%2Cowner", *playlistID), nil)
+	response, err := CreateRequest(
+		token,
+		selfMadeTypes.GET,
+		fmt.Sprintf(
+			"/playlists/%s?fields=name%%2Cowner",
+			*playlistID,
+		),
+		nil,
+	)
 	if err != nil {
 		return
 	}

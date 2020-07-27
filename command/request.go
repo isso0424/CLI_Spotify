@@ -18,7 +18,7 @@ import (
 	"time"
 )
 
-const(
+const (
 	track = "track"
 	off   = "off"
 )
@@ -256,11 +256,11 @@ func (_ volume) Execute(token *string) (err error) {
 		token,
 		selfMadeTypes.PUT,
 		fmt.Sprintf(
-		"/me/player/volume?volume_percent=%s",
-		percent,
-	),
-	nil,
-)
+			"/me/player/volume?volume_percent=%s",
+			percent,
+		),
+		nil,
+	)
 
 	return
 }
@@ -268,10 +268,10 @@ func (_ volume) Execute(token *string) (err error) {
 func (_ search) Execute(token *string) (err error) {
 	var kind string
 	util.Input(
-		"please input search kind\n\n" +
-		"search kinds: album artist playlist track show episode\n\n" +
-		"if input over 2 types, please enter with a colon\n" +
-		"------------------------",
+		"please input search kind\n\n"+
+			"search kinds: album artist playlist track show episode\n\n"+
+			"if input over 2 types, please enter with a colon\n"+
+			"------------------------",
 		"Kind",
 		&kind,
 	)
@@ -343,7 +343,7 @@ func (_ search) Execute(token *string) (err error) {
 }
 
 func existTarget(target string, judgeTargets []string) bool {
-	for _, judgeTarget := range(judgeTargets) {
+	for _, judgeTarget := range judgeTargets {
 		if judgeTarget == target {
 			return true
 		}

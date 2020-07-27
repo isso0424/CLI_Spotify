@@ -37,7 +37,18 @@ func TestPlayingStatus(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, CreatePlayingStatus(content, playList), "Playing status\n--------------\nTitle: name\nArtist: artist\n\nPlayList Infomation\n-------------------\nPlayList: playList\nOwner: user\n")
+	assert.Equal(
+		t,
+		CreatePlayingStatus(content, playList),
+		"Playing status\n"+
+			"--------------\n"+
+			"Title: name\n"+
+			"Artist: artist\n\n"+
+			"PlayList Infomation\n"+
+			"-------------------\n"+
+			"PlayList: playList\n"+
+			"Owner: user\n",
+	)
 }
 
 func TestCreateContextUriSuccess(t *testing.T) {

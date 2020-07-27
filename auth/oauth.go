@@ -12,7 +12,12 @@ import (
 )
 
 var (
-	auth  = spotify.NewAuthenticator("http://localhost:8888/callback", spotify.ScopeUserModifyPlaybackState, spotify.ScopeUserReadPlaybackState, spotify.ScopeUserLibraryModify)
+	auth = spotify.NewAuthenticator(
+		"http://localhost:8888/callback",
+		spotify.ScopeUserModifyPlaybackState,
+		spotify.ScopeUserReadPlaybackState,
+		spotify.ScopeUserLibraryModify,
+	)
 	state = "abc123"
 	ch    = make(chan *spotify.Client)
 )
