@@ -16,7 +16,7 @@ const (
 	unAuthorized = 401
 )
 
-func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (response *http.Response, err error) {
+func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (responseArray []byte, err error, statusCode int) {
 	request, err := http.NewRequest(method.String(), baseURL+requestUrl, body)
 	if err != nil {
 		return
@@ -24,26 +24,37 @@ func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string
 
 	request.Header.Set("Authorization", "Bearer "+*token)
 	client := &http.Client{}
-	response, err = client.Do(request)
+	response, err := client.Do(request)
+	if err != nil {
+		return
+	}
+	defer response.Body.Close()
+
+	statusCode = response.StatusCode
+
+	responseArray = make([]byte, 32768)
+	_, err = response.Body.Read(responseArray)
 	if err != nil {
 		return
 	}
 
+	responseArray = bytes.Trim(responseArray, "\x00")
+
 	if response.StatusCode == unAuthorized {
-		newTokenPtr, Err := auth.GetToken()
+		var newTokenPtr *string
+		newTokenPtr, err = auth.GetToken()
 		if err != nil {
-			err = Err
 			return
 		}
 
 		*token = *newTokenPtr
 	}
 
-	return
+	return responseArray, err, statusCode
 }
 
 func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
-	response, err := CreateRequest(
+	response, err, _ := CreateRequest(
 		token,
 		selfMadeTypes.GET,
 		fmt.Sprintf(
@@ -56,15 +67,7 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.
 		return
 	}
 
-	buffer := make([]byte, 1024)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
-
-	err = json.Unmarshal(buffer, &status)
+	err = json.Unmarshal(response, &status)
 	if err != nil {
 		return
 	}
@@ -73,24 +76,16 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.
 }
 
 func GetStatus(token *string) (status *selfMadeTypes.Content, err error) {
-	response, err := CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
+	response, err, statusCode := CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
-	if response.StatusCode == noContent {
+	if statusCode == noContent {
 		err = &selfMadeTypes.FailedGetError{Target: "playing status"}
 		return
 	}
 
-	buffer := make([]byte, 8192)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
-
-	err = json.Unmarshal(buffer, &status)
+	err = json.Unmarshal(response, &status)
 
 	return
 }

@@ -51,7 +51,7 @@ func (_ status) Execute(token *string) error {
 }
 
 func (_ next) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
 
 	if err != nil {
 		return
@@ -63,7 +63,7 @@ func (_ next) Execute(token *string) (err error) {
 }
 
 func (cmd pause) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -99,12 +99,12 @@ func playFromURL(token *string, uri string) (err error) {
 	}
 	fmt.Println(string(values))
 
-	response, err := request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, err, statusCode := request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}
 
-	fmt.Println(response.StatusCode)
+	fmt.Println(statusCode)
 
 	err = status{}.Execute(token)
 
@@ -116,7 +116,7 @@ func playFromURL(token *string, uri string) (err error) {
 }
 
 func (_ prev) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
 
 	if err != nil {
 		return
@@ -150,7 +150,7 @@ func (_ repeat) Execute(token *string) (err error) {
 
 	state := switchRepeatState(status.RepeatState)
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -175,7 +175,7 @@ func switchRepeatState(state string) string {
 }
 
 func (_ resume) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -193,7 +193,7 @@ func (_ shuffle) Execute(token *string) (err error) {
 
 	state := !status.ShuffleState
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
@@ -204,21 +204,13 @@ func (_ shuffle) Execute(token *string) (err error) {
 }
 
 func (_ welcome) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
+	response, err, _ := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
-
-	buffer := make([]byte, 8192)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
 
 	var userInfo selfMadeTypes.User
-	err = json.Unmarshal(buffer, &userInfo)
+	err = json.Unmarshal(response, &userInfo)
 	if err != nil {
 		return
 	}
@@ -252,7 +244,7 @@ func (_ volume) Execute(token *string) (err error) {
 		return errors.New("percent range is 0 to 100")
 	}
 
-	_, err = request.CreateRequest(
+	_, err, _ = request.CreateRequest(
 		token,
 		selfMadeTypes.PUT,
 		fmt.Sprintf(
@@ -286,7 +278,7 @@ func (_ search) Execute(token *string) (err error) {
 	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
 	keyword = url.QueryEscape(keyword)
 
-	response, err := request.CreateRequest(
+	response, err, _ := request.CreateRequest(
 		token,
 		selfMadeTypes.GET,
 		fmt.Sprintf(
@@ -300,16 +292,8 @@ func (_ search) Execute(token *string) (err error) {
 		return
 	}
 
-	buffer := make([]byte, 65536)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
-
 	var searchResponse selfMadeTypes.SearchResponse
-	err = json.Unmarshal(buffer, &searchResponse)
+	err = json.Unmarshal(response, &searchResponse)
 	if err != nil {
 		return
 	}
@@ -353,27 +337,21 @@ func existTarget(target string, judgeTargets []string) bool {
 }
 
 func (_ favoriteTrack) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me/player/currently-playing", nil)
-	if err != nil {
-		return
-	}
-
-	buffer := make([]byte, 65536)
-	_, err = response.Body.Read(buffer)
+	response, err, _ := request.CreateRequest(token, selfMadeTypes.GET, "/me/player/currently-playing", nil)
 	if err != nil {
 		return
 	}
 
 	var playingStatus selfMadeTypes.CurrentPlayStatus
 
-	buffer = bytes.Trim(buffer, "\x00")
-	err = json.Unmarshal(buffer, &playingStatus)
+	response = bytes.Trim(response, "\x00")
+	err = json.Unmarshal(response, &playingStatus)
 	if err != nil {
 		return
 	}
 
 	id := strings.Split(playingStatus.Item.Uri, ":")[2]
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+	_, err, _ = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
 	if err != nil {
 		return
 	}

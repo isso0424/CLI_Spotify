@@ -39,6 +39,7 @@ func refresh(token string) (newToken *string, err error) {
 	if err != nil {
 		return
 	}
+	defer response.Body.Close()
 
 	buffer := make([]byte, 1024)
 	_, err = response.Body.Read(buffer)
