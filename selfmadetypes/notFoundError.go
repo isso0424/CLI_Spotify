@@ -1,7 +1,8 @@
-package selfMadeTypes
+package selfmadetypes
 
 import "fmt"
 
+// NotFound is not found error.
 type NotFound struct {
 	Target string
 }

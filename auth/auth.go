@@ -7,6 +7,7 @@ import (
 
 const tokenFile = ".token"
 
+// GetToken is function that get token from .token.
 func GetToken() (*string, error) {
 	if existDotToken() {
 		token, err := readDotToken()

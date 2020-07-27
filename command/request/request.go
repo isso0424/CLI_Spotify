@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"isso0424/spotify_CLI/auth"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"net/http"
 )
 
@@ -16,8 +16,10 @@ const (
 	unAuthorized = 401
 )
 
-func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (responseArray []byte, err error, statusCode int) {
-	request, err := http.NewRequest(method.String(), baseURL+requestUrl, body)
+// CreateRequest is new request and submit request function.
+// Get response value.
+func CreateRequest(token *string, method selfmadetypes.Method, requestURL string, body io.Reader) (responseArray []byte, statusCode int, err error) {
+	request, err := http.NewRequest(method.String(), baseURL+requestURL, body)
 	if err != nil {
 		return
 	}
@@ -28,7 +30,12 @@ func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string
 	if err != nil {
 		return
 	}
-	defer response.Body.Close()
+	defer func() {
+		err := response.Body.Close()
+		if err != nil {
+			fmt.Printf("Error: " + err.Error())
+		}
+	}()
 
 	statusCode = response.StatusCode
 
@@ -50,13 +57,14 @@ func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string
 		*token = *newTokenPtr
 	}
 
-	return responseArray, err, statusCode
+	return responseArray, statusCode, err
 }
 
-func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.PlayListFromRequest, err error) {
-	response, err, _ := CreateRequest(
+// GetPlayListStatus is get user playlist status.
+func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.PlayListFromRequest, err error) {
+	response, _, err := CreateRequest(
 		token,
-		selfMadeTypes.GET,
+		selfmadetypes.GET,
 		fmt.Sprintf(
 			"/playlists/%s?fields=name%%2Cowner",
 			*playlistID,
@@ -75,13 +83,14 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfMadeTypes.
 	return
 }
 
-func GetStatus(token *string) (status *selfMadeTypes.Content, err error) {
-	response, err, statusCode := CreateRequest(token, selfMadeTypes.GET, "/me/player", nil)
+// GetStatus is function that get playing status.
+func GetStatus(token *string) (status *selfmadetypes.Content, err error) {
+	response, statusCode, err := CreateRequest(token, selfmadetypes.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
 	if statusCode == noContent {
-		err = &selfMadeTypes.FailedGetError{Target: "playing status"}
+		err = &selfmadetypes.FailedGetError{Target: "playing status"}
 		return
 	}
 

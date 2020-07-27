@@ -1,118 +1,122 @@
 package command
 
-type status struct {
-}
+type status struct{}
 
-func (_ status) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd status) GetCommandName() string {
 	return "status"
 }
 
-type next struct {
-}
+type next struct{}
 
-func (_ next) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd next) GetCommandName() string {
 	return "next"
 }
 
-type pause struct {
-}
+type pause struct{}
 
-func (_ pause) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd pause) GetCommandName() string {
 	return "pause"
 }
 
-type play struct {
-}
+type play struct{}
 
-func (_ play) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd play) GetCommandName() string {
 	return "play"
 }
 
-type prev struct {
-}
+type prev struct{}
 
-func (_ prev) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd prev) GetCommandName() string {
 	return "prev"
 }
 
-type repeat struct {
-}
+// GetCommandName is getting command name function.
+type repeat struct{}
 
-func (_ repeat) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd repeat) GetCommandName() string {
 	return "repeat"
 }
 
-type resume struct {
-}
+type resume struct{}
 
-func (_ resume) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd resume) GetCommandName() string {
 	return "resume"
 }
 
-type shuffle struct {
-}
+type shuffle struct{}
 
-func (_ shuffle) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd shuffle) GetCommandName() string {
 	return "shuffle"
 }
 
-type welcome struct {
-}
+type welcome struct{}
 
-func (_ welcome) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd welcome) GetCommandName() string {
 	return "welcome"
 }
 
-type save struct {
-}
+type save struct{}
 
-func (_ save) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd save) GetCommandName() string {
 	return "save"
 }
 
-type show struct {
-}
+type show struct{}
 
-func (_ show) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd show) GetCommandName() string {
 	return "show"
 }
 
 type random struct {
 }
 
-func (_ random) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd random) GetCommandName() string {
 	return "random"
 }
 
-type load struct {
-}
+type load struct{}
 
-func (_ load) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd load) GetCommandName() string {
 	return "load"
 }
 
-type refresh struct {
-}
+type refresh struct{}
 
-func (_ refresh) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd refresh) GetCommandName() string {
 	return "refresh"
 }
 
-type volume struct {
-}
+type volume struct{}
 
-func (_ volume) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd volume) GetCommandName() string {
 	return "volume"
 }
 
 type search struct{}
 
-func (_ search) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd search) GetCommandName() string {
 	return "search"
 }
 
 type favoriteTrack struct{}
 
-func (_ favoriteTrack) GetCommandName() string {
+// GetCommandName is getting command name function.
+func (cmd favoriteTrack) GetCommandName() string {
 	return "favoriteTrack"
 }

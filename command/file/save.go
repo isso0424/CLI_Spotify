@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"os"
 )
 
 var (
 	writeFile func(string, []byte, os.FileMode) error
-	loadFile  func() (playlistList []selfMadeTypes.PlayList, err error)
+	loadFile  func() (playlistList []selfmadetypes.PlayList, err error)
 )
 
 func init() {
@@ -18,12 +18,13 @@ func init() {
 		return ioutil.WriteFile(fileName, fileDetail, permission)
 	}
 
-	loadFile = func() (playlistList []selfMadeTypes.PlayList, err error) {
+	loadFile = func() (playlistList []selfmadetypes.PlayList, err error) {
 		return LoadPlayList()
 	}
 }
 
-func SavePlayList(target selfMadeTypes.PlayList) (err error) {
+// SavePlayList is function save playlist for json file
+func SavePlayList(target selfmadetypes.PlayList) (err error) {
 	playlistList, err := loadFile()
 	if err != nil {
 		return
@@ -41,14 +42,14 @@ func SavePlayList(target selfMadeTypes.PlayList) (err error) {
 		return
 	}
 
-	fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.Uri, target.Name)
+	fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.URI, target.Name)
 
 	return
 }
 
 func setSavePlayList(
 	writeFileFunc func(string, []byte, os.FileMode) error,
-	loadFileFunc func() ([]selfMadeTypes.PlayList, error),
+	loadFileFunc func() ([]selfmadetypes.PlayList, error),
 ) func() {
 	tmpWriteFile := writeFile
 	tmpLoadFile := loadFile

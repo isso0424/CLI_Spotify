@@ -1,10 +1,11 @@
-package selfMadeTypes
+package selfmadetypes
 
+// User is response when GET request to user
 type User struct {
 	DisplayName  string       `json:"display_name"`
 	ExternalUrls externalUrls `json:"external_urls"`
 	Href         string       `json:"href"`
-	Id           string       `json:"id"`
+	ID           string       `json:"id"`
 	Type         string       `json:"type"`
-	Uri          string       `json:"uri"`
+	URI          string       `json:"uri"`
 }

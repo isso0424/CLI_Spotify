@@ -1,11 +1,16 @@
-package selfMadeTypes
+package selfmadetypes
 
+// Method is HTTP Request Methods wrapper
 type Method int
 
 const (
+	// GET is GET method
 	GET Method = iota
+	// POST is POST method
 	POST
+	// PUT is PUT method
 	PUT
+	// DELETE is DELETE method
 	DELETE
 )
 

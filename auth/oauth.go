@@ -39,8 +39,8 @@ func oauth() (*string, error) {
 		fmt.Println("Error: ", err)
 	}()
 
-	authUrl := auth.AuthURL(state)
-	fmt.Println("Please log in to Spotify by visiting the following page in your browser:", authUrl)
+	authURL := auth.AuthURL(state)
+	fmt.Println("Please log in to Spotify by visiting the following page in your browser:", authURL)
 
 	client := <-ch
 
@@ -63,7 +63,10 @@ func createDotToken(token string) error {
 	if err != nil {
 		return err
 	}
-	file.Close()
+	err = file.Close()
+	if err != nil {
+		return err
+	}
 
 	bytes := []byte(token)
 

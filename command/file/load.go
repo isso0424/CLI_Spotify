@@ -3,7 +3,7 @@ package file
 import (
 	"encoding/json"
 	"io/ioutil"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"os"
 )
 
@@ -22,7 +22,8 @@ func init() {
 	}
 }
 
-func LoadPlayList() (playlistList []selfMadeTypes.PlayList, err error) {
+// LoadPlayList is load playlist from playlist.json
+func LoadPlayList() (playlistList []selfmadetypes.PlayList, err error) {
 	if _, err = fileExist("playlist.json"); err != nil {
 		return
 	}

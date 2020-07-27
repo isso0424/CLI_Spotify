@@ -2,10 +2,11 @@ package command
 
 import (
 	"fmt"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/util"
 )
 
+// MainLoop is function that is application's root loop.
 func MainLoop(token string) {
 	fmt.Println("if you wanna exit, you must type 'exit'")
 	err := welcome{}.Execute(&token)
@@ -19,7 +20,7 @@ func MainLoop(token string) {
 		fmt.Println("Error: ", err)
 	}
 
-	requestCommands := []selfMadeTypes.RequestCommand{
+	requestCommands := []selfmadetypes.RequestCommand{
 		play{},
 		pause{},
 		status{},
@@ -34,12 +35,12 @@ func MainLoop(token string) {
 		favoriteTrack{},
 	}
 
-	loadfileCommands := []selfMadeTypes.FileloadCommand{
+	loadfileCommands := []selfmadetypes.FileloadCommand{
 		save{},
 		show{},
 	}
 
-	requestAndLoadfileCommands := []selfMadeTypes.RequestAndFileloadCommand{
+	requestAndLoadfileCommands := []selfmadetypes.RequestAndFileloadCommand{
 		load{},
 		random{},
 	}
@@ -73,9 +74,9 @@ func MainLoop(token string) {
 func execute(
 	token *string,
 	commandName string,
-	requestCommandList []selfMadeTypes.RequestCommand,
-	loadfileCommandList []selfMadeTypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
+	requestCommandList []selfmadetypes.RequestCommand,
+	loadfileCommandList []selfmadetypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfmadetypes.RequestAndFileloadCommand,
 ) (err error) {
 	for _, command := range requestCommandList {
 		if command.GetCommandName() == commandName {
@@ -102,10 +103,10 @@ func execute(
 }
 
 func joinCommandList(
-	requestCommandList []selfMadeTypes.RequestCommand,
-	loadfileCommandList []selfMadeTypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
-) (commandList []selfMadeTypes.Command) {
+	requestCommandList []selfmadetypes.RequestCommand,
+	loadfileCommandList []selfmadetypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfmadetypes.RequestAndFileloadCommand,
+) (commandList []selfmadetypes.Command) {
 	for _, command := range requestCommandList {
 		commandList = append(commandList, command)
 	}
