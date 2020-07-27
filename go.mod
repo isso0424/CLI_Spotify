@@ -3,6 +3,7 @@ module isso0424/spotify_CLI
 go 1.14
 
 require (
+	github.com/dominikh/go-simple v0.0.0-20170915045940-f5886b68a220 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/stretchr/testify v1.6.1
 	github.com/zmb3/spotify v0.0.0-20200525010707-bc712583571e

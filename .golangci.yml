@@ -1,0 +1,9 @@
+issues:
+  exclude-use-default: false
+linters:
+  enable-all: true
+  disable:
+    "gochecknoglobals"
+    "gosec"
+    "gocritic"
+    "wsl"
