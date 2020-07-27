@@ -324,7 +324,13 @@ func (_ favoriteTrack) Execute(token *string) (err error) {
 		return
 	}
 
-  fmt.Printf("%v\n", playingStatus)
+  id := strings.Split(playingStatus.Item.Uri, ":")[2]
+  _, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+  if err != nil {
+    return
+  }
+
+  fmt.Printf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name)
 
   return
 }
