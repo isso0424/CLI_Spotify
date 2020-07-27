@@ -11,3 +11,4 @@ linters:
     - "goerr113"
     - "gochecknoinits"
     - "godot"
+    - "testpackage"
