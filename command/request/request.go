@@ -10,7 +10,11 @@ import (
 	"net/http"
 )
 
-const baseURL = "https://api.spotify.com/v1"
+const (
+  baseURL = "https://api.spotify.com/v1"
+  noContent = 204
+  unAuthorized = 401
+)
 
 func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string, body io.Reader) (response *http.Response, err error) {
 	request, err := http.NewRequest(method.String(), baseURL+requestUrl, body)
@@ -25,7 +29,7 @@ func CreateRequest(token *string, method selfMadeTypes.Method, requestUrl string
 		return
 	}
 
-	if response.StatusCode == 401 {
+	if response.StatusCode == unAuthorized {
 		newTokenPtr, Err := auth.GetToken()
 		if err != nil {
 			err = Err
@@ -65,7 +69,7 @@ func GetStatus(token *string) (status *selfMadeTypes.Content, err error) {
 	if err != nil {
 		return
 	}
-	if response.StatusCode == 204 {
+	if response.StatusCode == noContent {
 		err = &selfMadeTypes.FailedGetError{Target: "playing status"}
 		return
 	}
