@@ -139,3 +139,11 @@ func (cmd search) GetHelp() selfMadeTypes.CommandHelp {
 		Kind:    "request",
 	}
 }
+
+func (cmd favoriteTrack) GetHelp() selfMadeTypes.CommandHelp {
+  return selfMadeTypes.CommandHelp{
+    Name:    cmd.GetCommandName(),
+    Explain: "To be favorite playing track.",
+    Kind:    "request",
+  }
+}
