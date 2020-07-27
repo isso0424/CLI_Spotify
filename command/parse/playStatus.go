@@ -1,3 +1,4 @@
+// Package parse is response parser.
 package parse
 
 import (

@@ -1,3 +1,4 @@
+// Package selfmadetypes is types made myself
 package selfmadetypes
 
 // RequestCommand is interface that request commands.

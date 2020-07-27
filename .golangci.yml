@@ -10,3 +10,4 @@ linters:
     - "maligned"
     - "goerr113"
     - "gochecknoinits"
+    - "godot"

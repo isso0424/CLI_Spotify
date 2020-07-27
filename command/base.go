@@ -1,3 +1,4 @@
+// Package command is this application's commands package.
 package command
 
 import (

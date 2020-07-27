@@ -1,3 +1,4 @@
+// Package auth is authrize with spotify package.
 package auth
 
 import (

@@ -1,3 +1,4 @@
+// Package util is utility for command
 package util
 
 import (
