@@ -3,7 +3,7 @@ issues:
 linters:
   enable-all: true
   disable:
-    "gochecknoglobals"
-    "gosec"
-    "gocritic"
-    "wsl"
+    - "gochecknoglobals"
+    - "gosec"
+    - "gocritic"
+    - "wsl"
