@@ -82,16 +82,24 @@ func (_ play) Execute(token *string) (err error) {
 }
 
 func playFromURL(token *string, uri string) (err error) {
-	values, err := json.Marshal(playJson{ContextUri: uri})
+	uriKind := strings.Split(uri, ":")[1]
+	var values []byte
+	if uriKind == "track" {
+		values, err = json.Marshal(playJson{Uris: []string{uri}})
+	} else {
+		values, err = json.Marshal(playListJson{ContextUri: uri})
+	}
+	if err != nil {
+		return
+	}
+	fmt.Println(string(values))
+
+	response, err := request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
-
-	if err != nil {
-		return
-	}
+	fmt.Println(response.StatusCode)
 
 	err = status{}.Execute(token)
 
@@ -114,8 +122,12 @@ func (_ prev) Execute(token *string) (err error) {
 	return
 }
 
-type playJson struct {
+type playListJson struct {
 	ContextUri string `json:"context_uri"`
+}
+
+type playJson struct {
+	Uris []string `json:"uris"`
 }
 
 func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
