@@ -305,10 +305,10 @@ func (_ search) Execute(token *string) (err error) {
 }
 
 func (_ favoriteTrack) Execute(token *string) (err error) {
-  response, err := request.CreateRequest(token, selfMadeTypes.GET,  "/me/player/currently-playing", nil)
-  if err != nil {
-    return
-  }
+	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me/player/currently-playing", nil)
+	if err != nil {
+		return
+	}
 
 	buffer := make([]byte, 65536)
 	_, err = response.Body.Read(buffer)
@@ -316,7 +316,7 @@ func (_ favoriteTrack) Execute(token *string) (err error) {
 		return
 	}
 
-  var playingStatus selfMadeTypes.CurrentPlayStatus
+	var playingStatus selfMadeTypes.CurrentPlayStatus
 
 	buffer = bytes.Trim(buffer, "\x00")
 	err = json.Unmarshal(buffer, &playingStatus)
@@ -324,13 +324,13 @@ func (_ favoriteTrack) Execute(token *string) (err error) {
 		return
 	}
 
-  id := strings.Split(playingStatus.Item.Uri, ":")[2]
-  _, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
-  if err != nil {
-    return
-  }
+	id := strings.Split(playingStatus.Item.Uri, ":")[2]
+	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+	if err != nil {
+		return
+	}
 
-  fmt.Printf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name)
+	fmt.Printf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name)
 
-  return
+	return
 }

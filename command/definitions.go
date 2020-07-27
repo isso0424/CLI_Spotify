@@ -111,8 +111,8 @@ func (_ search) GetCommandName() string {
 	return "search"
 }
 
-type favoriteTrack struct {}
+type favoriteTrack struct{}
 
 func (_ favoriteTrack) GetCommandName() string {
-  return "favoriteTrack"
+	return "favoriteTrack"
 }

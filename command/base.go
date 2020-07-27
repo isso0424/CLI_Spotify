@@ -31,7 +31,7 @@ func MainLoop(token string) {
 		refresh{},
 		volume{},
 		search{},
-    favoriteTrack{},
+		favoriteTrack{},
 	}
 
 	loadfileCommands := []selfMadeTypes.FileloadCommand{
