@@ -3,7 +3,7 @@ package file
 import (
 	"encoding/json"
 	"errors"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"os"
 	"testing"
 	"time"
@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestLoadPlayListSuccess is test function
 func TestLoadPlayListSuccess(t *testing.T) {
 	reset := setLoadPlayList(
 		func(fileName string) (os.FileInfo, error) {
@@ -18,10 +19,10 @@ func TestLoadPlayListSuccess(t *testing.T) {
 			return fileInfo, nil
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []selfMadeTypes.PlayList{
+			playlistList := []selfmadetypes.PlayList{
 				{
 					Name: "PlayList",
-					Uri:  "URI",
+					URI:  "URI",
 				},
 			}
 			return json.Marshal(playlistList)
@@ -32,26 +33,27 @@ func TestLoadPlayListSuccess(t *testing.T) {
 	successResult, _ := LoadPlayList()
 	assert.Equal(
 		t,
-		[]selfMadeTypes.PlayList{
+		[]selfmadetypes.PlayList{
 			{
 				Name: "PlayList",
-				Uri:  "URI",
+				URI:  "URI",
 			},
 		},
 		successResult,
 	)
 }
 
+// TestLoadPlayListFail is test function
 func TestLoadPlayListFail(t *testing.T) {
 	reset := setLoadPlayList(
 		func(fileName string) (os.FileInfo, error) {
 			return nil, errors.New("file not exist")
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []selfMadeTypes.PlayList{
+			playlistList := []selfmadetypes.PlayList{
 				{
 					Name: "PlayList",
-					Uri:  "URI",
+					URI:  "URI",
 				},
 			}
 			return json.Marshal(playlistList)
@@ -77,16 +79,17 @@ func TestLoadPlayListFail(t *testing.T) {
 	reset()
 }
 
+// TestSavePlayListSuccess is test function
 func TestSavePlayListSuccess(t *testing.T) {
 	reset := setSavePlayList(
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]selfMadeTypes.PlayList, error) {
-			playlistList := []selfMadeTypes.PlayList{
+		func() ([]selfmadetypes.PlayList, error) {
+			playlistList := []selfmadetypes.PlayList{
 				{
 					Name: "PlayList",
-					Uri:  "URI",
+					URI:  "URI",
 				},
 			}
 			return playlistList, nil
@@ -95,24 +98,25 @@ func TestSavePlayListSuccess(t *testing.T) {
 	defer reset()
 
 	err := SavePlayList(
-		selfMadeTypes.PlayList{
+		selfmadetypes.PlayList{
 			Name: "PlayList2",
-			Uri:  "URI",
+			URI:  "URI",
 		},
 	)
 	assert.Equal(t, nil, err)
 }
 
+// TestSavePlayListFail is test function
 func TestSavePlayListFail(t *testing.T) {
 	reset := setSavePlayList(
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return errors.New("cannot write a file")
 		},
-		func() ([]selfMadeTypes.PlayList, error) {
-			playlistList := []selfMadeTypes.PlayList{
+		func() ([]selfmadetypes.PlayList, error) {
+			playlistList := []selfmadetypes.PlayList{
 				{
 					Name: "PlayList",
-					Uri:  "URI",
+					URI:  "URI",
 				},
 			}
 			return playlistList, nil
@@ -120,9 +124,9 @@ func TestSavePlayListFail(t *testing.T) {
 	)
 
 	err := SavePlayList(
-		selfMadeTypes.PlayList{
+		selfmadetypes.PlayList{
 			Name: "PlayList2",
-			Uri:  "URI",
+			URI:  "URI",
 		},
 	)
 	assert.EqualError(t, err, "cannot write a file")
@@ -132,15 +136,15 @@ func TestSavePlayListFail(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]selfMadeTypes.PlayList, error) {
+		func() ([]selfmadetypes.PlayList, error) {
 			return nil, errors.New("cannot load a file")
 		},
 	)
 
 	err = SavePlayList(
-		selfMadeTypes.PlayList{
+		selfmadetypes.PlayList{
 			Name: "PlayList2",
-			Uri:  "URI",
+			URI:  "URI",
 		},
 	)
 	assert.EqualError(t, err, "cannot load a file")
@@ -159,7 +163,8 @@ func (f files) Size() int64 {
 }
 
 func (f files) Mode() os.FileMode {
-	return 0600
+	const permission os.FileMode = 0600
+	return permission
 }
 
 func (f files) ModTime() time.Time {

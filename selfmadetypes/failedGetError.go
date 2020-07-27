@@ -1,7 +1,8 @@
-package selfMadeTypes
+package selfmadetypes
 
 import "fmt"
 
+// FailedGetError is failed get error.
 type FailedGetError struct {
 	Target string
 }

@@ -1,5 +1,6 @@
-package selfMadeTypes
+package selfmadetypes
 
+// Content is data struct when you execute GET to player
 type Content struct {
 	IsPlaying            bool                   `json:"is_playing"`
 	Device               device                 `json:"device"`
@@ -14,7 +15,7 @@ type Content struct {
 }
 
 type device struct {
-	Id               string `json:"id"`
+	ID               string `json:"id"`
 	IsActive         bool   `json:"is_active"`
 	IsPrivateSession bool   `json:"is_private_session"`
 	IsRestricted     bool   `json:"is_restricted"`
@@ -27,13 +28,14 @@ type context struct {
 	ExternalUrls externalUrls `json:"external_urls"`
 	Href         string       `json:"href"`
 	Type         string       `json:"type"`
-	Uri          string       `json:"uri"`
+	URI          string       `json:"uri"`
 }
 
 type externalUrls struct {
 	Spotify string `json:"spotify"`
 }
 
+// Item is Content's item
 type Item struct {
 	Album            album        `json:"album"`
 	Artists          []Artists    `json:"artists"`
@@ -44,14 +46,14 @@ type Item struct {
 	ExternalIds      externalIds  `json:"external_ids"`
 	ExternalUrls     externalUrls `json:"external_urls"`
 	Href             string       `json:"href"`
-	Id               string       `json:"id"`
+	ID               string       `json:"id"`
 	IsLocal          bool         `json:"is_local"`
 	Name             string       `json:"name"`
 	Popularity       int32        `json:"popularity"`
-	PreviewUrl       string       `json:"preview_url"`
+	PreviewURL       string       `json:"preview_url"`
 	TrackNumber      int32        `json:"track_number"`
 	Type             string       `json:"type"`
-	Uri              string       `json:"uri"`
+	URI              string       `json:"uri"`
 }
 
 type externalIds struct {
@@ -64,27 +66,28 @@ type album struct {
 	AvailableMarkets     []string     `json:"available_markets"`
 	ExternalUrls         externalUrls `json:"external_urls"`
 	Href                 string       `json:"href"`
-	Id                   string       `json:"id"`
+	ID                   string       `json:"id"`
 	Images               []image      `json:"images"`
 	Name                 string       `json:"name"`
 	ReleaseDate          string       `json:"release_date"`
 	ReleaseDatePrecision string       `json:"release_date_precision"`
 	TotalTracks          int32        `json:"total_tracks"`
 	Type                 string       `json:"type"`
-	Uri                  string       `json:"uri"`
+	URI                  string       `json:"uri"`
 }
 
 type image struct {
 	Height int32  `json:"height"`
-	Url    string `json:"url"`
+	URL    string `json:"url"`
 	Width  int32  `json:"width"`
 }
 
+// Artists is Content's artists value
 type Artists struct {
 	ExternalUrls externalUrls `json:"external_urls"`
 	Href         string       `json:"href"`
-	Id           string       `json:"id"`
+	ID           string       `json:"id"`
 	Name         string       `json:"name"`
 	Type         string       `json:"type"`
-	Uri          string       `json:"uri"`
+	URI          string       `json:"uri"`
 }

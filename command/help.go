@@ -2,146 +2,171 @@ package command
 
 import (
 	"fmt"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 )
 
-func help(commands []selfMadeTypes.Command) {
+func help(commands []selfmadetypes.Command) {
 	for _, command := range commands {
 		commandHelp := command.GetHelp()
-		fmt.Printf("-------------------------------\n%s\n-------------------------------\nKind: %s\nDescription: %s\n\n", commandHelp.Name, commandHelp.Kind, commandHelp.Explain)
+		fmt.Printf(
+			"-------------------------------\n"+
+				"%s\n"+
+				"-------------------------------\n"+
+				"Kind: %s\n"+
+				"Description: %s\n\n",
+			commandHelp.Name,
+			commandHelp.Kind,
+			commandHelp.Explain,
+		)
 	}
 }
 
-func (cmd status) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd status) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "get playing status in spotify",
 	}
 }
 
-func (cmd next) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd next) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "play next queuing track",
 	}
 }
 
-func (cmd pause) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd pause) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "stop playing track",
 	}
 }
 
-func (cmd play) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd play) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "play track from url",
 	}
 }
 
-func (cmd prev) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd prev) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "play previous track",
 	}
 }
 
-func (cmd repeat) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd repeat) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "switch repeat mode",
 	}
 }
 
-func (cmd resume) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd resume) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "resume stopping track",
 	}
 }
 
-func (cmd shuffle) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd shuffle) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "switch shuffle state",
 	}
 }
 
-func (cmd welcome) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "switch shuffle state",
 	}
 }
 
-func (cmd save) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd save) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "loadfile",
 		Explain: "save playlist to file",
 	}
 }
 
-func (cmd show) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd show) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "loadfile",
 		Explain: "show saved all playlists",
 	}
 }
 
-func (cmd random) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd random) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "requestAndLoadfile",
 		Explain: "play random playlist from play",
 	}
 }
 
-func (cmd load) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+func (cmd load) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "requestAndLoadfile",
 		Explain: "play saved playlist",
 	}
 }
 
-func (cmd refresh) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd refresh) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "refresh access token",
 	}
 }
 
-func (cmd volume) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Kind:    "request",
 		Explain: "set volume percent",
 	}
 }
 
-func (cmd search) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd search) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "search with spotify",
 		Kind:    "request",
 	}
 }
 
-func (cmd favoriteTrack) GetHelp() selfMadeTypes.CommandHelp {
-	return selfMadeTypes.CommandHelp{
+// GetHelp is getting help function.
+func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "To be favorite playing track.",
 		Kind:    "request",

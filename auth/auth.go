@@ -1,3 +1,4 @@
+// Package auth is authrize with spotify package.
 package auth
 
 import (
@@ -7,6 +8,7 @@ import (
 
 const tokenFile = ".token"
 
+// GetToken is function that get token from .token.
 func GetToken() (*string, error) {
 	if existDotToken() {
 		token, err := readDotToken()

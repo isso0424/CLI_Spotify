@@ -1,7 +1,8 @@
-package selfMadeTypes
+package selfmadetypes
 
 import "fmt"
 
+// NameDuplicateError is name duplicate error.
 type NameDuplicateError struct {
 	Target string
 }

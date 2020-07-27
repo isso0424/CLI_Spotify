@@ -1,7 +1,8 @@
-package selfMadeTypes
+package selfmadetypes
 
 import "fmt"
 
+// SearchResponse is searched response
 type SearchResponse struct {
 	Album    searchItem `json:"albums"`
 	Artists  searchItem `json:"artists"`
@@ -11,6 +12,7 @@ type SearchResponse struct {
 	Episode  searchItem `json:"episodes"`
 }
 
+// ParseAndPrint is function that response parse and print
 func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
 	searchResults := []SearchResultItem{}
 	for _, kind := range kinds {
@@ -42,7 +44,7 @@ func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem 
 func toProcessResponse(items searchItem, resultSlice []SearchResultItem) []SearchResultItem {
 	for _, item := range items.Item {
 		index := len(resultSlice)
-		fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.Uri)
+		fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.URI)
 		resultSlice = append(resultSlice, item)
 	}
 
@@ -53,7 +55,8 @@ type searchItem struct {
 	Item []SearchResultItem `json:"items"`
 }
 
+// SearchResultItem is SearchResultItem's item
 type SearchResultItem struct {
 	Name string `json:"name"`
-	Uri  string `json:"uri"`
+	URI  string `json:"uri"`
 }

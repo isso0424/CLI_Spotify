@@ -1,12 +1,13 @@
 package command
 
 import (
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
+// TestSwitchRepeat is test function for switchRepeat()
 func TestSwitchRepeat(t *testing.T) {
 	var result string
 	result = switchRepeatState("off")
@@ -19,17 +20,18 @@ func TestSwitchRepeat(t *testing.T) {
 	assert.Equal(t, result, "track")
 }
 
+// TestCheckDuplicateName is test function for checkDuplicateName()
 func TestCheckDuplicateName(t *testing.T) {
-	var playlistList []selfMadeTypes.PlayList
+	var playlistList []selfmadetypes.PlayList
 	var result bool
-	playlistList = []selfMadeTypes.PlayList{
+	playlistList = []selfmadetypes.PlayList{
 		{
 			Name: "playlist",
-			Uri:  "hogefuga",
+			URI:  "hogefuga",
 		},
 		{
 			Name: "playlist2",
-			Uri:  "unchi",
+			URI:  "unchi",
 		},
 	}
 

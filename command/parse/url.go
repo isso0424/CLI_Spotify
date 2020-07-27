@@ -5,11 +5,14 @@ import (
 	"strings"
 )
 
-func CreateContextUri(url string) (*string, error) {
+const urlMinimamLength = 5
+
+// CreateContextURI is parse context uri function.
+func CreateContextURI(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 
-	if len(spritted) < 5 {
+	if len(spritted) < urlMinimamLength {
 		return nil, err
 	}
 	kind := spritted[3]
@@ -17,15 +20,16 @@ func CreateContextUri(url string) (*string, error) {
 
 	id := strings.Split(tmp, "?")[0]
 
-	context_uri := fmt.Sprintf("spotify:%s:%s", kind, id)
-	return &context_uri, nil
+	contextURI := fmt.Sprintf("spotify:%s:%s", kind, id)
+	return &contextURI, nil
 }
 
+// GetPlaylistID is function that get playlist ID from url.
 func GetPlaylistID(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 
-	if len(spritted) < 5 {
+	if len(spritted) < urlMinimamLength {
 		return nil, err
 	}
 	tmp := spritted[4]

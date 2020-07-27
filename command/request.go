@@ -9,7 +9,7 @@ import (
 	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/util"
 	"math/rand"
 	"net/url"
@@ -18,7 +18,13 @@ import (
 	"time"
 )
 
-func (_ status) Execute(token *string) error {
+const (
+	track = "track"
+	off   = "off"
+)
+
+// Execute is excution command function.
+func (cmd status) Execute(token *string) error {
 	status, err := request.GetStatus(token)
 	if err != nil {
 		return err
@@ -27,8 +33,8 @@ func (_ status) Execute(token *string) error {
 	if status == nil {
 		return nil
 	}
-	playlistUrl := status.Context.ExternalUrls.Spotify
-	playlistID, err := parse.GetPlaylistID(playlistUrl)
+	playlistURL := status.Context.ExternalUrls.Spotify
+	playlistID, err := parse.GetPlaylistID(playlistURL)
 
 	if err != nil {
 		return err
@@ -45,8 +51,9 @@ func (_ status) Execute(token *string) error {
 	return nil
 }
 
-func (_ next) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/next", nil)
+// Execute is excution command function.
+func (cmd next) Execute(token *string) (err error) {
+	_, _, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/next", nil)
 
 	if err != nil {
 		return
@@ -57,8 +64,9 @@ func (_ next) Execute(token *string) (err error) {
 	return
 }
 
+// Execute is excution command function.
 func (cmd pause) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/pause", nil)
+	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -68,11 +76,12 @@ func (cmd pause) Execute(token *string) (err error) {
 	return
 }
 
-func (_ play) Execute(token *string) (err error) {
+// Execute is excution command function.
+func (cmd play) Execute(token *string) (err error) {
 	var url string
 	util.Input("please input playlist url\n------------------------", "PlayListURL", &url)
 
-	uri, err := parse.CreateContextUri(url)
+	uri, err := parse.CreateContextURI(url)
 	if err != nil {
 		return
 	}
@@ -84,22 +93,22 @@ func (_ play) Execute(token *string) (err error) {
 func playFromURL(token *string, uri string) (err error) {
 	uriKind := strings.Split(uri, ":")[1]
 	var values []byte
-	if uriKind == "track" {
-		values, err = json.Marshal(playJson{Uris: []string{uri}})
+	if uriKind == track {
+		values, err = json.Marshal(playJSON{URIs: []string{uri}})
 	} else {
-		values, err = json.Marshal(playListJson{ContextUri: uri})
+		values, err = json.Marshal(playListJSON{ContextURI: uri})
 	}
 	if err != nil {
 		return
 	}
 	fmt.Println(string(values))
 
-	response, err := request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, statusCode, err := request.CreateRequest(token, selfmadetypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}
 
-	fmt.Println(response.StatusCode)
+	fmt.Println(statusCode)
 
 	err = status{}.Execute(token)
 
@@ -110,8 +119,9 @@ func playFromURL(token *string, uri string) (err error) {
 	return
 }
 
-func (_ prev) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.POST, "/me/player/previous", nil)
+// Execute is excution command function.
+func (cmd prev) Execute(token *string) (err error) {
+	_, _, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/previous", nil)
 
 	if err != nil {
 		return
@@ -122,21 +132,23 @@ func (_ prev) Execute(token *string) (err error) {
 	return
 }
 
-type playListJson struct {
-	ContextUri string `json:"context_uri"`
+type playListJSON struct {
+	ContextURI string `json:"context_uri"`
 }
 
-type playJson struct {
-	Uris []string `json:"uris"`
+type playJSON struct {
+	URIs []string `json:"uris"`
 }
 
-func choice(playlists []selfMadeTypes.PlayList) selfMadeTypes.PlayList {
+func choice(playlists []selfmadetypes.PlayList) selfmadetypes.PlayList {
 	rand.Seed(time.Now().UnixNano())
 	index := rand.Intn(len(playlists))
 
 	return playlists[index]
 }
-func (_ repeat) Execute(token *string) (err error) {
+
+// Execute is excution command function.
+func (cmd repeat) Execute(token *string) (err error) {
 	status, err := request.GetStatus(token)
 
 	if err != nil {
@@ -145,7 +157,7 @@ func (_ repeat) Execute(token *string) (err error) {
 
 	state := switchRepeatState(status.RepeatState)
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
+	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -158,19 +170,20 @@ func (_ repeat) Execute(token *string) (err error) {
 
 func switchRepeatState(state string) string {
 	switch state {
-	case "track":
-		return "off"
+	case track:
+		return off
 	case "context":
-		return "track"
-	case "off":
+		return track
+	case off:
 		return "context"
 	}
 
-	return "off"
+	return off
 }
 
-func (_ resume) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, "/me/player/play", nil)
+// Execute is excution command function.
+func (cmd resume) Execute(token *string) (err error) {
+	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -180,7 +193,8 @@ func (_ resume) Execute(token *string) (err error) {
 	return
 }
 
-func (_ shuffle) Execute(token *string) (err error) {
+// Execute is excution command function.
+func (cmd shuffle) Execute(token *string) (err error) {
 	status, err := request.GetStatus(token)
 	if err != nil {
 		return
@@ -188,7 +202,7 @@ func (_ shuffle) Execute(token *string) (err error) {
 
 	state := !status.ShuffleState
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
+	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
@@ -198,22 +212,15 @@ func (_ shuffle) Execute(token *string) (err error) {
 	return
 }
 
-func (_ welcome) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me", nil)
+// Execute is excution command function.
+func (cmd welcome) Execute(token *string) (err error) {
+	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	buffer := make([]byte, 8192)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
-
-	var userInfo selfMadeTypes.User
-	err = json.Unmarshal(buffer, &userInfo)
+	var userInfo selfmadetypes.User
+	err = json.Unmarshal(response, &userInfo)
 	if err != nil {
 		return
 	}
@@ -223,7 +230,8 @@ func (_ welcome) Execute(token *string) (err error) {
 	return
 }
 
-func (_ refresh) Execute(token *string) error {
+// Execute is excution command function.
+func (cmd refresh) Execute(token *string) error {
 	tokenPtr, err := auth.GetToken()
 	if err != nil {
 		return err
@@ -234,7 +242,8 @@ func (_ refresh) Execute(token *string) error {
 	return nil
 }
 
-func (_ volume) Execute(token *string) (err error) {
+// Execute is excution command function.
+func (cmd volume) Execute(token *string) (err error) {
 	var percent string
 	util.Input("please volume percent\n------------------------", "Volume", &percent)
 
@@ -247,17 +256,33 @@ func (_ volume) Execute(token *string) (err error) {
 		return errors.New("percent range is 0 to 100")
 	}
 
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/player/volume?volume_percent=%s", percent), nil)
+	_, _, err = request.CreateRequest(
+		token,
+		selfmadetypes.PUT,
+		fmt.Sprintf(
+			"/me/player/volume?volume_percent=%s",
+			percent,
+		),
+		nil,
+	)
 
 	return
 }
 
-func (_ search) Execute(token *string) (err error) {
+// Execute is excution command function.
+func (cmd search) Execute(token *string) (err error) {
 	var kind string
-	util.Input("please input search kind\n\nsearch kinds: album artist playlist track show episode\n\nif input over 2 types, please enter with a colon\n------------------------", "Kind", &kind)
+	util.Input(
+		"please input search kind\n\n"+
+			"search kinds: album artist playlist track show episode\n\n"+
+			"if input over 2 types, please enter with a colon\n"+
+			"------------------------",
+		"Kind",
+		&kind,
+	)
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
-		if kind != "album" && kind != "artist" && kind != "playlist" && kind != "track" && kind != "show" && kind != "episode" {
+		if existTarget(kind, []string{"album", "artist", "playlist", "track", "show", "episode"}) {
 			return fmt.Errorf("search type %s is not found", kind)
 		}
 	}
@@ -266,27 +291,34 @@ func (_ search) Execute(token *string) (err error) {
 	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
 	keyword = url.QueryEscape(keyword)
 
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kind), nil)
+	response, _, err := request.CreateRequest(
+		token,
+		selfmadetypes.GET,
+		fmt.Sprintf(
+			"/search?q=%s&type=%s",
+			keyword,
+			kind,
+		),
+		nil,
+	)
 	if err != nil {
 		return
 	}
 
-	buffer := make([]byte, 65536)
-	_, err = response.Body.Read(buffer)
-	if err != nil {
-		return
-	}
-
-	buffer = bytes.Trim(buffer, "\x00")
-
-	var searchResponse selfMadeTypes.SearchResponse
-	err = json.Unmarshal(buffer, &searchResponse)
+	var searchResponse selfmadetypes.SearchResponse
+	err = json.Unmarshal(response, &searchResponse)
 	if err != nil {
 		return
 	}
 
 	searchResultItems := searchResponse.ParseAndPrint(kinds)
 
+	err = saveSearchResult(searchResultItems)
+
+	return err
+}
+
+func saveSearchResult(searchResults []selfmadetypes.SearchResultItem) (err error) {
 	var isSave string
 	util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
 
@@ -302,42 +334,44 @@ func (_ search) Execute(token *string) (err error) {
 		return
 	}
 
-	if index >= len(searchResultItems) {
+	if index >= len(searchResults) {
 		return errors.New("index is out of range")
 	}
 
-	item := searchResultItems[index]
+	item := searchResults[index]
 
-	err = file.SavePlayList(selfMadeTypes.PlayList{Name: item.Name, Uri: item.Uri})
-	if err != nil {
-		return
-	}
+	err = file.SavePlayList(selfmadetypes.PlayList{Name: item.Name, URI: item.URI})
 
 	return
 }
 
-func (_ favoriteTrack) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfMadeTypes.GET, "/me/player/currently-playing", nil)
+func existTarget(target string, judgeTargets []string) bool {
+	for _, judgeTarget := range judgeTargets {
+		if judgeTarget == target {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Execute is excution command function.
+func (cmd favoriteTrack) Execute(token *string) (err error) {
+	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/currently-playing", nil)
 	if err != nil {
 		return
 	}
 
-	buffer := make([]byte, 65536)
-	_, err = response.Body.Read(buffer)
+	var playingStatus selfmadetypes.CurrentPlayStatus
+
+	response = bytes.Trim(response, "\x00")
+	err = json.Unmarshal(response, &playingStatus)
 	if err != nil {
 		return
 	}
 
-	var playingStatus selfMadeTypes.CurrentPlayStatus
-
-	buffer = bytes.Trim(buffer, "\x00")
-	err = json.Unmarshal(buffer, &playingStatus)
-	if err != nil {
-		return
-	}
-
-	id := strings.Split(playingStatus.Item.Uri, ":")[2]
-	_, err = request.CreateRequest(token, selfMadeTypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+	id := strings.Split(playingStatus.Item.URI, ":")[2]
+	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
 	if err != nil {
 		return
 	}

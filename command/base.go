@@ -1,25 +1,14 @@
+// Package command is this application's commands package.
 package command
 
 import (
 	"fmt"
-	"isso0424/spotify_CLI/selfMadeTypes"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/util"
 )
 
-func MainLoop(token string) {
-	fmt.Println("if you wanna exit, you must type 'exit'")
-	err := welcome{}.Execute(&token)
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-
-	err = status{}.Execute(&token)
-
-	if err != nil {
-		fmt.Println("Error: ", err)
-	}
-
-	requestCommands := []selfMadeTypes.RequestCommand{
+var (
+	requestCommands = []selfmadetypes.RequestCommand{
 		play{},
 		pause{},
 		status{},
@@ -34,14 +23,29 @@ func MainLoop(token string) {
 		favoriteTrack{},
 	}
 
-	loadfileCommands := []selfMadeTypes.FileloadCommand{
+	loadfileCommands = []selfmadetypes.FileloadCommand{
 		save{},
 		show{},
 	}
 
-	requestAndLoadfileCommands := []selfMadeTypes.RequestAndFileloadCommand{
+	requestAndLoadfileCommands = []selfmadetypes.RequestAndFileloadCommand{
 		load{},
 		random{},
+	}
+)
+
+// MainLoop is function that is application's root loop.
+func MainLoop(token string) {
+	fmt.Println("if you wanna exit, you must type 'exit'")
+	err := welcome{}.Execute(&token)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	err = status{}.Execute(&token)
+
+	if err != nil {
+		fmt.Println("Error: ", err)
 	}
 
 	allCommands := joinCommandList(
@@ -62,7 +66,7 @@ func MainLoop(token string) {
 			break
 		}
 
-		err := execute(&token, commandName, requestCommands, loadfileCommands, requestAndLoadfileCommands)
+		err := execute(&token, commandName)
 
 		if err != nil {
 			fmt.Printf("Error: %s", err)
@@ -73,25 +77,22 @@ func MainLoop(token string) {
 func execute(
 	token *string,
 	commandName string,
-	requestCommandList []selfMadeTypes.RequestCommand,
-	loadfileCommandList []selfMadeTypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
 ) (err error) {
-	for _, command := range requestCommandList {
+	for _, command := range requestCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
 			return
 		}
 	}
 
-	for _, command := range loadfileCommandList {
+	for _, command := range loadfileCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute()
 			return
 		}
 	}
 
-	for _, command := range requestAndLoadfileCommandList {
+	for _, command := range requestAndLoadfileCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
 			return
@@ -102,10 +103,10 @@ func execute(
 }
 
 func joinCommandList(
-	requestCommandList []selfMadeTypes.RequestCommand,
-	loadfileCommandList []selfMadeTypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfMadeTypes.RequestAndFileloadCommand,
-) (commandList []selfMadeTypes.Command) {
+	requestCommandList []selfmadetypes.RequestCommand,
+	loadfileCommandList []selfmadetypes.FileloadCommand,
+	requestAndLoadfileCommandList []selfmadetypes.RequestAndFileloadCommand,
+) (commandList []selfmadetypes.Command) {
 	for _, command := range requestCommandList {
 		commandList = append(commandList, command)
 	}

@@ -26,7 +26,7 @@ func refresh(token string) (newToken *string, err error) {
 	request, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
 
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	encoded := createEncodedID()
@@ -39,6 +39,12 @@ func refresh(token string) (newToken *string, err error) {
 	if err != nil {
 		return
 	}
+	defer func() {
+		err = response.Body.Close()
+		if err != nil {
+			fmt.Println("Error: " + err.Error())
+		}
+	}()
 
 	buffer := make([]byte, 1024)
 	_, err = response.Body.Read(buffer)
@@ -49,14 +55,14 @@ func refresh(token string) (newToken *string, err error) {
 	buffer = bytes.Trim(buffer, "\x00")
 
 	var responseBody refreshTokenResponse
-	if err := json.Unmarshal(buffer, &responseBody); err != nil {
-		fmt.Println("Error: ", err)
-		return nil, err
+	err = json.Unmarshal(buffer, &responseBody)
+	if err != nil {
+		return
 	}
 
 	newToken = &responseBody.AccessToken
 
-	return
+	return newToken, err
 }
 
 func createEncodedID() string {
