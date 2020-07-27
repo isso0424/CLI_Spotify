@@ -252,7 +252,6 @@ func (_ search) Execute(token *string) (err error) {
 
 	var keyword string
 	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
-	keyword = strings.Replace(keyword, " ", "%20", -1)
 	keyword = url.QueryEscape(keyword)
 
 	response, err := request.CreateRequest(token, selfMadeTypes.GET, fmt.Sprintf("/search?q=%s&type=%s", keyword, kind), nil)
