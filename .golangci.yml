@@ -7,3 +7,5 @@ linters:
     - "gosec"
     - "gocritic"
     - "wsl"
+    - "maligned"
+    - "goerr113"
