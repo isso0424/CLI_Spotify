@@ -22,6 +22,7 @@ var (
 		search{},
 		favoriteTrack{},
 		importOwnPlaylists{},
+		recent{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{
