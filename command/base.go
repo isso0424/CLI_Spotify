@@ -21,6 +21,7 @@ var (
 		volume{},
 		search{},
 		favoriteTrack{},
+		importOwnPlaylists{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{

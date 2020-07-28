@@ -172,3 +172,12 @@ func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
 		Kind:    "request",
 	}
 }
+
+// GetHelp is getting help function.
+func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "Import user playlists",
+		Kind:    "request",
+	}
+}

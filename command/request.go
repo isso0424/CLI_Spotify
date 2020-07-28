@@ -380,3 +380,26 @@ func (cmd favoriteTrack) Execute(token *string) (err error) {
 
 	return
 }
+
+// Execute is excution command function.
+func (cmd importOwnPlaylists) Execute(token *string) (err error) {
+	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
+	if err != nil {
+		return
+	}
+
+	var userPlayLists selfmadetypes.UserPlaylists
+	err = json.Unmarshal(response, &userPlayLists)
+	if err != nil {
+		return
+	}
+
+	for _, playlist := range userPlayLists.Item {
+		err = file.SavePlayList(playlist)
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
