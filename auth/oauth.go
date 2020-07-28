@@ -17,6 +17,7 @@ var (
 		spotify.ScopeUserModifyPlaybackState,
 		spotify.ScopeUserReadPlaybackState,
 		spotify.ScopeUserLibraryModify,
+		spotify.ScopeUserReadRecentlyPlayed,
 	)
 	state = "abc123"
 	ch    = make(chan *spotify.Client)

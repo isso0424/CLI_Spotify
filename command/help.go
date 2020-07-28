@@ -181,3 +181,12 @@ func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
 		Kind:    "request",
 	}
 }
+
+// GetHelp is getting help function.
+func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "Show recently played track",
+		Kind:    "request",
+	}
+}

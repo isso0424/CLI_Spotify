@@ -403,3 +403,39 @@ func (cmd importOwnPlaylists) Execute(token *string) (err error) {
 
 	return
 }
+
+// Execute is excution command function.
+func (cmd recent) Execute(token *string) (err error) {
+	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/recently-played?limit=1", nil)
+	if err != nil {
+		return
+	}
+
+	var recentPlayedTracks selfmadetypes.RecentPlayedTracks
+	err = json.Unmarshal(response, &recentPlayedTracks)
+	if err != nil {
+		return
+	}
+
+	recentPlayedTrack := recentPlayedTracks.Items[0]
+	artistNames := getArtistsName(recentPlayedTrack.Track.Artists)
+
+	fmt.Printf(
+		"TrackName: %s\n"+
+			"Artist:    %s\n",
+		recentPlayedTrack.Track.Name,
+		artistNames,
+	)
+
+	return
+}
+
+func getArtistsName(artists []selfmadetypes.Artists) (artistNames string) {
+	artistNames = ""
+
+	for _, artist := range artists {
+		artistNames += artist.Name + " "
+	}
+
+	return
+}

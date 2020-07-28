@@ -127,3 +127,10 @@ type importOwnPlaylists struct{}
 func (cmd importOwnPlaylists) GetCommandName() string {
 	return "importOwnPlaylists"
 }
+
+type recent struct{}
+
+// GetCommandName is getting command name function.
+func (cmd recent) GetCommandName() string {
+	return "recent"
+}
