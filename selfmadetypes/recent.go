@@ -2,7 +2,11 @@ package selfmadetypes
 
 // RecentPlayedTracks is response of Get recently played track.
 type RecentPlayedTracks struct{
-	Items []trackSimplified `json:"items"`
+	Items []recentPlayedItem `json:"items"`
+}
+
+type recentPlayedItem struct{
+	Track trackSimplified `json:"track"`
 }
 
 type trackSimplified struct{
