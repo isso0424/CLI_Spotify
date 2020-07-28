@@ -120,3 +120,10 @@ type favoriteTrack struct{}
 func (cmd favoriteTrack) GetCommandName() string {
 	return "favoriteTrack"
 }
+
+type importOwnPlaylists struct{}
+
+// GetCommandName is getting command name function.
+func (cmd importOwnPlaylists) GetCommandName() string {
+	return "importOwnPlaylists"
+}
