@@ -421,8 +421,8 @@ func (cmd recent) Execute(token *string) (err error) {
 	artistNames := getArtistsName(recentPlayedTrack.Track.Artists)
 
 	fmt.Printf(
-		"TrackName: %s\n" +
-		"Artist:    %s\n",
+		"TrackName: %s\n"+
+			"Artist:    %s\n",
 		recentPlayedTrack.Track.Name,
 		artistNames,
 	)
