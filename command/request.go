@@ -418,13 +418,24 @@ func (cmd recent) Execute(token *string) (err error) {
 	}
 
 	recentPlayedTrack := recentPlayedTracks.Items[0]
+	artistNames := getArtistsName(recentPlayedTrack.Track.Artists)
 
 	fmt.Printf(
 		"TrackName: %s\n" +
 		"Artist:    %s\n",
-		recentPlayedTrack.Name,
-		recentPlayedTrack.Artists,
+		recentPlayedTrack.Track.Name,
+		artistNames,
 	)
+
+	return
+}
+
+func getArtistsName(artists []selfmadetypes.Artists) (artistNames string) {
+	artistNames = ""
+
+	for _, artist := range artists {
+		artistNames += artist.Name + " "
+	}
 
 	return
 }
