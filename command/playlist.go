@@ -126,13 +126,13 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 	util.Input("Please input track id", "TrackID", &addTrackID)
 	addTrackURI := fmt.Sprintf("spotify:track:%s", addTrackID)
 
-	body, err := json.Marshal(map[string][]interface{}{"tracks": {map[string]string{"uri": addTrackURI}}})
+	body, err := json.Marshal(map[string][]map[string]string{"tracks": {{"uri": addTrackURI}}})
 	if err != nil {
 		return
 	}
 	_, statusCode, err := request.CreateRequest(
 		token,
-		selfmadetypes.POST,
+		selfmadetypes.DELETE,
 		fmt.Sprintf(
 			"/playlists/%s/tracks",
 			playlistID,
