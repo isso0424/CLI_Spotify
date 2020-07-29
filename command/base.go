@@ -26,6 +26,9 @@ var (
 		playlist{},
 		load{},
 		random{},
+		addToPlaylist{},
+		createPlaylist{},
+		deleteTrackFromPlaylist{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{

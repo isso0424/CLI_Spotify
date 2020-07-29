@@ -35,6 +35,7 @@ func CreateRequest(
 	}
 
 	request.Header.Set("Authorization", "Bearer "+*token)
+	request.Header.Set("Content-Type", "application/json")
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
