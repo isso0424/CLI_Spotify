@@ -14,9 +14,8 @@ func (cmd random) Execute(token *string) (err error) {
 		return
 	}
 
-	playlist := choice(playlists)
-
-	err = playFromURL(token, playlist.URI)
+	choisePlaylist := util.Choose(playlists)
+	err = playFromURL(token, choisePlaylist.URI)
 
 	return
 }
