@@ -450,7 +450,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 	response, _, err := request.CreateRequest(
 		token,
 		selfmadetypes.GET,
-		fmt.Sprintf("/playlistList/%s", *playlistID),
+		fmt.Sprintf("/playlists/%s?fields=name,owner,followers,tracks.total", *playlistID),
 		nil,
 	)
 
@@ -483,10 +483,8 @@ func getPlayingPlaylistID(token *string) (id *string, err error) {
 	}
 
 	url := playingStatus.Context.Href
-	id, err = parse.GetPlaylistID(url)
-	if err != nil {
-		return
-	}
+
+	id = &strings.Split(url, "/")[5]
 
 	return
 }
