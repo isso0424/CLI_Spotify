@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/command/file"
+	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"strings"
@@ -24,7 +25,7 @@ func (cmd recent) Execute(token *string) (err error) {
 	}
 
 	recentPlayedTrack := recentPlayedTracks.Items[0]
-	artistNames := getArtistsName(recentPlayedTrack.Track.Artists)
+	artistNames := parse.GetArtistNames(recentPlayedTrack.Track.Artists)
 
 	fmt.Printf(
 		"TrackName: %s\n"+
@@ -38,7 +39,7 @@ func (cmd recent) Execute(token *string) (err error) {
 
 // Execute is excution command function.
 func (cmd playlist) Execute(token *string) (err error) {
-	playlistID, err := getPlayingPlaylistID(token)
+	playlistID, err := parse.GetPlayingPlaylistID(token)
 	if err != nil {
 		return
 	}

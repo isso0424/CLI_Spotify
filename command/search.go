@@ -2,11 +2,14 @@ package command
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/util"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -23,7 +26,7 @@ func (cmd search) Execute(token *string) (err error) {
 	)
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
-		if existTarget(kind, []string{"album", "artist", "playlist", "track", "show", "episode"}) {
+		if util.ExistTarget(kind, []string{"album", "artist", "playlist", "track", "show", "episode"}) {
 			return fmt.Errorf("search type %s is not found", kind)
 		}
 	}
@@ -57,4 +60,31 @@ func (cmd search) Execute(token *string) (err error) {
 	err = saveSearchResult(searchResultItems)
 
 	return err
+}
+
+func saveSearchResult(searchResults []selfmadetypes.SearchResultItem) (err error) {
+	var isSave string
+	util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
+
+	if isSave != "yes" {
+		return
+	}
+
+	var rawIndex string
+	util.Input("Please input index\n------------------------", "Index", &rawIndex)
+
+	index, err := strconv.Atoi(rawIndex)
+	if err != nil {
+		return
+	}
+
+	if index >= len(searchResults) {
+		return errors.New("index is out of range")
+	}
+
+	item := searchResults[index]
+
+	err = file.SavePlayList(selfmadetypes.PlayList{Name: item.Name, URI: item.URI})
+
+	return
 }

@@ -12,3 +12,23 @@ func Choose(playlists []selfmadetypes.PlayList) selfmadetypes.PlayList {
 
 	return playlists[index]
 }
+
+func CheckDuplicateName(name string, playlistList []selfmadetypes.PlayList) bool {
+	for _, content := range playlistList {
+		if content.Name == name {
+			return false
+		}
+	}
+
+	return true
+}
+
+func ExistTarget(target string, judgeTargets []string) bool {
+	for _, judgeTarget := range judgeTargets {
+		if judgeTarget == target {
+			return true
+		}
+	}
+
+	return false
+}

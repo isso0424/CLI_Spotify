@@ -44,7 +44,7 @@ func (cmd play) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	err = playFromURL(token, *uri)
+	err = request.PlayFromURL(token, *uri)
 
 	return
 }
@@ -63,31 +63,10 @@ func (cmd prev) Execute(token *string) (err error) {
 }
 
 // Execute is excution command function.
-func (cmd status) Execute(token *string) error {
-	status, err := request.GetStatus(token)
-	if err != nil {
-		return err
-	}
+func (cmd status) Execute(token *string) (err error) {
+	err = request.PrintPlayingStatus(token)
 
-	if status == nil {
-		return nil
-	}
-	playlistURL := status.Context.ExternalUrls.Spotify
-	playlistID, err := parse.GetPlaylistID(playlistURL)
-
-	if err != nil {
-		return err
-	}
-
-	playListStatus, err := request.GetPlayListStatus(token, playlistID)
-
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(parse.CreatePlayingStatus(*status, playListStatus))
-
-	return nil
+	return
 }
 
 // Execute is excution command function.
@@ -98,7 +77,7 @@ func (cmd repeat) Execute(token *string) (err error) {
 		return
 	}
 
-	state := switchRepeatState(status.RepeatState)
+	state := util.SwitchRepeatState(status.RepeatState)
 
 	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
