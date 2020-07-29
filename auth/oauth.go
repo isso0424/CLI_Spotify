@@ -18,6 +18,8 @@ var (
 		spotify.ScopeUserReadPlaybackState,
 		spotify.ScopeUserLibraryModify,
 		spotify.ScopeUserReadRecentlyPlayed,
+		spotify.ScopePlaylistModifyPrivate,
+		spotify.ScopePlaylistModifyPublic,
 	)
 	state = "abc123"
 	ch    = make(chan *spotify.Client)

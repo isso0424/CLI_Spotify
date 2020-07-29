@@ -26,6 +26,7 @@ var (
 		playlist{},
 		load{},
 		random{},
+		addToPlaylist{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{
