@@ -45,7 +45,7 @@ func (cmd addToPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	if statusCode == 201 {
+	if statusCode == request.Created {
 		fmt.Println("Successful added!!!")
 	} else {
 		fmt.Println("Track add failed")
@@ -90,18 +90,23 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	_, statusCode, err := request.CreateRequest(token, selfmadetypes.POST, fmt.Sprintf("/users/%s/playlists", userID), bytes.NewBuffer(values))
+	_, statusCode, err := request.CreateRequest(
+		token,
+		selfmadetypes.POST,
+		fmt.Sprintf("/users/%s/playlists", userID),
+		bytes.NewBuffer(values),
+	)
 	if err != nil {
 		return
 	}
 
-	if statusCode == 200 || statusCode == 201 {
+	if statusCode == request.Ok || statusCode == request.Created {
 		fmt.Println("Successful created playlist!!!")
 	} else {
 		fmt.Println("Failed create playlist.")
 	}
 
-	return
+	return err
 }
 
 type deleteTrackFromPlaylist struct{}
@@ -112,8 +117,8 @@ func (cmd deleteTrackFromPlaylist) GetCommandName() string {
 
 func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
-		Name: cmd.GetCommandName(),
-		Kind: "request",
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
 		Explain: "Delete track from playlist",
 	}
 }
@@ -143,11 +148,11 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	if statusCode == 200 {
+	if statusCode == request.Ok {
 		fmt.Println("Successful delete track!!!")
 	} else {
 		fmt.Println("Failed delete track.")
 	}
 
-	return
+	return err
 }
