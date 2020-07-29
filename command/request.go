@@ -450,11 +450,28 @@ func (cmd playlist) Execute(token *string) (err error) {
 	response, _, err := request.CreateRequest(
 		token,
 		selfmadetypes.GET,
-		fmt.Sprintf("/playlistList/%s", playlistID),
+		fmt.Sprintf("/playlistList/%s", *playlistID),
 		nil,
 	)
 
-	var playlistDetails
+	var playlistDetails selfmadetypes.PlayListFromRequest
+	err = json.Unmarshal(response, &playlistDetails)
+	if err != nil {
+		return
+	}
+
+	fmt.Printf(
+		"Playlist detail\n" +
+		"---------------\n" +
+		"Name: %s\n" +
+		"Owner: %s\n" +
+		"Followers: %d users\n" +
+		"Tracks: %d track(s)\n\n",
+		playlistDetails.Name,
+		playlistDetails.Owner.DisplayName,
+		playlistDetails.Followers.Total,
+		playlistDetails.Tracks.Total,
+	)
 
 	return
 }
