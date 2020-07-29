@@ -5,6 +5,7 @@ const (
 	off   = "off"
 )
 
+// SwitchRepeatState is function that switch repeat state.
 func SwitchRepeatState(state string) string {
 	switch state {
 	case track:

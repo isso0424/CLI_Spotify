@@ -11,6 +11,7 @@ import (
 
 const track = "track"
 
+// PlayFromURL is play track or playlist.
 func PlayFromURL(token *string, uri string) (err error) {
 	uriKind := strings.Split(uri, ":")[1]
 	var values []byte
@@ -34,6 +35,7 @@ func PlayFromURL(token *string, uri string) (err error) {
 	return
 }
 
+// PrintPlayingStatus is function that print playing status.
 func PrintPlayingStatus(token *string) (err error) {
 	status, err := GetStatus(token)
 	if err != nil || status == nil {

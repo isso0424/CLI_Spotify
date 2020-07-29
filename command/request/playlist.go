@@ -1,12 +1,10 @@
-package parse
+package request
 
-import (
-	"isso0424/spotify_CLI/command/request"
-	"strings"
-)
+import "strings"
 
+// GetPlayingPlaylistID is function get playlist id.
 func GetPlayingPlaylistID(token *string) (id *string, err error) {
-	playingStatus, err := request.GetStatus(token)
+	playingStatus, err := GetStatus(token)
 	if err != nil {
 		return
 	}
