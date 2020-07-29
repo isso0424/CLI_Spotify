@@ -69,7 +69,7 @@ func (cmd playlist) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd playlist) Execute(token *string) (err error) {
-	playlistID, err := parse.GetPlayingPlaylistID(token)
+	playlistID, err := request.GetPlayingPlaylistID(token)
 	if err != nil {
 		return
 	}

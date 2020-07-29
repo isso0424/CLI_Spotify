@@ -24,16 +24,13 @@ var (
 		importOwnPlaylists{},
 		recent{},
 		playlist{},
+		load{},
+		random{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{
 		save{},
 		show{},
-	}
-
-	requestAndLoadfileCommands = []selfmadetypes.RequestAndFileloadCommand{
-		load{},
-		random{},
 	}
 )
 
@@ -54,7 +51,6 @@ func MainLoop(token string) {
 	allCommands := joinCommandList(
 		requestCommands,
 		loadfileCommands,
-		requestAndLoadfileCommands,
 	)
 
 	for {
@@ -95,30 +91,18 @@ func execute(
 		}
 	}
 
-	for _, command := range requestAndLoadfileCommands {
-		if command.GetCommandName() == commandName {
-			err = command.Execute(token)
-			return
-		}
-	}
-
 	return
 }
 
 func joinCommandList(
 	requestCommandList []selfmadetypes.RequestCommand,
 	loadfileCommandList []selfmadetypes.FileloadCommand,
-	requestAndLoadfileCommandList []selfmadetypes.RequestAndFileloadCommand,
 ) (commandList []selfmadetypes.Command) {
 	for _, command := range requestCommandList {
 		commandList = append(commandList, command)
 	}
 
 	for _, command := range loadfileCommandList {
-		commandList = append(commandList, command)
-	}
-
-	for _, command := range requestAndLoadfileCommandList {
 		commandList = append(commandList, command)
 	}
 
