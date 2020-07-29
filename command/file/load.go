@@ -24,7 +24,7 @@ func init() {
 }
 
 // LoadPlayList is load playlist from playlist.json
-func LoadPlayList() (playlistList []selfmadetypes.PlayList, err error) {
+func LoadPlayList() (playlistList []selfmadetypes.SearchResultItem, err error) {
 	if _, err = fileExist("playlist.json"); err != nil {
 		return
 	}

@@ -19,9 +19,9 @@ func TestLoadPlayListSuccess(t *testing.T) {
 			return fileInfo, nil
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []selfmadetypes.PlayList{
+			playlistList := []selfmadetypes.SearchResultItem{
 				{
-					Name: "PlayList",
+					Name: "SearchResultItem",
 					URI:  "URI",
 				},
 			}
@@ -33,9 +33,9 @@ func TestLoadPlayListSuccess(t *testing.T) {
 	successResult, _ := LoadPlayList()
 	assert.Equal(
 		t,
-		[]selfmadetypes.PlayList{
+		[]selfmadetypes.SearchResultItem{
 			{
-				Name: "PlayList",
+				Name: "SearchResultItem",
 				URI:  "URI",
 			},
 		},
@@ -50,9 +50,9 @@ func TestLoadPlayListFail(t *testing.T) {
 			return nil, errors.New("file not exist")
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []selfmadetypes.PlayList{
+			playlistList := []selfmadetypes.SearchResultItem{
 				{
-					Name: "PlayList",
+					Name: "SearchResultItem",
 					URI:  "URI",
 				},
 			}
@@ -85,10 +85,10 @@ func TestSavePlayListSuccess(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]selfmadetypes.PlayList, error) {
-			playlistList := []selfmadetypes.PlayList{
+		func() ([]selfmadetypes.SearchResultItem, error) {
+			playlistList := []selfmadetypes.SearchResultItem{
 				{
-					Name: "PlayList",
+					Name: "SearchResultItem",
 					URI:  "URI",
 				},
 			}
@@ -98,7 +98,7 @@ func TestSavePlayListSuccess(t *testing.T) {
 	defer reset()
 
 	err := SavePlayList(
-		selfmadetypes.PlayList{
+		selfmadetypes.SearchResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},
@@ -112,10 +112,10 @@ func TestSavePlayListFail(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return errors.New("cannot write a file")
 		},
-		func() ([]selfmadetypes.PlayList, error) {
-			playlistList := []selfmadetypes.PlayList{
+		func() ([]selfmadetypes.SearchResultItem, error) {
+			playlistList := []selfmadetypes.SearchResultItem{
 				{
-					Name: "PlayList",
+					Name: "SearchResultItem",
 					URI:  "URI",
 				},
 			}
@@ -124,7 +124,7 @@ func TestSavePlayListFail(t *testing.T) {
 	)
 
 	err := SavePlayList(
-		selfmadetypes.PlayList{
+		selfmadetypes.SearchResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},
@@ -136,13 +136,13 @@ func TestSavePlayListFail(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]selfmadetypes.PlayList, error) {
+		func() ([]selfmadetypes.SearchResultItem, error) {
 			return nil, errors.New("cannot load a file")
 		},
 	)
 
 	err = SavePlayList(
-		selfmadetypes.PlayList{
+		selfmadetypes.SearchResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},

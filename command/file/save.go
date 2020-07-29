@@ -10,7 +10,7 @@ import (
 
 var (
 	writeFile func(string, []byte, os.FileMode) error
-	loadFile  func() (playlistList []selfmadetypes.PlayList, err error)
+	loadFile  func() (playlistList []selfmadetypes.SearchResultItem, err error)
 )
 
 func init() {
@@ -18,13 +18,13 @@ func init() {
 		return ioutil.WriteFile(fileName, fileDetail, permission)
 	}
 
-	loadFile = func() (playlistList []selfmadetypes.PlayList, err error) {
+	loadFile = func() (playlistList []selfmadetypes.SearchResultItem, err error) {
 		return LoadPlayList()
 	}
 }
 
 // SavePlayList is function save playlist for json file
-func SavePlayList(target selfmadetypes.PlayList) (err error) {
+func SavePlayList(target selfmadetypes.SearchResultItem) (err error) {
 	playlistList, err := loadFile()
 	if err != nil {
 		return
@@ -49,7 +49,7 @@ func SavePlayList(target selfmadetypes.PlayList) (err error) {
 
 func setSavePlayList(
 	writeFileFunc func(string, []byte, os.FileMode) error,
-	loadFileFunc func() ([]selfmadetypes.PlayList, error),
+	loadFileFunc func() ([]selfmadetypes.SearchResultItem, error),
 ) func() {
 	tmpWriteFile := writeFile
 	tmpLoadFile := loadFile

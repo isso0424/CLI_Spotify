@@ -7,16 +7,16 @@ import (
 )
 
 // CreatePlayingStatus is parsing play status function
-func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.PlayListFromRequest) (status string) {
+func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.PlayList) (status string) {
 	if content.IsPlaying && len(content.Item.Artists) != 0 {
 		status = fmt.Sprintf(
 			"Playing status\n"+
 				"--------------\n"+
 				"Title: %s\n"+
 				"Artist: %s\n\n"+
-				"PlayList Information\n"+
+				"SearchResultItem Information\n"+
 				"-------------------\n"+
-				"PlayList: %s\n"+
+				"SearchResultItem: %s\n"+
 				"Owner: %s\n",
 			content.Item.Name,
 			content.Item.Artists[0].Name,

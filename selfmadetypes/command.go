@@ -15,13 +15,6 @@ type FileloadCommand interface {
 	GetHelp() CommandHelp
 }
 
-// RequestAndFileloadCommand is interface that request and fileLoad commands.
-type RequestAndFileloadCommand interface {
-	Execute(*string) error
-	GetCommandName() string
-	GetHelp() CommandHelp
-}
-
 // CommandHelp is command's help.
 type CommandHelp struct {
 	Name    string
