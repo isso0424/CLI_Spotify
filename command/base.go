@@ -23,6 +23,7 @@ var (
 		favoriteTrack{},
 		importOwnPlaylists{},
 		recent{},
+		playlist{},
 	}
 
 	loadfileCommands = []selfmadetypes.FileloadCommand{

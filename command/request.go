@@ -439,3 +439,55 @@ func getArtistsName(artists []selfmadetypes.Artists) (artistNames string) {
 
 	return
 }
+
+// Execute is excution command function.
+func (cmd playlist) Execute(token *string) (err error) {
+	playlistID, err := getPlayingPlaylistID(token)
+	if err != nil {
+		return
+	}
+
+	response, _, err := request.CreateRequest(
+		token,
+		selfmadetypes.GET,
+		fmt.Sprintf("/playlists/%s?fields=name,owner,followers,tracks.total", *playlistID),
+		nil,
+	)
+	if err != nil {
+		return
+	}
+
+	var playlistDetails selfmadetypes.PlayListFromRequest
+	err = json.Unmarshal(response, &playlistDetails)
+	if err != nil {
+		return
+	}
+
+	fmt.Printf(
+		"Playlist detail\n"+
+			"---------------\n"+
+			"Name: %s\n"+
+			"Owner: %s\n"+
+			"Followers: %d users\n"+
+			"Tracks: %d track(s)\n\n",
+		playlistDetails.Name,
+		playlistDetails.Owner.DisplayName,
+		playlistDetails.Followers.Total,
+		playlistDetails.Tracks.Total,
+	)
+
+	return err
+}
+
+func getPlayingPlaylistID(token *string) (id *string, err error) {
+	playingStatus, err := request.GetStatus(token)
+	if err != nil {
+		return
+	}
+
+	url := playingStatus.Context.Href
+
+	id = &strings.Split(url, "/")[5]
+
+	return
+}
