@@ -453,6 +453,9 @@ func (cmd playlist) Execute(token *string) (err error) {
 		fmt.Sprintf("/playlists/%s?fields=name,owner,followers,tracks.total", *playlistID),
 		nil,
 	)
+	if err != nil {
+		return
+	}
 
 	var playlistDetails selfmadetypes.PlayListFromRequest
 	err = json.Unmarshal(response, &playlistDetails)
@@ -473,7 +476,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 		playlistDetails.Tracks.Total,
 	)
 
-	return
+	return err
 }
 
 func getPlayingPlaylistID(token *string) (id *string, err error) {
