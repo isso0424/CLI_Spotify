@@ -84,7 +84,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 		return
 	}
 
-	var playlistDetails selfmadetypes.PlayListFromRequest
+	var playlistDetails selfmadetypes.PlayList
 	err = json.Unmarshal(response, &playlistDetails)
 	if err != nil {
 		return

@@ -71,7 +71,7 @@ func CreateRequest(
 }
 
 // GetPlayListStatus is get user playlist status.
-func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.PlayListFromRequest, err error) {
+func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.PlayList, err error) {
 	response, _, err := CreateRequest(
 		token,
 		selfmadetypes.GET,

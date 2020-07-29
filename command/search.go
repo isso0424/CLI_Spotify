@@ -100,7 +100,7 @@ func saveSearchResult(searchResults []selfmadetypes.SearchResultItem) (err error
 
 	item := searchResults[index]
 
-	err = file.SavePlayList(selfmadetypes.PlayList{Name: item.Name, URI: item.URI})
+	err = file.SavePlayList(item)
 
 	return
 }

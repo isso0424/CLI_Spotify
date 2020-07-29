@@ -13,7 +13,7 @@ func TestPausingStatus(t *testing.T) {
 		IsPlaying: false,
 	}
 
-	playList := selfmadetypes.PlayListFromRequest{}
+	playList := selfmadetypes.PlayList{}
 
 	assert.Equal(t, CreatePlayingStatus(content, playList), "Pausing")
 }
@@ -32,7 +32,7 @@ func TestPlayingStatus(t *testing.T) {
 		},
 	}
 
-	playList := selfmadetypes.PlayListFromRequest{
+	playList := selfmadetypes.PlayList{
 		Name: "playList",
 		Owner: selfmadetypes.User{
 			DisplayName: "user",
@@ -46,9 +46,9 @@ func TestPlayingStatus(t *testing.T) {
 			"--------------\n"+
 			"Title: name\n"+
 			"Artist: artist\n\n"+
-			"PlayList Information\n"+
+			"SearchResultItem Information\n"+
 			"-------------------\n"+
-			"PlayList: playList\n"+
+			"SearchResultItem: playList\n"+
 			"Owner: user\n",
 	)
 }

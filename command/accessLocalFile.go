@@ -39,7 +39,7 @@ func (cmd save) Execute() (err error) {
 	var name string
 	util.Input("\nplease input playlist name\n", "PlayListName", &name)
 
-	list := selfmadetypes.PlayList{URI: *uri, Name: name}
+	list := selfmadetypes.SearchResultItem{URI: *uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 
