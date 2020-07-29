@@ -103,3 +103,51 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 
 	return
 }
+
+type deleteTrackFromPlaylist struct{}
+
+func (cmd deleteTrackFromPlaylist) GetCommandName() string {
+	return "deleteTrackFromPlaylist"
+}
+
+func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name: cmd.GetCommandName(),
+		Kind: "request",
+		Explain: "Delete track from playlist",
+	}
+}
+
+func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
+	var playlistID string
+	util.Input("Please input playlist id", "PlaylistID", &playlistID)
+
+	var addTrackID string
+	util.Input("Please input track id", "TrackID", &addTrackID)
+	addTrackURI := fmt.Sprintf("spotify:track:%s", addTrackID)
+
+	body, err := json.Marshal(map[string][]interface{}{"tracks": {map[string]string{"uri": addTrackURI}}})
+	if err != nil {
+		return
+	}
+	_, statusCode, err := request.CreateRequest(
+		token,
+		selfmadetypes.POST,
+		fmt.Sprintf(
+			"/playlists/%s/tracks",
+			playlistID,
+		),
+		bytes.NewBuffer(body),
+	)
+	if err != nil {
+		return
+	}
+
+	if statusCode == 200 {
+		fmt.Println("Successful delete track!!!")
+	} else {
+		fmt.Println("Failed delete track.")
+	}
+
+	return
+}
