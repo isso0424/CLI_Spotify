@@ -190,3 +190,11 @@ func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
 		Kind:    "request",
 	}
 }
+
+// GetHelp is getting help function.
+func (cmd playlist) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "Show playing playlist detail",
+	}
+}

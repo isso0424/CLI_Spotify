@@ -134,3 +134,10 @@ type recent struct{}
 func (cmd recent) GetCommandName() string {
 	return "recent"
 }
+
+type playlist struct{}
+
+// GetCommandName is getting command name function.
+func (cmd playlist) GetCommandName() string {
+	return "playlist"
+}
