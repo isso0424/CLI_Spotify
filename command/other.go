@@ -8,6 +8,22 @@ import (
 	"isso0424/spotify_CLI/selfmadetypes"
 )
 
+type welcome struct{}
+
+// GetCommandName is getting command name function.
+func (cmd welcome) GetCommandName() string {
+	return "welcome"
+}
+
+// GetHelp is getting help function.
+func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "switch shuffle state",
+	}
+}
+
 // Execute is excution command function.
 func (cmd welcome) Execute(token *string) (err error) {
 	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
@@ -26,6 +42,22 @@ func (cmd welcome) Execute(token *string) (err error) {
 	return
 }
 
+type refresh struct{}
+
+// GetCommandName is getting command name function.
+func (cmd refresh) GetCommandName() string {
+	return "refresh"
+}
+
+// GetHelp is getting help function.
+func (cmd refresh) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "refresh access token",
+	}
+}
+
 // Execute is excution command function.
 func (cmd refresh) Execute(token *string) error {
 	tokenPtr, err := auth.GetToken()
@@ -36,4 +68,20 @@ func (cmd refresh) Execute(token *string) error {
 	*token = *tokenPtr
 
 	return nil
+}
+
+func help(commands []selfmadetypes.Command) {
+	for _, command := range commands {
+		commandHelp := command.GetHelp()
+		fmt.Printf(
+			"-------------------------------\n"+
+				"%s\n"+
+				"-------------------------------\n"+
+				"Kind: %s\n"+
+				"Description: %s\n\n",
+			commandHelp.Name,
+			commandHelp.Kind,
+			commandHelp.Explain,
+		)
+	}
 }

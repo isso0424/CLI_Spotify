@@ -13,6 +13,22 @@ import (
 	"strings"
 )
 
+type search struct{}
+
+// GetCommandName is getting command name function.
+func (cmd search) GetCommandName() string {
+	return "search"
+}
+
+// GetHelp is getting help function.
+func (cmd search) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "search with spotify",
+		Kind:    "request",
+	}
+}
+
 // Execute is excution command function.
 func (cmd search) Execute(token *string) (err error) {
 	var kind string

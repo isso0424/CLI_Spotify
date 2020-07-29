@@ -4,12 +4,27 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"strings"
 )
+
+type recent struct{}
+
+// GetCommandName is getting command name function.
+func (cmd recent) GetCommandName() string {
+	return "recent"
+}
+
+// GetHelp is getting help function.
+func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "Show recently played track",
+		Kind:    "request",
+	}
+}
 
 // Execute is excution command function.
 func (cmd recent) Execute(token *string) (err error) {
@@ -35,6 +50,21 @@ func (cmd recent) Execute(token *string) (err error) {
 	)
 
 	return
+}
+
+type playlist struct{}
+
+// GetCommandName is getting command name function.
+func (cmd playlist) GetCommandName() string {
+	return "playlist"
+}
+
+// GetHelp is getting help function.
+func (cmd playlist) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "Show playing playlist detail",
+	}
 }
 
 // Execute is excution command function.
@@ -76,6 +106,22 @@ func (cmd playlist) Execute(token *string) (err error) {
 	return err
 }
 
+type favoriteTrack struct{}
+
+// GetCommandName is getting command name function.
+func (cmd favoriteTrack) GetCommandName() string {
+	return "favoriteTrack"
+}
+
+// GetHelp is getting help function.
+func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Explain: "To be favorite playing track.",
+		Kind:    "request",
+	}
+}
+
 // Execute is excution command function.
 func (cmd favoriteTrack) Execute(token *string) (err error) {
 	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/currently-playing", nil)
@@ -98,29 +144,6 @@ func (cmd favoriteTrack) Execute(token *string) (err error) {
 	}
 
 	fmt.Printf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name)
-
-	return
-}
-
-// Execute is excution command function.
-func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
-	if err != nil {
-		return
-	}
-
-	var userPlayLists selfmadetypes.UserPlaylists
-	err = json.Unmarshal(response, &userPlayLists)
-	if err != nil {
-		return
-	}
-
-	for _, playlist := range userPlayLists.Item {
-		err = file.SavePlayList(playlist)
-		if err != nil {
-			return
-		}
-	}
 
 	return
 }

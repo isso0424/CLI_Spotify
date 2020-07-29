@@ -10,6 +10,22 @@ import (
 	"strconv"
 )
 
+type next struct{}
+
+// GetCommandName is getting command name function.
+func (cmd next) GetCommandName() string {
+	return "next"
+}
+
+// GetHelp is getting help function.
+func (cmd next) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "play next queuing track",
+	}
+}
+
 // Execute is excution command function.
 func (cmd next) Execute(token *string) (err error) {
 	_, _, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/next", nil)
@@ -23,6 +39,22 @@ func (cmd next) Execute(token *string) (err error) {
 	return
 }
 
+type pause struct{}
+
+// GetCommandName is getting command name function.
+func (cmd pause) GetCommandName() string {
+	return "pause"
+}
+
+// GetHelp is getting help function.
+func (cmd pause) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "stop playing track",
+	}
+}
+
 // Execute is excution command function.
 func (cmd pause) Execute(token *string) (err error) {
 	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/pause", nil)
@@ -33,6 +65,22 @@ func (cmd pause) Execute(token *string) (err error) {
 	fmt.Println("paused!!!")
 
 	return
+}
+
+type play struct{}
+
+// GetCommandName is getting command name function.
+func (cmd play) GetCommandName() string {
+	return "play"
+}
+
+// GetHelp is getting help function.
+func (cmd play) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "play track from url",
+	}
 }
 
 // Execute is excution command function.
@@ -49,6 +97,22 @@ func (cmd play) Execute(token *string) (err error) {
 	return
 }
 
+type prev struct{}
+
+// GetCommandName is getting command name function.
+func (cmd prev) GetCommandName() string {
+	return "prev"
+}
+
+// GetHelp is getting help function.
+func (cmd prev) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "play previous track",
+	}
+}
+
 // Execute is excution command function.
 func (cmd prev) Execute(token *string) (err error) {
 	_, _, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/previous", nil)
@@ -62,11 +126,44 @@ func (cmd prev) Execute(token *string) (err error) {
 	return
 }
 
+type status struct{}
+
+// GetCommandName is getting command name function.
+func (cmd status) GetCommandName() string {
+	return "status"
+}
+
+// GetHelp is getting help function.
+func (cmd status) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "get playing status in spotify",
+	}
+}
+
 // Execute is excution command function.
 func (cmd status) Execute(token *string) (err error) {
 	err = request.PrintPlayingStatus(token)
 
 	return
+}
+
+// GetCommandName is getting command name function.
+type repeat struct{}
+
+// GetCommandName is getting command name function.
+func (cmd repeat) GetCommandName() string {
+	return "repeat"
+}
+
+// GetHelp is getting help function.
+func (cmd repeat) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "switch repeat mode",
+	}
 }
 
 // Execute is excution command function.
@@ -90,6 +187,22 @@ func (cmd repeat) Execute(token *string) (err error) {
 	return
 }
 
+type resume struct{}
+
+// GetCommandName is getting command name function.
+func (cmd resume) GetCommandName() string {
+	return "resume"
+}
+
+// GetHelp is getting help function.
+func (cmd resume) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "resume stopping track",
+	}
+}
+
 // Execute is excution command function.
 func (cmd resume) Execute(token *string) (err error) {
 	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/play", nil)
@@ -100,6 +213,22 @@ func (cmd resume) Execute(token *string) (err error) {
 	fmt.Println("resumed!!!")
 
 	return
+}
+
+type shuffle struct{}
+
+// GetCommandName is getting command name function.
+func (cmd shuffle) GetCommandName() string {
+	return "shuffle"
+}
+
+// GetHelp is getting help function.
+func (cmd shuffle) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "switch shuffle state",
+	}
 }
 
 // Execute is excution command function.
@@ -119,6 +248,22 @@ func (cmd shuffle) Execute(token *string) (err error) {
 	fmt.Printf("Switch shuffle state to %v\n", state)
 
 	return
+}
+
+type volume struct{}
+
+// GetCommandName is getting command name function.
+func (cmd volume) GetCommandName() string {
+	return "volume"
+}
+
+// GetHelp is getting help function.
+func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
+	return selfmadetypes.CommandHelp{
+		Name:    cmd.GetCommandName(),
+		Kind:    "request",
+		Explain: "set volume percent",
+	}
 }
 
 // Execute is excution command function.
