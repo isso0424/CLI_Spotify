@@ -25,8 +25,7 @@ func CreateRequest(
 	requestURL string,
 	body io.Reader,
 ) (
-	responseArray []byte,
-	statusCode int,
+	httpResponse selfmadetypes.Response,
 	err error,
 ) {
 	request, err := http.NewRequest(method.String(), baseURL+requestURL, body)
@@ -48,15 +47,7 @@ func CreateRequest(
 		}
 	}()
 
-	statusCode = response.StatusCode
-
-	responseArray = make([]byte, 32768)
-	_, err = response.Body.Read(responseArray)
-	if err != nil {
-		return
-	}
-
-	responseArray = bytes.Trim(responseArray, "\x00")
+	httpResponse, err = selfmadetypes.HttpResponse{}.New(response)
 
 	if response.StatusCode == unAuthorized {
 		var newTokenPtr *string
@@ -68,7 +59,7 @@ func CreateRequest(
 		*token = *newTokenPtr
 	}
 
-	return responseArray, statusCode, err
+	return httpResponse, err
 }
 
 // GetPlayListStatus is get user playlist status.
