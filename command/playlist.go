@@ -31,7 +31,7 @@ func (cmd addToPlaylist) Execute(token *string) (err error) {
 	util.Input("Please input track id", "TrackID", &addTrackID)
 	addTrackURI := fmt.Sprintf("spotify:track:%s", addTrackID)
 
-	_, statusCode, err := request.CreateRequest(
+	response, err := request.CreateRequest(
 		token,
 		selfmadetypes.POST,
 		fmt.Sprintf(
@@ -45,7 +45,7 @@ func (cmd addToPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	if statusCode == request.Created {
+	if response.GetStatusCode() == request.Created {
 		fmt.Println("Successful added!!!")
 	} else {
 		fmt.Println("Track add failed")
@@ -69,13 +69,13 @@ func (cmd createPlaylist) GetHelp() selfmadetypes.CommandHelp {
 }
 
 func (cmd createPlaylist) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
 	var user selfmadetypes.User
-	err = json.Unmarshal(response, &user)
+	err = json.Unmarshal(response.GetBody(), &user)
 	if err != nil {
 		return
 	}
@@ -90,7 +90,7 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	_, statusCode, err := request.CreateRequest(
+	response, err = request.CreateRequest(
 		token,
 		selfmadetypes.POST,
 		fmt.Sprintf("/users/%s/playlists", userID),
@@ -100,7 +100,7 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	if statusCode == request.Ok || statusCode == request.Created {
+	if response.GetStatusCode() == request.Ok || response.GetStatusCode() == request.Created {
 		fmt.Println("Successful created playlist!!!")
 	} else {
 		fmt.Println("Failed create playlist.")
@@ -135,7 +135,7 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	_, statusCode, err := request.CreateRequest(
+	response, err := request.CreateRequest(
 		token,
 		selfmadetypes.DELETE,
 		fmt.Sprintf(
@@ -148,7 +148,7 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 		return
 	}
 
-	if statusCode == request.Ok {
+	if response.GetStatusCode() == request.Ok {
 		fmt.Println("Successful delete track!!!")
 	} else {
 		fmt.Println("Failed delete track.")

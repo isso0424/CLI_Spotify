@@ -51,7 +51,7 @@ func (cmd search) Execute(token *string) (err error) {
 	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
 	keyword = url.QueryEscape(keyword)
 
-	response, _, err := request.CreateRequest(
+	response, err := request.CreateRequest(
 		token,
 		selfmadetypes.GET,
 		fmt.Sprintf(
@@ -66,7 +66,7 @@ func (cmd search) Execute(token *string) (err error) {
 	}
 
 	var searchResponse selfmadetypes.SearchResponse
-	err = json.Unmarshal(response, &searchResponse)
+	err = json.Unmarshal(response.GetBody(), &searchResponse)
 	if err != nil {
 		return
 	}

@@ -26,13 +26,13 @@ func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd welcome) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
 	var userInfo selfmadetypes.User
-	err = json.Unmarshal(response, &userInfo)
+	err = json.Unmarshal(response.GetBody(), &userInfo)
 	if err != nil {
 		return
 	}

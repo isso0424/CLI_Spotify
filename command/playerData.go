@@ -1,7 +1,6 @@
 package command
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/command/parse"
@@ -28,13 +27,13 @@ func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd recent) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/recently-played?limit=1", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/recently-played?limit=1", nil)
 	if err != nil {
 		return
 	}
 
 	var recentPlayedTracks selfmadetypes.RecentPlayedTracks
-	err = json.Unmarshal(response, &recentPlayedTracks)
+	err = json.Unmarshal(response.GetBody(), &recentPlayedTracks)
 	if err != nil {
 		return
 	}
@@ -74,7 +73,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 		return
 	}
 
-	response, _, err := request.CreateRequest(
+	response, err := request.CreateRequest(
 		token,
 		selfmadetypes.GET,
 		fmt.Sprintf("/playlists/%s?fields=name,owner,followers,tracks.total", *playlistID),
@@ -85,7 +84,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 	}
 
 	var playlistDetails selfmadetypes.PlayList
-	err = json.Unmarshal(response, &playlistDetails)
+	err = json.Unmarshal(response.GetBody(), &playlistDetails)
 	if err != nil {
 		return
 	}
@@ -124,21 +123,20 @@ func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd favoriteTrack) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/currently-playing", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/currently-playing", nil)
 	if err != nil {
 		return
 	}
 
 	var playingStatus selfmadetypes.CurrentPlayStatus
 
-	response = bytes.Trim(response, "\x00")
-	err = json.Unmarshal(response, &playingStatus)
+	err = json.Unmarshal(response.GetBody(), &playingStatus)
 	if err != nil {
 		return
 	}
 
 	id := strings.Split(playingStatus.Item.URI, ":")[2]
-	_, _, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+	_, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
 	if err != nil {
 		return
 	}

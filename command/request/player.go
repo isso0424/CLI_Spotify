@@ -24,7 +24,7 @@ func PlayFromURL(token *string, uri string) (err error) {
 		return
 	}
 
-	_, _, err = CreateRequest(token, selfmadetypes.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, err = CreateRequest(token, selfmadetypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}

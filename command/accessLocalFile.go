@@ -179,13 +179,13 @@ func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
 	if err != nil {
 		return
 	}
 
 	var userPlayLists selfmadetypes.UserPlaylists
-	err = json.Unmarshal(response, &userPlayLists)
+	err = json.Unmarshal(response.GetBody(), &userPlayLists)
 	if err != nil {
 		return
 	}
