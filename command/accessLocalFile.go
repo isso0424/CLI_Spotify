@@ -132,7 +132,7 @@ func (cmd load) GetCommandName() string {
 func (cmd load) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "requestAndLoadfile",
+		Kind:    "loadfile",
 		Explain: "play saved playlist",
 	}
 }
