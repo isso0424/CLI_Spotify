@@ -29,8 +29,6 @@ func PlayFromURL(token *string, uri string) (err error) {
 		return
 	}
 
-	err = PrintPlayingStatus(token)
-
 	return
 }
 

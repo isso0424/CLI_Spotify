@@ -3,6 +3,7 @@ package command
 
 import (
 	"fmt"
+	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/util"
 )
@@ -83,6 +84,9 @@ func execute(
 	for _, command := range requestCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
+			if command.GetHelp().Kind == selfmadetypes.Player {
+				err = request.PrintPlayingStatus(token)
+			}
 			return
 		}
 	}

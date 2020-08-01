@@ -34,8 +34,6 @@ func (cmd next) Execute(token *string) (err error) {
 		return
 	}
 
-	err = status{}.Execute(token)
-
 	return
 }
 
@@ -62,7 +60,6 @@ func (cmd pause) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println("paused!!!")
 
 	return
 }
@@ -143,10 +140,8 @@ func (cmd status) GetHelp() selfmadetypes.CommandHelp {
 }
 
 // Execute is excution command function.
-func (cmd status) Execute(token *string) (err error) {
-	err = request.PrintPlayingStatus(token)
-
-	return
+func (cmd status) Execute(_ *string) error {
+	return nil
 }
 
 // GetCommandName is getting command name function.
@@ -210,7 +205,6 @@ func (cmd resume) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println("resumed!!!")
 
 	return
 }
