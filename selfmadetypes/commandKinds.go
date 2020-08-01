@@ -19,7 +19,7 @@ const (
 	Search
 )
 
-func(kind CommandKind) String() string{
+func (kind CommandKind) String() string {
 	switch kind {
 	case LoadFile:
 		return "loadfile"

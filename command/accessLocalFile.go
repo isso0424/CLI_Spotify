@@ -118,6 +118,9 @@ func (cmd random) Execute(token *string) (err error) {
 
 	choicePlaylist := util.Choose(playlists)
 	err = request.PlayFromURL(token, choicePlaylist.URI)
+	if err != nil {
+		return
+	}
 	err = request.PrintPlayingStatus(token)
 
 	return
@@ -153,6 +156,9 @@ func (cmd load) Execute(token *string) (err error) {
 		if target.Name == name {
 			fmt.Printf("play %s\n", target.Name)
 			err = request.PlayFromURL(token, target.URI)
+			if err != nil {
+				return
+			}
 			err = request.PrintPlayingStatus(token)
 			return
 		}

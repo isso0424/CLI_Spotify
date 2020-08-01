@@ -13,7 +13,7 @@ type Response interface {
 
 // HttpResponse is struct for HTTP request response.
 type HttpResponse struct {
-	Body []byte
+	Body       []byte
 	StatusCode int
 }
 
@@ -37,7 +37,7 @@ func (tmp HttpResponse) New(response *http.Response) (HttpResponse, error) {
 	responseArray = bytes.Trim(responseArray, "\x00")
 
 	return HttpResponse{
-		Body: responseArray,
+		Body:       responseArray,
 		StatusCode: statusCode,
 	}, nil
 }
