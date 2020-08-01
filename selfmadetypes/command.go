@@ -18,7 +18,7 @@ type FileloadCommand interface {
 // CommandHelp is command's help.
 type CommandHelp struct {
 	Name    string
-	Kind    string
+	Kind    CommandKind
 	Explain string
 }
 

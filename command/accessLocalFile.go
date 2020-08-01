@@ -21,7 +21,7 @@ func (cmd save) GetCommandName() string {
 func (cmd save) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "loadfile",
+		Kind:    selfmadetypes.LoadFile,
 		Explain: "save playlist to file",
 	}
 }
@@ -67,12 +67,12 @@ func (cmd show) GetCommandName() string {
 func (cmd show) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "loadfile",
+		Kind:    selfmadetypes.LoadFile,
 		Explain: "show saved all playlists",
 	}
 }
 
-// Execute is excution command function.
+// Execute is execution command function.
 func (cmd show) Execute() (err error) {
 	playlistList, err := file.LoadPlayList()
 
@@ -104,7 +104,7 @@ func (cmd random) GetCommandName() string {
 func (cmd random) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "requestAndLoadfile",
+		Kind:    selfmadetypes.LoadFile,
 		Explain: "play random playlist from play",
 	}
 }
@@ -132,7 +132,7 @@ func (cmd load) GetCommandName() string {
 func (cmd load) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "loadfile",
+		Kind:    selfmadetypes.LoadFile,
 		Explain: "play saved playlist",
 	}
 }
@@ -173,11 +173,11 @@ func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Import user playlists",
-		Kind:    "request",
+		Kind:    selfmadetypes.LoadFile,
 	}
 }
 
-// Execute is excution command function.
+// Execute is execution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
 	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
 	if err != nil {

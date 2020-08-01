@@ -19,7 +19,7 @@ func (cmd welcome) GetCommandName() string {
 func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Other,
 		Explain: "switch shuffle state",
 	}
 }
@@ -53,7 +53,7 @@ func (cmd refresh) GetCommandName() string {
 func (cmd refresh) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Other,
 		Explain: "refresh access token",
 	}
 }

@@ -18,7 +18,7 @@ func (cmd addToPlaylist) GetCommandName() string {
 func (cmd addToPlaylist) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Playlist,
 		Explain: "Edit user's playlist",
 	}
 }
@@ -63,7 +63,7 @@ func (cmd createPlaylist) GetCommandName() string {
 func (cmd createPlaylist) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Playlist,
 		Explain: "Create new playlist",
 	}
 }
@@ -118,7 +118,7 @@ func (cmd deleteTrackFromPlaylist) GetCommandName() string {
 func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Playlist,
 		Explain: "Delete track from playlist",
 	}
 }
