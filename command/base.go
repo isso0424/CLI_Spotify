@@ -57,8 +57,7 @@ func MainLoop(token string) {
 	)
 
 	for {
-		var commandName string
-		util.Input("", "Command", &commandName)
+		commandName := util.Input("", "Command")
 
 		if commandName == "help" {
 			help(allCommands)

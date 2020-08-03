@@ -31,14 +31,12 @@ func (cmd search) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd search) Execute(token *string) (err error) {
-	var kind string
-	util.Input(
+	kind := util.Input(
 		"please input search kind\n\n"+
 			"search kinds: album artist playlist track show episode\n\n"+
 			"if input over 2 types, please enter with a colon\n"+
 			"------------------------",
 		"Kind",
-		&kind,
 	)
 	kinds := strings.Split(kind, ",")
 	for _, kind := range kinds {
@@ -47,8 +45,7 @@ func (cmd search) Execute(token *string) (err error) {
 		}
 	}
 
-	var keyword string
-	util.Input("Please input search keyword\n------------------------", "Keyword", &keyword)
+	keyword := util.Input("Please input search keyword\n------------------------", "Keyword")
 	keyword = url.QueryEscape(keyword)
 
 	response, err := request.CreateRequest(
@@ -79,15 +76,13 @@ func (cmd search) Execute(token *string) (err error) {
 }
 
 func saveSearchResult(searchResults []selfmadetypes.SearchResultItem) (err error) {
-	var isSave string
-	util.Input("Want to save result?\n------------------------", "Want to save?", &isSave)
+	isSave := util.Input("Want to save result?\n------------------------", "Want to save?")
 
 	if isSave != "yes" {
 		return
 	}
 
-	var rawIndex string
-	util.Input("Please input index\n------------------------", "Index", &rawIndex)
+	rawIndex := util.Input("Please input index\n------------------------", "Index")
 
 	index, err := strconv.Atoi(rawIndex)
 	if err != nil {
