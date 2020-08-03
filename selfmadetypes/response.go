@@ -11,33 +11,36 @@ type Response interface {
 	GetStatusCode() int
 }
 
-// HttpResponse is struct for HTTP request response.
-type HttpResponse struct {
-	Body []byte
+// HTTPResponse is struct for HTTP request response.
+type HTTPResponse struct {
+	Body       []byte
 	StatusCode int
 }
 
-func (response HttpResponse) GetBody() []byte {
+// GetBody get body.
+func (response HTTPResponse) GetBody() []byte {
 	return response.Body
 }
 
-func (response HttpResponse) GetStatusCode() int {
+// GetStatusCode get HTTP status code.
+func (response HTTPResponse) GetStatusCode() int {
 	return response.StatusCode
 }
 
-func (tmp HttpResponse) New(response *http.Response) (HttpResponse, error) {
-	statusCode := response.StatusCode
+// New create new HTTPResponse
+func (response HTTPResponse) New(resource *http.Response) (HTTPResponse, error) {
+	statusCode := resource.StatusCode
 
 	responseArray := make([]byte, 32768)
-	_, err := response.Body.Read(responseArray)
+	_, err := resource.Body.Read(responseArray)
 	if err != nil {
-		return HttpResponse{}, err
+		return HTTPResponse{}, err
 	}
 
 	responseArray = bytes.Trim(responseArray, "\x00")
 
-	return HttpResponse{
-		Body: responseArray,
+	return HTTPResponse{
+		Body:       responseArray,
 		StatusCode: statusCode,
 	}, nil
 }

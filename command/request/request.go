@@ -46,7 +46,7 @@ func CreateRequest(
 		}
 	}()
 
-	httpResponse, err = selfmadetypes.HttpResponse{}.New(response)
+	httpResponse, err = selfmadetypes.HTTPResponse{}.New(response)
 
 	if response.StatusCode == unAuthorized {
 		var newTokenPtr *string
