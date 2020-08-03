@@ -38,10 +38,12 @@ func PlayFromURL(token *string, uri string) (err error) {
 // PrintPlayingStatus is function that print playing status.
 func PrintPlayingStatus(token *string) (err error) {
 	status, err := GetStatus(token)
-	if err != nil || status == nil {
-		if err == io.EOF {
-			print("Pausing")
-		}
+	isPause := err == io.EOF || (err == nil && status == nil)
+	if isPause {
+		print("Pausing")
+		return
+	}
+	if err != nil {
 		return
 	}
 
