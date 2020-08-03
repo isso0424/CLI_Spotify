@@ -2,7 +2,6 @@
 package request
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -25,8 +24,7 @@ func CreateRequest(
 	requestURL string,
 	body io.Reader,
 ) (
-	responseArray []byte,
-	statusCode int,
+	httpResponse selfmadetypes.Response,
 	err error,
 ) {
 	request, err := http.NewRequest(method.String(), baseURL+requestURL, body)
@@ -48,15 +46,7 @@ func CreateRequest(
 		}
 	}()
 
-	statusCode = response.StatusCode
-
-	responseArray = make([]byte, 32768)
-	_, err = response.Body.Read(responseArray)
-	if err != nil {
-		return
-	}
-
-	responseArray = bytes.Trim(responseArray, "\x00")
+	httpResponse, err = selfmadetypes.HTTPResponse{}.New(response)
 
 	if response.StatusCode == unAuthorized {
 		var newTokenPtr *string
@@ -68,12 +58,12 @@ func CreateRequest(
 		*token = *newTokenPtr
 	}
 
-	return responseArray, statusCode, err
+	return httpResponse, err
 }
 
 // GetPlayListStatus is get user playlist status.
 func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.PlayList, err error) {
-	response, _, err := CreateRequest(
+	response, err := CreateRequest(
 		token,
 		selfmadetypes.GET,
 		fmt.Sprintf(
@@ -86,7 +76,7 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.
 		return
 	}
 
-	err = json.Unmarshal(response, &status)
+	err = json.Unmarshal(response.GetBody(), &status)
 	if err != nil {
 		return
 	}
@@ -96,16 +86,16 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.
 
 // GetStatus is function that get playing status.
 func GetStatus(token *string) (status *selfmadetypes.Content, err error) {
-	response, statusCode, err := CreateRequest(token, selfmadetypes.GET, "/me/player", nil)
+	response, err := CreateRequest(token, selfmadetypes.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
-	if statusCode == noContent {
+	if response.GetStatusCode() == noContent {
 		err = &selfmadetypes.FailedGetError{Target: "playing status"}
 		return
 	}
 
-	err = json.Unmarshal(response, &status)
+	err = json.Unmarshal(response.GetBody(), &status)
 
 	return
 }

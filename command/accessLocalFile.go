@@ -28,16 +28,14 @@ func (cmd save) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd save) Execute() (err error) {
-	var url string
-	util.Input("please input playlist url\n", "PlayListURL", &url)
+	url := util.Input("please input playlist url\n", "PlayListURL")
 
 	uri, err := parse.CreateContextURI(url)
 	if err != nil {
 		return
 	}
 
-	var name string
-	util.Input("\nplease input playlist name\n", "PlayListName", &name)
+	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
 	list := selfmadetypes.SearchResultItem{URI: *uri, Name: name}
 
@@ -139,8 +137,7 @@ func (cmd load) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd load) Execute(token *string) (err error) {
-	var name string
-	util.Input("please input playlist name", "PlayListName", &name)
+	name := util.Input("please input playlist name", "PlayListName")
 
 	playlistList, err := file.LoadPlayList()
 
@@ -179,13 +176,13 @@ func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	response, _, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
+	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
 	if err != nil {
 		return
 	}
 
 	var userPlayLists selfmadetypes.UserPlaylists
-	err = json.Unmarshal(response, &userPlayLists)
+	err = json.Unmarshal(response.GetBody(), &userPlayLists)
 	if err != nil {
 		return
 	}
