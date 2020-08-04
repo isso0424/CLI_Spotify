@@ -23,7 +23,7 @@ func CreatePlayingStatus(
 					"Artist: " + content.Item.Artists[0].Name,
 				},
 				{
-					"Playing Item",
+					"Playing " + kind,
 				},
 				getContextStatus(contextUser, contextName, kind),
 			},
