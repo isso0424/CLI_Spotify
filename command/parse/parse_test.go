@@ -15,7 +15,7 @@ func TestPausingStatus(t *testing.T) {
 
 	playList := selfmadetypes.PlayList{}
 
-	assert.Equal(t, CreatePlayingStatus(content, playList), "Pausing")
+	assert.Equal(t, CreatePlayingStatus(content, playList), selfmadetypes.OutputMessage{Message: [][]string{{"Pausing"}}})
 }
 
 // TestPlayingStatus is test function for CreatePlayingStatus
@@ -42,14 +42,24 @@ func TestPlayingStatus(t *testing.T) {
 	assert.Equal(
 		t,
 		CreatePlayingStatus(content, playList),
-		"Playing status\n"+
-			"--------------\n"+
-			"Title: name\n"+
-			"Artist: artist\n\n"+
-			"SearchResultItem Information\n"+
-			"-------------------\n"+
-			"SearchResultItem: playList\n"+
-			"Owner: user\n",
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"Playing status",
+				},
+				{
+					"Title: name",
+					"Artist: artist",
+				},
+				{
+					"Playing Item",
+				},
+				{
+					"SearchResultItem: playList",
+					"Owner: user",
+				},
+			},
+		},
 	)
 }
 

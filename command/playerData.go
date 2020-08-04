@@ -6,6 +6,7 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/util"
 	"strings"
 )
 
@@ -41,11 +42,15 @@ func (cmd recent) Execute(token *string) (err error) {
 	recentPlayedTrack := recentPlayedTracks.Items[0]
 	artistNames := parse.GetArtistNames(recentPlayedTrack.Track.Artists)
 
-	fmt.Printf(
-		"TrackName: %s\n"+
-			"Artist:    %s\n",
-		recentPlayedTrack.Track.Name,
-		artistNames,
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"TrackName: " + recentPlayedTrack.Track.Name,
+					"Artist:    " + artistNames,
+				},
+			},
+		},
 	)
 
 	return
@@ -89,17 +94,20 @@ func (cmd playlist) Execute(token *string) (err error) {
 		return
 	}
 
-	fmt.Printf(
-		"Playlist detail\n"+
-			"---------------\n"+
-			"Name: %s\n"+
-			"Owner: %s\n"+
-			"Followers: %d users\n"+
-			"Tracks: %d track(s)\n\n",
-		playlistDetails.Name,
-		playlistDetails.Owner.DisplayName,
-		playlistDetails.Followers.Total,
-		playlistDetails.Tracks.Total,
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"Playlist detail",
+				},
+				{
+					"Name: " + playlistDetails.Name,
+					"Owner: " + playlistDetails.Owner.DisplayName,
+					fmt.Sprintf("Followers: %d users", playlistDetails.Followers.Total),
+					fmt.Sprintf("Tracks: %d track(s)", playlistDetails.Tracks.Total),
+				},
+			},
+		},
 	)
 
 	return err
@@ -141,7 +149,15 @@ func (cmd favoriteTrack) Execute(token *string) (err error) {
 		return
 	}
 
-	fmt.Printf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name)
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					fmt.Sprintf("Success add '%s' to your favorite song!!!\n", playingStatus.Item.Name),
+				},
+			},
+		},
+	)
 
 	return
 }

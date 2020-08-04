@@ -79,11 +79,18 @@ func (cmd show) Execute() (err error) {
 	}
 
 	for index, target := range playlistList {
-		fmt.Printf(
-			"id: %d\n------------------------------------------------\nname: %s\nuri: %s\n\n",
-			index,
-			target.Name,
-			target.URI,
+		util.Output(
+			selfmadetypes.OutputMessage{
+				Message: [][]string{
+					{
+						fmt.Sprintf("id: %d", index),
+					},
+					{
+						fmt.Sprintf("name: %s", target.Name),
+						fmt.Sprintf("uri:  %s", target.URI),
+					},
+				},
+			},
 		)
 	}
 
@@ -151,7 +158,15 @@ func (cmd load) Execute(token *string) (err error) {
 
 	for _, target := range playlistList {
 		if target.Name == name {
-			fmt.Printf("play %s\n", target.Name)
+			util.Output(
+				selfmadetypes.OutputMessage{
+					Message: [][]string{
+						{
+							fmt.Sprintf("play %s", target.Name),
+						},
+					},
+				},
+			)
 			err = request.PlayFromURL(token, target.URI)
 			if err != nil {
 				return
@@ -163,7 +178,7 @@ func (cmd load) Execute(token *string) (err error) {
 
 	err = &selfmadetypes.NotFound{Target: name}
 
-	return
+	return err
 }
 
 type importOwnPlaylists struct{}
