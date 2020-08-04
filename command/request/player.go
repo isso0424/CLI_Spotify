@@ -3,6 +3,7 @@ package request
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/selfmadetypes"
@@ -46,17 +47,43 @@ func PrintPlayingStatus(token *string) (err error) {
 	}
 
 	url := status.Context.ExternalUrls.Spotify
-	id, err := parse.GetPlaylistID(url)
+	id, err := parse.GetIDFromURL(url)
 	if err != nil {
 		return
 	}
 
-	listStatus, err := GetPlayListStatus(token, id)
+	kind, err := parse.GetKindFromURL(url)
 	if err != nil {
 		return
 	}
 
-	util.Output(parse.CreatePlayingStatus(*status, listStatus))
+	var contextName, contextUser string
+	switch *kind {
+	case "playlist":
+		listStatus, err := GetPlayListStatus(token, id)
+		if err != nil {
+			return err
+		}
+		contextName = listStatus.Name
+		contextUser = listStatus.Owner.DisplayName
+	case "album":
+		albumStatus, err := GetAlbumStatus(token, id)
+		if err != nil {
+			return err
+		}
+		contextName = albumStatus.Name
+		contextUser = albumStatus.Artists[0].Name
+	case "artist":
+		artistStatus, err := GetArtistStatus(token, id)
+		if err != nil {
+			return err
+		}
+		contextName = artistStatus.Name
+	default:
+		return errors.New("kind not found")
+	}
+
+	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
 
 	return
 }
