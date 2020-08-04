@@ -15,7 +15,11 @@ func TestPausingStatus(t *testing.T) {
 
 	playList := selfmadetypes.PlayList{}
 
-	assert.Equal(t, CreatePlayingStatus(content, playList), selfmadetypes.OutputMessage{Message: [][]string{{"Pausing"}}})
+	assert.Equal(
+		t,
+		CreatePlayingStatus(content, playList.Name, playList.Owner.DisplayName, "playlist"),
+		selfmadetypes.OutputMessage{Message: [][]string{{"Pausing"}}},
+	)
 }
 
 // TestPlayingStatus is test function for CreatePlayingStatus
@@ -41,7 +45,7 @@ func TestPlayingStatus(t *testing.T) {
 
 	assert.Equal(
 		t,
-		CreatePlayingStatus(content, playList),
+		CreatePlayingStatus(content, playList.Name, playList.Owner.DisplayName, "playlist"),
 		selfmadetypes.OutputMessage{
 			Message: [][]string{
 				{
@@ -52,10 +56,10 @@ func TestPlayingStatus(t *testing.T) {
 					"Artist: artist",
 				},
 				{
-					"Playing Item",
+					"Playing playlist",
 				},
 				{
-					"SearchResultItem: playList",
+					"Playlist name: playList",
 					"Owner: user",
 				},
 			},
@@ -80,14 +84,14 @@ func TestCreateContextURIFailed(t *testing.T) {
 // TestGetPlaylistIDSuccess is test function.
 func TestGetPlaylistIDSuccess(t *testing.T) {
 	url := "https://open.spotify.com/playlist/37i9dQZF1DXd8cPo2t5Hqf?si=X4SkTg0BTHKclOIlM0D8lA"
-	uri, _ := GetPlaylistID(url)
+	uri, _ := GetIDFromURL(url)
 	assert.Equal(t, *uri, "37i9dQZF1DXd8cPo2t5Hqf")
 }
 
 // TestGetPlaylistIDFailed is test function.
 func TestGetPlaylistIDFailed(t *testing.T) {
 	url := "https://open.spotify.com/"
-	_, err := GetPlaylistID(url)
+	_, err := GetIDFromURL(url)
 	assert.EqualError(t, err, "too short length")
 }
 
