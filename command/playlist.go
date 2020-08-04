@@ -24,11 +24,9 @@ func (cmd addToPlaylist) GetHelp() selfmadetypes.CommandHelp {
 }
 
 func (cmd addToPlaylist) Execute(token *string) (err error) {
-	var playlistID string
-	util.Input("Please input playlist id", "PlaylistID", &playlistID)
+	playlistID := util.Input("Please input playlist id", "PlaylistID")
 
-	var addTrackID string
-	util.Input("Please input track id", "TrackID", &addTrackID)
+	addTrackID := util.Input("Please input track id", "TrackID")
 	addTrackURI := fmt.Sprintf("spotify:track:%s", addTrackID)
 
 	response, err := request.CreateRequest(
@@ -82,8 +80,7 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 
 	userID := user.ID
 
-	var playlistName string
-	util.Input("Please input new playlist name.", "Playlist name", &playlistName)
+	playlistName := util.Input("Please input new playlist name.", "Playlist name")
 
 	values, err := json.Marshal(map[string]string{"name": playlistName})
 	if err != nil {
@@ -124,11 +121,9 @@ func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
 }
 
 func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
-	var playlistID string
-	util.Input("Please input playlist id", "PlaylistID", &playlistID)
+	playlistID := util.Input("Please input playlist id", "PlaylistID")
 
-	var addTrackID string
-	util.Input("Please input track id", "TrackID", &addTrackID)
+	addTrackID := util.Input("Please input track id", "TrackID")
 	addTrackURI := fmt.Sprintf("spotify:track:%s", addTrackID)
 
 	body, err := json.Marshal(map[string][]map[string]string{"tracks": {{"uri": addTrackURI}}})

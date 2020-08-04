@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"strings"
@@ -35,7 +36,12 @@ func PlayFromURL(token *string, uri string) (err error) {
 // PrintPlayingStatus is function that print playing status.
 func PrintPlayingStatus(token *string) (err error) {
 	status, err := GetStatus(token)
-	if err != nil || status == nil {
+	isPause := err == io.EOF || (err == nil && status == nil)
+	if isPause {
+		print("Pausing")
+		return
+	}
+	if err != nil {
 		return
 	}
 

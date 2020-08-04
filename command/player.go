@@ -82,8 +82,7 @@ func (cmd play) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd play) Execute(token *string) (err error) {
-	var href string
-	util.Input("please input playlist href\n------------------------", "PlayListURL", &href)
+	href := util.Input("please input playlist href\n------------------------", "PlayListURL")
 
 	uri, err := parse.CreateContextURI(href)
 	if err != nil {
@@ -262,8 +261,7 @@ func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd volume) Execute(token *string) (err error) {
-	var percent string
-	util.Input("please volume percent\n------------------------", "Volume", &percent)
+	percent := util.Input("please volume percent\n------------------------", "Volume")
 
 	percentInt, err := strconv.Atoi(percent)
 	if err != nil {

@@ -8,11 +8,13 @@ import (
 )
 
 // Input is get stdinput string.
-func Input(message string, hint string, getValiable *string) {
+func Input(message string, hint string) (inputtedValue string) {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Printf("%s\n%s|>>>", message, hint)
 	if scanner.Scan() {
-		*getValiable = scanner.Text()
+		inputtedValue = scanner.Text()
 	}
 	fmt.Println()
+
+	return
 }
