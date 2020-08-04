@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/command/request"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
@@ -17,10 +17,10 @@ func (cmd addToPlaylist) GetCommandName() string {
 	return "addToPlaylist"
 }
 
-func (cmd addToPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd addToPlaylist) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandTypes.Playlist,
 		Explain: "Edit user's playlist",
 	}
 }
@@ -60,10 +60,10 @@ func (cmd createPlaylist) GetCommandName() string {
 	return "createPlaylist"
 }
 
-func (cmd createPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd createPlaylist) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandTypes.Playlist,
 		Explain: "Create new playlist",
 	}
 }
@@ -114,10 +114,10 @@ func (cmd deleteTrackFromPlaylist) GetCommandName() string {
 	return "deleteTrackFromPlaylist"
 }
 
-func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd deleteTrackFromPlaylist) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandTypes.Playlist,
 		Explain: "Delete track from playlist",
 	}
 }

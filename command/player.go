@@ -6,6 +6,7 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	"isso0424/spotify_CLI/util"
 	"strconv"
@@ -19,10 +20,10 @@ func (cmd next) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd next) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd next) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "play next queuing track",
 	}
 }
@@ -46,10 +47,10 @@ func (cmd pause) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd pause) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd pause) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "stop playing track",
 	}
 }
@@ -73,10 +74,10 @@ func (cmd play) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd play) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd play) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "play track from url",
 	}
 }
@@ -102,10 +103,10 @@ func (cmd prev) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd prev) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd prev) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "play previous track",
 	}
 }
@@ -131,10 +132,10 @@ func (cmd status) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd status) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd status) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "get playing status in spotify",
 	}
 }
@@ -153,10 +154,10 @@ func (cmd repeat) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd repeat) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd repeat) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "switch repeat mode",
 	}
 }
@@ -198,10 +199,10 @@ func (cmd resume) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd resume) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd resume) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "resume stopping track",
 	}
 }
@@ -225,10 +226,10 @@ func (cmd shuffle) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd shuffle) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd shuffle) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "switch shuffle state",
 	}
 }
@@ -268,10 +269,10 @@ func (cmd volume) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd volume) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandTypes.Player,
 		Explain: "set volume percent",
 	}
 }

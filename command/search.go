@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"isso0424/spotify_CLI/command/file"
 	"isso0424/spotify_CLI/command/request"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
@@ -23,11 +23,11 @@ func (cmd search) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd search) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd search) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "search with spotify",
-		Kind:    selfmadetypes.Search,
+		Kind:    commandTypes.Search,
 	}
 }
 

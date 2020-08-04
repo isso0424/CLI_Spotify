@@ -1,5 +1,5 @@
 // Package selfmadetypes is types made myself
-package selfmadetypes
+package commandTypes
 
 // RequestCommand is interface that request commands.
 type RequestCommand interface {

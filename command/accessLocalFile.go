@@ -7,6 +7,7 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	"isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
@@ -21,10 +22,10 @@ func (cmd save) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd save) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd save) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandTypes.LoadFile,
 		Explain: "save playlist to file",
 	}
 }
@@ -65,10 +66,10 @@ func (cmd show) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd show) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd show) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandTypes.LoadFile,
 		Explain: "show saved all playlists",
 	}
 }
@@ -109,10 +110,10 @@ func (cmd random) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd random) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd random) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandTypes.LoadFile,
 		Explain: "play random playlist from play",
 	}
 }
@@ -141,10 +142,10 @@ func (cmd load) GetCommandName() string {
 	return "load"
 }
 
-func (cmd load) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd load) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandTypes.LoadFile,
 		Explain: "play saved playlist",
 	}
 }
@@ -192,11 +193,11 @@ func (cmd importOwnPlaylists) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd importOwnPlaylists) GetHelp() commandTypes.CommandHelp {
+	return commandTypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Import user playlists",
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandTypes.LoadFile,
 	}
 }
 
