@@ -1,4 +1,5 @@
-package command
+// Package commanderrors is error for command
+package commanderrors
 
 import "fmt"
 

@@ -8,7 +8,7 @@ import (
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/selfmadetypes/request"
 	"isso0424/spotify_CLI/selfmadetypes/response"
-	"isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
+	command "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"net/http"
 )
 

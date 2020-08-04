@@ -6,7 +6,7 @@ import (
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
-	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
@@ -20,10 +20,10 @@ func (cmd welcome) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd welcome) GetHelp() commandTypes.CommandHelp {
-	return commandTypes.CommandHelp{
+func (cmd welcome) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    commandTypes.Other,
+		Kind:    commandtypes.Other,
 		Explain: "switch shuffle state",
 	}
 }
@@ -62,10 +62,10 @@ func (cmd refresh) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd refresh) GetHelp() commandTypes.CommandHelp {
-	return commandTypes.CommandHelp{
+func (cmd refresh) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    commandTypes.Other,
+		Kind:    commandtypes.Other,
 		Explain: "refresh access token",
 	}
 }
@@ -82,7 +82,7 @@ func (cmd refresh) Execute(token *string) error {
 	return nil
 }
 
-func help(commands []commandTypes.Command) {
+func help(commands []commandtypes.Command) {
 	for _, command := range commands {
 		commandHelp := command.GetHelp()
 		util.Output(

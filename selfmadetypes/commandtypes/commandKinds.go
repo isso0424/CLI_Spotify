@@ -1,4 +1,4 @@
-package commandTypes
+package commandtypes
 
 // CommandKind is kind of commands
 // ex) loadfile, player, playlist and other...

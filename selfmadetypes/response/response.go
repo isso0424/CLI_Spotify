@@ -1,3 +1,4 @@
+// Package response is types for response
 package response
 
 import (

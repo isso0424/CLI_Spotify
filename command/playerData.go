@@ -6,7 +6,7 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
-	"isso0424/spotify_CLI/selfmadetypes/commandTypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
 	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
@@ -21,11 +21,11 @@ func (cmd recent) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd recent) GetHelp() commandTypes.CommandHelp {
-	return commandTypes.CommandHelp{
+func (cmd recent) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Show recently played track",
-		Kind:    commandTypes.PlayerData,
+		Kind:    commandtypes.PlayerData,
 	}
 }
 
@@ -67,8 +67,8 @@ func (cmd playlist) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd playlist) GetHelp() commandTypes.CommandHelp {
-	return commandTypes.CommandHelp{
+func (cmd playlist) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Show playing playlist detail",
 	}
@@ -124,11 +124,11 @@ func (cmd favoriteTrack) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd favoriteTrack) GetHelp() commandTypes.CommandHelp {
-	return commandTypes.CommandHelp{
+func (cmd favoriteTrack) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "To be favorite playing track.",
-		Kind:    commandTypes.PlayerData,
+		Kind:    commandtypes.PlayerData,
 	}
 }
 
