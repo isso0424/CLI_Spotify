@@ -1,4 +1,4 @@
-package selfmadetypes
+package response
 
 // Content is data struct when you execute GET to player
 type Content struct {
@@ -37,7 +37,7 @@ type externalUrls struct {
 
 // Item is Content's item
 type Item struct {
-	Album            album        `json:"album"`
+	Album            Album        `json:"album"`
 	Artists          []Artists    `json:"artists"`
 	AvailableMarkets []string     `json:"available_markets"`
 	DiscNumber       int32        `json:"disc_number"`
@@ -60,22 +60,6 @@ type externalIds struct {
 	Isrc string `json:"isrc"`
 }
 
-type album struct {
-	AlbumType            string       `json:"album_type"`
-	Artists              []Artists    `json:"artists"`
-	AvailableMarkets     []string     `json:"available_markets"`
-	ExternalUrls         externalUrls `json:"external_urls"`
-	Href                 string       `json:"href"`
-	ID                   string       `json:"id"`
-	Images               []image      `json:"images"`
-	Name                 string       `json:"name"`
-	ReleaseDate          string       `json:"release_date"`
-	ReleaseDatePrecision string       `json:"release_date_precision"`
-	TotalTracks          int32        `json:"total_tracks"`
-	Type                 string       `json:"type"`
-	URI                  string       `json:"uri"`
-}
-
 type image struct {
 	Height int32  `json:"height"`
 	URL    string `json:"url"`
@@ -90,4 +74,34 @@ type Artists struct {
 	Name         string       `json:"name"`
 	Type         string       `json:"type"`
 	URI          string       `json:"uri"`
+}
+
+// CurrentPlayStatus is current playing song status.
+type CurrentPlayStatus struct {
+	Item SearchResultItem `json:"item"`
+}
+
+// RecentPlayedTracks is response of Get recently played track.
+type RecentPlayedTracks struct {
+	Items []recentPlayedItem `json:"items"`
+}
+
+type recentPlayedItem struct {
+	Track trackSimplified `json:"track"`
+}
+
+type trackSimplified struct {
+	Artists          []Artists    `json:"artists"`
+	AvailableMarkets []string     `json:"available_markets"`
+	DiscNumber       int          `json:"disc_number"`
+	Duration         int          `json:"duration_ms"`
+	ExternalUrls     externalUrls `json:"external_urls"`
+	Href             string       `json:"href"`
+	ID               string       `json:"id"`
+	IsPlayable       bool         `json:"is_playable"`
+	Name             string       `json:"name"`
+	PreviewURL       string       `json:"preview_url"`
+	TrackNumber      int          `json:"track_number"`
+	Type             string       `json:"type"`
+	URI              string       `json:"uri"`
 }

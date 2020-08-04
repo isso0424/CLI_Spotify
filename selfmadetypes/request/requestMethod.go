@@ -1,4 +1,5 @@
-package selfmadetypes
+// Package request is type for request
+package request
 
 // Method is HTTP Request Methods wrapper
 type Method int

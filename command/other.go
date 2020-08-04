@@ -6,6 +6,9 @@ import (
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
+	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -17,22 +20,22 @@ func (cmd welcome) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd welcome) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Other,
+		Kind:    commandtypes.Other,
 		Explain: "switch shuffle state",
 	}
 }
 
 // Execute is excution command function.
 func (cmd welcome) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, request2.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	var userInfo selfmadetypes.User
+	var userInfo response2.User
 	err = json.Unmarshal(response.GetBody(), &userInfo)
 	if err != nil {
 		return
@@ -59,10 +62,10 @@ func (cmd refresh) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd refresh) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd refresh) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Other,
+		Kind:    commandtypes.Other,
 		Explain: "refresh access token",
 	}
 }
@@ -79,7 +82,7 @@ func (cmd refresh) Execute(token *string) error {
 	return nil
 }
 
-func help(commands []selfmadetypes.Command) {
+func help(commands []commandtypes.Command) {
 	for _, command := range commands {
 		commandHelp := command.GetHelp()
 		util.Output(

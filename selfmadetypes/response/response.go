@@ -1,4 +1,5 @@
-package selfmadetypes
+// Package response is types for response
+package response
 
 import (
 	"bytes"

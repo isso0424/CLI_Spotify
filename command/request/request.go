@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"io"
 	"isso0424/spotify_CLI/auth"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/request"
+	"isso0424/spotify_CLI/selfmadetypes/response"
+	command "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"net/http"
 )
 
@@ -24,31 +26,31 @@ func CreateRequest(
 	requestURL string,
 	body io.Reader,
 ) (
-	httpResponse selfmadetypes.Response,
+	httpResponse response.Response,
 	err error,
 ) {
-	request, err := http.NewRequest(method.String(), baseURL+requestURL, body)
+	req, err := http.NewRequest(method.String(), baseURL+requestURL, body)
 	if err != nil {
 		return
 	}
 
-	request.Header.Set("Authorization", "Bearer "+*token)
-	request.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+*token)
+	req.Header.Set("Content-Type", "application/json")
 	client := &http.Client{}
-	response, err := client.Do(request)
+	res, err := client.Do(req)
 	if err != nil {
 		return
 	}
 	defer func() {
-		err := response.Body.Close()
+		err := res.Body.Close()
 		if err != nil {
 			fmt.Printf("Error: " + err.Error())
 		}
 	}()
 
-	httpResponse, err = selfmadetypes.HTTPResponse{}.New(response)
+	httpResponse, err = response.HTTPResponse{}.New(res)
 
-	if response.StatusCode == unAuthorized {
+	if res.StatusCode == unAuthorized {
 		var newTokenPtr *string
 		newTokenPtr, err = auth.GetToken()
 		if err != nil {
@@ -62,10 +64,10 @@ func CreateRequest(
 }
 
 // GetPlayListStatus is get user playlist status.
-func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.PlayList, err error) {
-	response, err := CreateRequest(
+func GetPlayListStatus(token *string, playlistID *string) (status response.PlayList, err error) {
+	res, err := CreateRequest(
 		token,
-		selfmadetypes.GET,
+		request.GET,
 		fmt.Sprintf(
 			"/playlists/%s?fields=name%%2Cowner",
 			*playlistID,
@@ -76,7 +78,7 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.
 		return
 	}
 
-	err = json.Unmarshal(response.GetBody(), &status)
+	err = json.Unmarshal(res.GetBody(), &status)
 	if err != nil {
 		return
 	}
@@ -85,10 +87,10 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.
 }
 
 // GetArtistStatus get artist status that is playing.
-func GetArtistStatus(token *string, artistID *string) (status selfmadetypes.Artists, err error) {
-	response, err := CreateRequest(
+func GetArtistStatus(token *string, artistID *string) (status response.Artists, err error) {
+	res, err := CreateRequest(
 		token,
-		selfmadetypes.GET,
+		request.GET,
 		fmt.Sprintf(
 			"/artists/%s",
 			*artistID,
@@ -99,7 +101,7 @@ func GetArtistStatus(token *string, artistID *string) (status selfmadetypes.Arti
 		return
 	}
 
-	err = json.Unmarshal(response.GetBody(), &status)
+	err = json.Unmarshal(res.GetBody(), &status)
 	if err != nil {
 		return
 	}
@@ -108,10 +110,10 @@ func GetArtistStatus(token *string, artistID *string) (status selfmadetypes.Arti
 }
 
 // GetAlbumStatus get album status that is playing.
-func GetAlbumStatus(token *string, albumID *string) (status selfmadetypes.Album, err error) {
-	response, err := CreateRequest(
+func GetAlbumStatus(token *string, albumID *string) (status response.Album, err error) {
+	res, err := CreateRequest(
 		token,
-		selfmadetypes.GET,
+		request.GET,
 		fmt.Sprintf(
 			"/albums/%s",
 			*albumID,
@@ -122,7 +124,7 @@ func GetAlbumStatus(token *string, albumID *string) (status selfmadetypes.Album,
 		return
 	}
 
-	err = json.Unmarshal(response.GetBody(), &status)
+	err = json.Unmarshal(res.GetBody(), &status)
 	if err != nil {
 		return
 	}
@@ -131,17 +133,17 @@ func GetAlbumStatus(token *string, albumID *string) (status selfmadetypes.Album,
 }
 
 // GetStatus is function that get playing status.
-func GetStatus(token *string) (status *selfmadetypes.Content, err error) {
-	response, err := CreateRequest(token, selfmadetypes.GET, "/me/player", nil)
+func GetStatus(token *string) (status *response.Content, err error) {
+	res, err := CreateRequest(token, request.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
-	if response.GetStatusCode() == noContent {
-		err = &selfmadetypes.FailedGetError{Target: "playing status"}
+	if res.GetStatusCode() == noContent {
+		err = &command.FailedGetError{Target: "playing status"}
 		return
 	}
 
-	err = json.Unmarshal(response.GetBody(), &status)
+	err = json.Unmarshal(res.GetBody(), &status)
 
 	return
 }

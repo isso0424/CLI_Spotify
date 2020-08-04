@@ -6,6 +6,9 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
+	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
 	"strings"
 )
@@ -18,22 +21,22 @@ func (cmd recent) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd recent) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Show recently played track",
-		Kind:    selfmadetypes.PlayerData,
+		Kind:    commandtypes.PlayerData,
 	}
 }
 
 // Execute is excution command function.
 func (cmd recent) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/recently-played?limit=1", nil)
+	response, err := request.CreateRequest(token, request2.GET, "/me/player/recently-played?limit=1", nil)
 	if err != nil {
 		return
 	}
 
-	var recentPlayedTracks selfmadetypes.RecentPlayedTracks
+	var recentPlayedTracks response2.RecentPlayedTracks
 	err = json.Unmarshal(response.GetBody(), &recentPlayedTracks)
 	if err != nil {
 		return
@@ -64,8 +67,8 @@ func (cmd playlist) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd playlist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd playlist) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Show playing playlist detail",
 	}
@@ -80,7 +83,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 
 	response, err := request.CreateRequest(
 		token,
-		selfmadetypes.GET,
+		request2.GET,
 		fmt.Sprintf("/playlists/%s?fields=name,owner,followers,tracks.total", *playlistID),
 		nil,
 	)
@@ -88,7 +91,7 @@ func (cmd playlist) Execute(token *string) (err error) {
 		return
 	}
 
-	var playlistDetails selfmadetypes.PlayList
+	var playlistDetails response2.PlayList
 	err = json.Unmarshal(response.GetBody(), &playlistDetails)
 	if err != nil {
 		return
@@ -121,22 +124,22 @@ func (cmd favoriteTrack) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd favoriteTrack) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "To be favorite playing track.",
-		Kind:    selfmadetypes.PlayerData,
+		Kind:    commandtypes.PlayerData,
 	}
 }
 
 // Execute is excution command function.
 func (cmd favoriteTrack) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/player/currently-playing", nil)
+	response, err := request.CreateRequest(token, request2.GET, "/me/player/currently-playing", nil)
 	if err != nil {
 		return
 	}
 
-	var playingStatus selfmadetypes.CurrentPlayStatus
+	var playingStatus response2.CurrentPlayStatus
 
 	err = json.Unmarshal(response.GetBody(), &playingStatus)
 	if err != nil {
@@ -144,7 +147,7 @@ func (cmd favoriteTrack) Execute(token *string) (err error) {
 	}
 
 	id := strings.Split(playingStatus.Item.URI, ":")[2]
-	_, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
+	_, err = request.CreateRequest(token, request2.PUT, fmt.Sprintf("/me/tracks?ids=%s", id), nil)
 	if err != nil {
 		return
 	}

@@ -4,12 +4,12 @@ package command
 import (
 	"fmt"
 	"isso0424/spotify_CLI/command/request"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
 	"isso0424/spotify_CLI/util"
 )
 
 var (
-	requestCommands = []selfmadetypes.RequestCommand{
+	requestCommands = []commandtypes.RequestCommand{
 		play{},
 		pause{},
 		status{},
@@ -32,7 +32,7 @@ var (
 		deleteTrackFromPlaylist{},
 	}
 
-	loadfileCommands = []selfmadetypes.FileloadCommand{
+	loadfileCommands = []commandtypes.FileloadCommand{
 		save{},
 		show{},
 	}
@@ -83,7 +83,7 @@ func execute(
 	for _, command := range requestCommands {
 		if command.GetCommandName() == commandName {
 			err = command.Execute(token)
-			if command.GetHelp().Kind == selfmadetypes.Player {
+			if command.GetHelp().Kind == commandtypes.Player {
 				err = request.PrintPlayingStatus(token)
 			}
 			return
@@ -101,9 +101,9 @@ func execute(
 }
 
 func joinCommandList(
-	requestCommandList []selfmadetypes.RequestCommand,
-	loadfileCommandList []selfmadetypes.FileloadCommand,
-) (commandList []selfmadetypes.Command) {
+	requestCommandList []commandtypes.RequestCommand,
+	loadfileCommandList []commandtypes.FileloadCommand,
+) (commandList []commandtypes.Command) {
 	for _, command := range requestCommandList {
 		commandList = append(commandList, command)
 	}

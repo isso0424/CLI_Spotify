@@ -1,4 +1,4 @@
-package selfmadetypes
+package response
 
 // PlayList is playlist information from request.
 type PlayList struct {

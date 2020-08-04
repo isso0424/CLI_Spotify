@@ -7,6 +7,10 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
+	"isso0424/spotify_CLI/selfmadetypes/response"
+	command "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -18,10 +22,10 @@ func (cmd save) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd save) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd save) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandtypes.LoadFile,
 		Explain: "save playlist to file",
 	}
 }
@@ -37,7 +41,7 @@ func (cmd save) Execute() (err error) {
 
 	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
-	list := selfmadetypes.SearchResultItem{URI: *uri, Name: name}
+	list := response.SearchResultItem{URI: *uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 
@@ -48,7 +52,7 @@ func (cmd save) Execute() (err error) {
 	if util.CheckDuplicateName(name, playlistList) {
 		err = file.SavePlayList(list)
 	} else {
-		err = &selfmadetypes.NameDuplicateError{Target: name}
+		err = &command.NameDuplicateError{Target: name}
 	}
 
 	return
@@ -62,10 +66,10 @@ func (cmd show) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd show) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd show) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandtypes.LoadFile,
 		Explain: "show saved all playlists",
 	}
 }
@@ -106,10 +110,10 @@ func (cmd random) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd random) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd random) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandtypes.LoadFile,
 		Explain: "play random playlist from play",
 	}
 }
@@ -138,10 +142,10 @@ func (cmd load) GetCommandName() string {
 	return "load"
 }
 
-func (cmd load) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd load) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandtypes.LoadFile,
 		Explain: "play saved playlist",
 	}
 }
@@ -176,7 +180,7 @@ func (cmd load) Execute(token *string) (err error) {
 		}
 	}
 
-	err = &selfmadetypes.NotFound{Target: name}
+	err = &command.NotFound{Target: name}
 
 	return err
 }
@@ -189,23 +193,23 @@ func (cmd importOwnPlaylists) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd importOwnPlaylists) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd importOwnPlaylists) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Import user playlists",
-		Kind:    selfmadetypes.LoadFile,
+		Kind:    commandtypes.LoadFile,
 	}
 }
 
 // Execute is execution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me/playlists", nil)
+	res, err := request.CreateRequest(token, request2.GET, "/me/playlists", nil)
 	if err != nil {
 		return
 	}
 
-	var userPlayLists selfmadetypes.UserPlaylists
-	err = json.Unmarshal(response.GetBody(), &userPlayLists)
+	var userPlayLists response.UserPlaylists
+	err = json.Unmarshal(res.GetBody(), &userPlayLists)
 	if err != nil {
 		return
 	}

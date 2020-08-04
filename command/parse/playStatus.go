@@ -3,11 +3,12 @@ package parse
 
 import (
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/response"
 )
 
 // CreatePlayingStatus is parsing play status function
 func CreatePlayingStatus(
-	content selfmadetypes.Content,
+	content response.Content,
 	contextName string,
 	contextUser string,
 	kind string,

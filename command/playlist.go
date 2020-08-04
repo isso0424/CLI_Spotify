@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"isso0424/spotify_CLI/command/request"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
+	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -15,10 +17,10 @@ func (cmd addToPlaylist) GetCommandName() string {
 	return "addToPlaylist"
 }
 
-func (cmd addToPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd addToPlaylist) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandtypes.Playlist,
 		Explain: "Edit user's playlist",
 	}
 }
@@ -31,7 +33,7 @@ func (cmd addToPlaylist) Execute(token *string) (err error) {
 
 	response, err := request.CreateRequest(
 		token,
-		selfmadetypes.POST,
+		request2.POST,
 		fmt.Sprintf(
 			"/playlists/%s/tracks?uris=%s",
 			playlistID,
@@ -58,21 +60,21 @@ func (cmd createPlaylist) GetCommandName() string {
 	return "createPlaylist"
 }
 
-func (cmd createPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd createPlaylist) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandtypes.Playlist,
 		Explain: "Create new playlist",
 	}
 }
 
 func (cmd createPlaylist) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, request2.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	var user selfmadetypes.User
+	var user response2.User
 	err = json.Unmarshal(response.GetBody(), &user)
 	if err != nil {
 		return
@@ -89,7 +91,7 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 
 	response, err = request.CreateRequest(
 		token,
-		selfmadetypes.POST,
+		request2.POST,
 		fmt.Sprintf("/users/%s/playlists", userID),
 		bytes.NewBuffer(values),
 	)
@@ -112,10 +114,10 @@ func (cmd deleteTrackFromPlaylist) GetCommandName() string {
 	return "deleteTrackFromPlaylist"
 }
 
-func (cmd deleteTrackFromPlaylist) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd deleteTrackFromPlaylist) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Playlist,
+		Kind:    commandtypes.Playlist,
 		Explain: "Delete track from playlist",
 	}
 }
@@ -132,7 +134,7 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 	}
 	response, err := request.CreateRequest(
 		token,
-		selfmadetypes.DELETE,
+		request2.DELETE,
 		fmt.Sprintf(
 			"/playlists/%s/tracks",
 			playlistID,

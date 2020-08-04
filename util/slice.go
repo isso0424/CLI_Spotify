@@ -1,13 +1,13 @@
 package util
 
 import (
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/response"
 	"math/rand"
 	"time"
 )
 
 // Choose is function that get 1 item from slice.
-func Choose(playlists []selfmadetypes.SearchResultItem) selfmadetypes.SearchResultItem {
+func Choose(playlists []response.SearchResultItem) response.SearchResultItem {
 	rand.Seed(time.Now().UnixNano())
 	index := rand.Intn(len(playlists))
 
@@ -15,7 +15,7 @@ func Choose(playlists []selfmadetypes.SearchResultItem) selfmadetypes.SearchResu
 }
 
 // CheckDuplicateName is function that check to exist playlist name.
-func CheckDuplicateName(name string, playlistList []selfmadetypes.SearchResultItem) bool {
+func CheckDuplicateName(name string, playlistList []response.SearchResultItem) bool {
 	for _, content := range playlistList {
 		if content.Name == name {
 			return false

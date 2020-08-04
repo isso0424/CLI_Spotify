@@ -6,6 +6,8 @@ import (
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
 	"isso0424/spotify_CLI/util"
 	"strconv"
 )
@@ -18,17 +20,17 @@ func (cmd next) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd next) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd next) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "play next queuing track",
 	}
 }
 
 // Execute is excution command function.
 func (cmd next) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/next", nil)
+	_, err = request.CreateRequest(token, request2.POST, "/me/player/next", nil)
 
 	if err != nil {
 		return
@@ -45,17 +47,17 @@ func (cmd pause) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd pause) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd pause) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "stop playing track",
 	}
 }
 
 // Execute is excution command function.
 func (cmd pause) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/pause", nil)
+	_, err = request.CreateRequest(token, request2.PUT, "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -72,10 +74,10 @@ func (cmd play) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd play) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd play) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "play track from url",
 	}
 }
@@ -101,17 +103,17 @@ func (cmd prev) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd prev) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd prev) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "play previous track",
 	}
 }
 
 // Execute is excution command function.
 func (cmd prev) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfmadetypes.POST, "/me/player/previous", nil)
+	_, err = request.CreateRequest(token, request2.POST, "/me/player/previous", nil)
 
 	if err != nil {
 		return
@@ -130,10 +132,10 @@ func (cmd status) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd status) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd status) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "get playing status in spotify",
 	}
 }
@@ -152,10 +154,10 @@ func (cmd repeat) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd repeat) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd repeat) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "switch repeat mode",
 	}
 }
@@ -170,7 +172,7 @@ func (cmd repeat) Execute(token *string) (err error) {
 
 	state := util.SwitchRepeatState(status.RepeatState)
 
-	_, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
+	_, err = request.CreateRequest(token, request2.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -197,17 +199,17 @@ func (cmd resume) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd resume) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd resume) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "resume stopping track",
 	}
 }
 
 // Execute is excution command function.
 func (cmd resume) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, selfmadetypes.PUT, "/me/player/play", nil)
+	_, err = request.CreateRequest(token, request2.PUT, "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -224,10 +226,10 @@ func (cmd shuffle) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd shuffle) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd shuffle) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "switch shuffle state",
 	}
 }
@@ -241,7 +243,7 @@ func (cmd shuffle) Execute(token *string) (err error) {
 
 	state := !status.ShuffleState
 
-	_, err = request.CreateRequest(token, selfmadetypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
+	_, err = request.CreateRequest(token, request2.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
@@ -267,10 +269,10 @@ func (cmd volume) GetCommandName() string {
 }
 
 // GetHelp is getting help function.
-func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
-	return selfmadetypes.CommandHelp{
+func (cmd volume) GetHelp() commandtypes.CommandHelp {
+	return commandtypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    selfmadetypes.Player,
+		Kind:    commandtypes.Player,
 		Explain: "set volume percent",
 	}
 }
@@ -290,7 +292,7 @@ func (cmd volume) Execute(token *string) (err error) {
 
 	_, err = request.CreateRequest(
 		token,
-		selfmadetypes.PUT,
+		request2.PUT,
 		fmt.Sprintf(
 			"/me/player/volume?volume_percent=%s",
 			percent,

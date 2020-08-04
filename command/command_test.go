@@ -1,7 +1,7 @@
 package command
 
 import (
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
 	"testing"
 
@@ -23,9 +23,9 @@ func TestSwitchRepeat(t *testing.T) {
 
 // TestCheckDuplicateName is test function for CheckDuplicateName()
 func TestCheckDuplicateName(t *testing.T) {
-	var playlistList []selfmadetypes.SearchResultItem
+	var playlistList []response.SearchResultItem
 	var result bool
-	playlistList = []selfmadetypes.SearchResultItem{
+	playlistList = []response.SearchResultItem{
 		{
 			Name: "playlist",
 			URI:  "hogefuga",
