@@ -12,3 +12,4 @@ linters:
     - "gochecknoinits"
     - "godot"
     - "testpackage"
+    - "nakedret"
