@@ -21,7 +21,7 @@ func (cmd recent) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "Show recently played track",
-		Kind:    "request",
+		Kind:    selfmadetypes.PlayerData,
 	}
 }
 
@@ -117,7 +117,7 @@ func (cmd favoriteTrack) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
 		Explain: "To be favorite playing track.",
-		Kind:    "request",
+		Kind:    selfmadetypes.PlayerData,
 	}
 }
 

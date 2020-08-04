@@ -21,7 +21,7 @@ func (cmd next) GetCommandName() string {
 func (cmd next) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "play next queuing track",
 	}
 }
@@ -33,8 +33,6 @@ func (cmd next) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-
-	err = status{}.Execute(token)
 
 	return
 }
@@ -50,7 +48,7 @@ func (cmd pause) GetCommandName() string {
 func (cmd pause) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "stop playing track",
 	}
 }
@@ -62,7 +60,6 @@ func (cmd pause) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println("paused!!!")
 
 	return
 }
@@ -78,7 +75,7 @@ func (cmd play) GetCommandName() string {
 func (cmd play) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "play track from url",
 	}
 }
@@ -107,7 +104,7 @@ func (cmd prev) GetCommandName() string {
 func (cmd prev) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "play previous track",
 	}
 }
@@ -136,16 +133,14 @@ func (cmd status) GetCommandName() string {
 func (cmd status) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "get playing status in spotify",
 	}
 }
 
 // Execute is excution command function.
-func (cmd status) Execute(token *string) (err error) {
-	err = request.PrintPlayingStatus(token)
-
-	return
+func (cmd status) Execute(_ *string) error {
+	return nil
 }
 
 // GetCommandName is getting command name function.
@@ -160,7 +155,7 @@ func (cmd repeat) GetCommandName() string {
 func (cmd repeat) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "switch repeat mode",
 	}
 }
@@ -197,7 +192,7 @@ func (cmd resume) GetCommandName() string {
 func (cmd resume) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "resume stopping track",
 	}
 }
@@ -209,7 +204,6 @@ func (cmd resume) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println("resumed!!!")
 
 	return
 }
@@ -225,7 +219,7 @@ func (cmd shuffle) GetCommandName() string {
 func (cmd shuffle) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "switch shuffle state",
 	}
 }
@@ -260,7 +254,7 @@ func (cmd volume) GetCommandName() string {
 func (cmd volume) GetHelp() selfmadetypes.CommandHelp {
 	return selfmadetypes.CommandHelp{
 		Name:    cmd.GetCommandName(),
-		Kind:    "request",
+		Kind:    selfmadetypes.Player,
 		Explain: "set volume percent",
 	}
 }
