@@ -6,6 +6,7 @@ import (
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/util"
 )
 
 type welcome struct{}
@@ -37,7 +38,15 @@ func (cmd welcome) Execute(token *string) (err error) {
 		return
 	}
 
-	fmt.Printf("ようこそ! %sさん!\n", userInfo.DisplayName)
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					fmt.Sprintf("ようこそ! %sさん!", userInfo.DisplayName),
+				},
+			},
+		},
+	)
 
 	return
 }
@@ -73,15 +82,18 @@ func (cmd refresh) Execute(token *string) error {
 func help(commands []selfmadetypes.Command) {
 	for _, command := range commands {
 		commandHelp := command.GetHelp()
-		fmt.Printf(
-			"-------------------------------\n"+
-				"%s\n"+
-				"-------------------------------\n"+
-				"Kind: %s\n"+
-				"Description: %s\n\n",
-			commandHelp.Name,
-			commandHelp.Kind,
-			commandHelp.Explain,
+		util.Output(
+			selfmadetypes.OutputMessage{
+				Message: [][]string{
+					{
+						commandHelp.Name,
+					},
+					{
+						"Kind: " + commandHelp.Kind.String(),
+						"Description: " + commandHelp.Explain,
+					},
+				},
+			},
 		)
 	}
 }

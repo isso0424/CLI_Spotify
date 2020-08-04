@@ -2,29 +2,38 @@
 package parse
 
 import (
-	"fmt"
 	"isso0424/spotify_CLI/selfmadetypes"
 )
 
 // CreatePlayingStatus is parsing play status function
-func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.PlayList) (status string) {
+func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.PlayList) (status selfmadetypes.OutputMessage) {
 	if content.IsPlaying && len(content.Item.Artists) != 0 {
-		status = fmt.Sprintf(
-			"Playing status\n"+
-				"--------------\n"+
-				"Title: %s\n"+
-				"Artist: %s\n\n"+
-				"SearchResultItem Information\n"+
-				"-------------------\n"+
-				"SearchResultItem: %s\n"+
-				"Owner: %s\n",
-			content.Item.Name,
-			content.Item.Artists[0].Name,
-			playlist.Name,
-			playlist.Owner.DisplayName,
-		)
+		status = selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"Playing status",
+				},
+				{
+					"Title: " + content.Item.Name,
+					"Artist: " + content.Item.Artists[0].Name,
+				},
+				{
+					"Playing Item",
+				},
+				{
+					"SearchResultItem: " + playlist.Name,
+					"Owner: " + playlist.Owner.DisplayName,
+				},
+			},
+		}
 	} else {
-		status = "Pausing"
+		status = selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"Pausing",
+				},
+			},
+		}
 	}
 
 	return

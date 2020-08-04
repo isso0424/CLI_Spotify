@@ -3,10 +3,10 @@ package request
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"isso0424/spotify_CLI/command/parse"
 	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/util"
 	"strings"
 )
 
@@ -56,7 +56,7 @@ func PrintPlayingStatus(token *string) (err error) {
 		return
 	}
 
-	fmt.Println(parse.CreatePlayingStatus(*status, listStatus))
+	util.Output(parse.CreatePlayingStatus(*status, listStatus))
 
 	return
 }

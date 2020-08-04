@@ -176,7 +176,15 @@ func (cmd repeat) Execute(token *string) (err error) {
 		return
 	}
 
-	fmt.Printf("Repeat state change to `%s`\n", state)
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					fmt.Sprintf("Repeat state change to `%s`\n", state),
+				},
+			},
+		},
+	)
 
 	return
 }
@@ -238,7 +246,15 @@ func (cmd shuffle) Execute(token *string) (err error) {
 		return
 	}
 
-	fmt.Printf("Switch shuffle state to %v\n", state)
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					fmt.Sprintf("Switch shuffle state to %v", state),
+				},
+			},
+		},
+	)
 
 	return
 }
