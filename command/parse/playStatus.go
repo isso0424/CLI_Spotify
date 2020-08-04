@@ -8,7 +8,9 @@ import (
 // CreatePlayingStatus is parsing play status function
 func CreatePlayingStatus(
 	content selfmadetypes.Content,
-	playlist selfmadetypes.PlayList,
+	contextName string,
+	contextUser string,
+	kind string,
 ) (status selfmadetypes.OutputMessage) {
 	if content.IsPlaying && len(content.Item.Artists) != 0 {
 		status = selfmadetypes.OutputMessage{
@@ -23,10 +25,7 @@ func CreatePlayingStatus(
 				{
 					"Playing Item",
 				},
-				{
-					"SearchResultItem: " + playlist.Name,
-					"Owner: " + playlist.Owner.DisplayName,
-				},
+				getContextStatus(contextUser, contextName, kind),
 			},
 		}
 	} else {
@@ -40,4 +39,27 @@ func CreatePlayingStatus(
 	}
 
 	return status
+}
+
+func getContextStatus(contextUser string, contextName string, kind string) (status []string) {
+	switch kind {
+	case "playlist":
+		status = []string{
+			"Playlist name: " + contextName,
+			"Owner: " + contextUser,
+		}
+	case "artist":
+		status = []string{
+			"Artist name: " + contextName,
+		}
+	case "album":
+		status = []string{
+			"Album name: " + contextName,
+			"Artist name: " + contextUser,
+		}
+	default:
+		status = []string{}
+	}
+
+	return
 }
