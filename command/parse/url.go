@@ -24,8 +24,8 @@ func CreateContextURI(url string) (*string, error) {
 	return &contextURI, nil
 }
 
-// GetPlaylistID is function that get playlist ID from url.
-func GetPlaylistID(url string) (*string, error) {
+// GetIDFromURL is function that get playlist ID from url.
+func GetIDFromURL(url string) (*string, error) {
 	err := &lengthError{}
 	spritted := strings.Split(url, "/")
 
@@ -37,4 +37,17 @@ func GetPlaylistID(url string) (*string, error) {
 	id := strings.Split(tmp, "?")[0]
 
 	return &id, nil
+}
+
+// GetKindFromURL get URL kind.
+func GetKindFromURL(url string) (*string, error) {
+	err := &lengthError{}
+	splitted := strings.Split(url, "/")
+
+	if len(splitted) < urlMinimamLength {
+		return nil, err
+	}
+	kind := &splitted[3]
+
+	return kind, nil
 }
