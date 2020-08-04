@@ -1,4 +1,4 @@
-package selfmadetypes
+package response
 
 // User is response when GET request to user
 type User struct {
@@ -8,4 +8,9 @@ type User struct {
 	ID           string       `json:"id"`
 	Type         string       `json:"type"`
 	URI          string       `json:"uri"`
+}
+
+// UserPlaylists is user's all playlists.
+type UserPlaylists struct {
+	Item []SearchResultItem `json:"items"`
 }

@@ -1,4 +1,4 @@
-package selfmadetypes
+package response
 
 import (
 	"bytes"

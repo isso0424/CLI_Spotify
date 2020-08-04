@@ -6,7 +6,7 @@ import (
 	"errors"
 	"io"
 	"isso0424/spotify_CLI/command/parse"
-	"isso0424/spotify_CLI/selfmadetypes"
+	"isso0424/spotify_CLI/selfmadetypes/request"
 	"isso0424/spotify_CLI/util"
 	"strings"
 )
@@ -26,7 +26,7 @@ func PlayFromURL(token *string, uri string) (err error) {
 		return
 	}
 
-	_, err = CreateRequest(token, selfmadetypes.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, err = CreateRequest(token, request.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}

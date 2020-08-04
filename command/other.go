@@ -6,6 +6,8 @@ import (
 	"isso0424/spotify_CLI/auth"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
+	request2 "isso0424/spotify_CLI/selfmadetypes/request"
+	response2 "isso0424/spotify_CLI/selfmadetypes/response"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -27,12 +29,12 @@ func (cmd welcome) GetHelp() selfmadetypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd welcome) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, selfmadetypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, request2.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	var userInfo selfmadetypes.User
+	var userInfo response2.User
 	err = json.Unmarshal(response.GetBody(), &userInfo)
 	if err != nil {
 		return
