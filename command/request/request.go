@@ -84,6 +84,29 @@ func GetPlayListStatus(token *string, playlistID *string) (status selfmadetypes.
 	return
 }
 
+// GetArtistStatus get artist status that is playing.
+func GetArtistStatus(token *string, artistID *string) (status selfmadetypes.Artists, err error) {
+	response, err := CreateRequest(
+		token,
+		selfmadetypes.GET,
+		fmt.Sprintf(
+			"/artists/%s",
+			*artistID,
+		),
+		nil,
+	)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(response.GetBody(), &status)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 // GetStatus is function that get playing status.
 func GetStatus(token *string) (status *selfmadetypes.Content, err error) {
 	response, err := CreateRequest(token, selfmadetypes.GET, "/me/player", nil)
