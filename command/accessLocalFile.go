@@ -178,7 +178,7 @@ func (cmd load) Execute(token *string) (err error) {
 
 	err = &selfmadetypes.NotFound{Target: name}
 
-	return
+	return err
 }
 
 type importOwnPlaylists struct{}

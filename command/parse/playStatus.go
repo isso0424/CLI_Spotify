@@ -6,7 +6,10 @@ import (
 )
 
 // CreatePlayingStatus is parsing play status function
-func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.PlayList) (status selfmadetypes.OutputMessage) {
+func CreatePlayingStatus(
+	content selfmadetypes.Content,
+	playlist selfmadetypes.PlayList,
+) (status selfmadetypes.OutputMessage) {
 	if content.IsPlaying && len(content.Item.Artists) != 0 {
 		status = selfmadetypes.OutputMessage{
 			Message: [][]string{
@@ -36,5 +39,5 @@ func CreatePlayingStatus(content selfmadetypes.Content, playlist selfmadetypes.P
 		}
 	}
 
-	return
+	return status
 }
