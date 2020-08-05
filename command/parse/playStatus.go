@@ -42,7 +42,7 @@ func CreatePlayingStatus(
 	return status
 }
 
-func getContextStatus(contextUser string, contextName string, kind string) (status []string) {
+func getContextStatus(contextUser, contextName, kind string) (status []string) {
 	switch kind {
 	case "playlist":
 		status = []string{
