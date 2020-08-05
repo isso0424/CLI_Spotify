@@ -72,21 +72,21 @@ func getContextInformation(token, id, kind *string) (name string, user string, e
 	case "playlist":
 		listStatus, err := GetPlayListStatus(token, id)
 		if err != nil {
-			return
+			return "", "", err
 		}
 		name = listStatus.Name
 		user = listStatus.Owner.DisplayName
 	case "album":
 		albumStatus, err := GetAlbumStatus(token, id)
 		if err != nil {
-			return
+			return "", "", err
 		}
 		name = albumStatus.Name
 		user = albumStatus.Artists[0].Name
 	case "artist":
 		artistStatus, err := GetArtistStatus(token, id)
 		if err != nil {
-			return
+			return "", "", err
 		}
 		name = artistStatus.Name
 	default:

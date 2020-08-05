@@ -2,9 +2,10 @@ package file
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
+	"isso0424/spotify_CLI/util"
 	"os"
 )
 
@@ -42,7 +43,19 @@ func SavePlayList(target responseTypes.SearchResultItem) (err error) {
 		return
 	}
 
-	fmt.Printf("\nplaylist saved!!!\nurl: %s\nname: %s\n", target.URI, target.Name)
+	util.Output(
+		selfmadetypes.OutputMessage{
+			Message: [][]string{
+				{
+					"playlist saved!!!",
+				},
+				{
+					"url:  " + target.URI,
+					"name: " + target.Name,
+				},
+			},
+		},
+	)
 
 	return
 }
