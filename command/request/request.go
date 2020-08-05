@@ -1,4 +1,4 @@
-// Package request is submit request package.
+// Package request is submit requestTypes package.
 package request
 
 import (
@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"io"
 	"isso0424/spotify_CLI/auth"
-	"isso0424/spotify_CLI/selfmadetypes/request"
-	"isso0424/spotify_CLI/selfmadetypes/response"
-	command "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	commanderrors "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"net/http"
 )
 
@@ -18,15 +18,15 @@ const (
 	unAuthorized = 401
 )
 
-// CreateRequest is new request and submit request function.
-// Get response value.
+// CreateRequest is new requestTypes and submit requestTypes function.
+// Get responseTypes value.
 func CreateRequest(
 	token *string,
 	method fmt.Stringer,
 	requestURL string,
 	body io.Reader,
 ) (
-	httpResponse response.Response,
+	httpResponse responsetypes.Response,
 	err error,
 ) {
 	req, err := http.NewRequest(method.String(), baseURL+requestURL, body)
@@ -48,7 +48,7 @@ func CreateRequest(
 		}
 	}()
 
-	httpResponse, err = response.HTTPResponse{}.New(res)
+	httpResponse, err = responsetypes.HTTPResponse{}.New(res)
 
 	if res.StatusCode == unAuthorized {
 		var newTokenPtr *string
@@ -64,10 +64,10 @@ func CreateRequest(
 }
 
 // GetPlayListStatus is get user playlist status.
-func GetPlayListStatus(token *string, playlistID *string) (status response.PlayList, err error) {
+func GetPlayListStatus(token *string, playlistID *string) (status responsetypes.PlayList, err error) {
 	res, err := CreateRequest(
 		token,
-		request.GET,
+		requesttypes.GET,
 		fmt.Sprintf(
 			"/playlists/%s?fields=name%%2Cowner",
 			*playlistID,
@@ -87,10 +87,10 @@ func GetPlayListStatus(token *string, playlistID *string) (status response.PlayL
 }
 
 // GetArtistStatus get artist status that is playing.
-func GetArtistStatus(token *string, artistID *string) (status response.Artists, err error) {
+func GetArtistStatus(token *string, artistID *string) (status responsetypes.Artists, err error) {
 	res, err := CreateRequest(
 		token,
-		request.GET,
+		requesttypes.GET,
 		fmt.Sprintf(
 			"/artists/%s",
 			*artistID,
@@ -110,10 +110,10 @@ func GetArtistStatus(token *string, artistID *string) (status response.Artists, 
 }
 
 // GetAlbumStatus get album status that is playing.
-func GetAlbumStatus(token *string, albumID *string) (status response.Album, err error) {
+func GetAlbumStatus(token *string, albumID *string) (status responsetypes.Album, err error) {
 	res, err := CreateRequest(
 		token,
-		request.GET,
+		requesttypes.GET,
 		fmt.Sprintf(
 			"/albums/%s",
 			*albumID,
@@ -133,13 +133,13 @@ func GetAlbumStatus(token *string, albumID *string) (status response.Album, err 
 }
 
 // GetStatus is function that get playing status.
-func GetStatus(token *string) (status *response.Content, err error) {
-	res, err := CreateRequest(token, request.GET, "/me/player", nil)
+func GetStatus(token *string) (status *responsetypes.Content, err error) {
+	res, err := CreateRequest(token, requesttypes.GET, "/me/player", nil)
 	if err != nil {
 		return
 	}
 	if res.GetStatusCode() == noContent {
-		err = &command.FailedGetError{Target: "playing status"}
+		err = &commanderrors.FailedGetError{Target: "playing status"}
 		return
 	}
 

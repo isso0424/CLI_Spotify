@@ -1,6 +1,6 @@
-package response
+package responsetypes
 
-// Album is response type for album.
+// Album is responseTypes type for album.
 type Album struct {
 	AlbumType            string       `json:"album_type"`
 	Artists              []Artists    `json:"artists"`

@@ -1,5 +1,5 @@
-// Package request is type for request
-package request
+// Package requesttypes is type for requestTypes
+package requesttypes
 
 // Method is HTTP Request Methods wrapper
 type Method int

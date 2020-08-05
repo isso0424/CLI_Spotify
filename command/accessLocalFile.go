@@ -8,9 +8,9 @@ import (
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
-	request2 "isso0424/spotify_CLI/selfmadetypes/request"
-	"isso0424/spotify_CLI/selfmadetypes/response"
-	command "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	commanderrors "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -41,7 +41,7 @@ func (cmd save) Execute() (err error) {
 
 	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
-	list := response.SearchResultItem{URI: *uri, Name: name}
+	list := responsetypes.SearchResultItem{URI: *uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 
@@ -52,7 +52,7 @@ func (cmd save) Execute() (err error) {
 	if util.CheckDuplicateName(name, playlistList) {
 		err = file.SavePlayList(list)
 	} else {
-		err = &command.NameDuplicateError{Target: name}
+		err = &commanderrors.NameDuplicateError{Target: name}
 	}
 
 	return
@@ -180,7 +180,7 @@ func (cmd load) Execute(token *string) (err error) {
 		}
 	}
 
-	err = &command.NotFound{Target: name}
+	err = &commanderrors.NotFound{Target: name}
 
 	return err
 }
@@ -203,12 +203,12 @@ func (cmd importOwnPlaylists) GetHelp() commandtypes.CommandHelp {
 
 // Execute is execution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	res, err := request.CreateRequest(token, request2.GET, "/me/playlists", nil)
+	res, err := request.CreateRequest(token, requesttypes.GET, "/me/playlists", nil)
 	if err != nil {
 		return
 	}
 
-	var userPlayLists response.UserPlaylists
+	var userPlayLists responsetypes.UserPlaylists
 	err = json.Unmarshal(res.GetBody(), &userPlayLists)
 	if err != nil {
 		return

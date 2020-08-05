@@ -6,7 +6,7 @@ import (
 	"errors"
 	"io"
 	"isso0424/spotify_CLI/command/parse"
-	"isso0424/spotify_CLI/selfmadetypes/request"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
 	"isso0424/spotify_CLI/util"
 	"strings"
 )
@@ -26,7 +26,7 @@ func PlayFromURL(token *string, uri string) (err error) {
 		return
 	}
 
-	_, err = CreateRequest(token, request.PUT, "/me/player/play", bytes.NewBuffer(values))
+	_, err = CreateRequest(token, requesttypes.PUT, "/me/player/play", bytes.NewBuffer(values))
 	if err != nil {
 		return
 	}
@@ -57,33 +57,42 @@ func PrintPlayingStatus(token *string) (err error) {
 		return
 	}
 
-	var contextName, contextUser string
+	contextName, contextUser, err := getContextInformation(token, id, kind)
+	if err != nil {
+		return
+	}
+
+	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
+
+	return
+}
+
+func getContextInformation(token, id, kind *string) (name string, user string, err error) {
 	switch *kind {
 	case "playlist":
 		listStatus, err := GetPlayListStatus(token, id)
 		if err != nil {
-			return err
+			return "", "", err
 		}
-		contextName = listStatus.Name
-		contextUser = listStatus.Owner.DisplayName
+		name = listStatus.Name
+		user = listStatus.Owner.DisplayName
 	case "album":
 		albumStatus, err := GetAlbumStatus(token, id)
 		if err != nil {
-			return err
+			return "", "", err
 		}
-		contextName = albumStatus.Name
-		contextUser = albumStatus.Artists[0].Name
+		name = albumStatus.Name
+		user = albumStatus.Artists[0].Name
 	case "artist":
 		artistStatus, err := GetArtistStatus(token, id)
 		if err != nil {
-			return err
+			return "", "", err
 		}
-		contextName = artistStatus.Name
+		name = artistStatus.Name
 	default:
-		return errors.New("kind not found")
+		err = errors.New("kind not found")
+		return
 	}
-
-	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
 
 	return
 }

@@ -1,8 +1,8 @@
-package response
+package responsetypes
 
 import "fmt"
 
-// SearchResponse is searched response
+// SearchResponse is searched responseTypes
 type SearchResponse struct {
 	Album    searchItem `json:"albums"`
 	Artists  searchItem `json:"artists"`
@@ -12,7 +12,7 @@ type SearchResponse struct {
 	Episode  searchItem `json:"episodes"`
 }
 
-// ParseAndPrint is function that response parse and print
+// ParseAndPrint is function that responseTypes parse and print
 func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
 	searchResults := []SearchResultItem{}
 	for _, kind := range kinds {

@@ -1,6 +1,6 @@
-package response
+package responsetypes
 
-// PlayList is playlist information from request.
+// PlayList is playlist information from requestTypes.
 type PlayList struct {
 	Name      string         `json:"name"`
 	Owner     User           `json:"owner"`

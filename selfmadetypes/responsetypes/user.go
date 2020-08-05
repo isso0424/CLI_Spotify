@@ -1,6 +1,6 @@
-package response
+package responsetypes
 
-// User is response when GET request to user
+// User is responseTypes when GET requestTypes to user
 type User struct {
 	DisplayName  string       `json:"display_name"`
 	ExternalUrls externalUrls `json:"external_urls"`

@@ -1,7 +1,7 @@
 // Package commandtypes is types for command
 package commandtypes
 
-// RequestCommand is interface that request commands.
+// RequestCommand is interface that requestTypes commands.
 type RequestCommand interface {
 	Execute(*string) error
 	GetCommandName() string
