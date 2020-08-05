@@ -1,4 +1,4 @@
-package responseTypes
+package responsetypes
 
 // PlayList is playlist information from requestTypes.
 type PlayList struct {

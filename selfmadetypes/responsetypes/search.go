@@ -1,4 +1,4 @@
-package responseTypes
+package responsetypes
 
 import "fmt"
 

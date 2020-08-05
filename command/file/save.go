@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"isso0424/spotify_CLI/selfmadetypes"
-	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
 	"isso0424/spotify_CLI/util"
 	"os"
 )
 
 var (
 	writeFile func(string, []byte, os.FileMode) error
-	loadFile  func() (playlistList []responseTypes.SearchResultItem, err error)
+	loadFile  func() (playlistList []responsetypes.SearchResultItem, err error)
 )
 
 func init() {
@@ -19,13 +19,13 @@ func init() {
 		return ioutil.WriteFile(fileName, fileDetail, permission)
 	}
 
-	loadFile = func() (playlistList []responseTypes.SearchResultItem, err error) {
+	loadFile = func() (playlistList []responsetypes.SearchResultItem, err error) {
 		return LoadPlayList()
 	}
 }
 
 // SavePlayList is function save playlist for json file
-func SavePlayList(target responseTypes.SearchResultItem) (err error) {
+func SavePlayList(target responsetypes.SearchResultItem) (err error) {
 	playlistList, err := loadFile()
 	if err != nil {
 		return
@@ -62,7 +62,7 @@ func SavePlayList(target responseTypes.SearchResultItem) (err error) {
 
 func setSavePlayList(
 	writeFileFunc func(string, []byte, os.FileMode) error,
-	loadFileFunc func() ([]responseTypes.SearchResultItem, error),
+	loadFileFunc func() ([]responsetypes.SearchResultItem, error),
 ) func() {
 	tmpWriteFile := writeFile
 	tmpLoadFile := loadFile

@@ -8,9 +8,9 @@ import (
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
-	"isso0424/spotify_CLI/selfmadetypes/requestTypes"
-	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
-	"isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	commanderrors "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -41,7 +41,7 @@ func (cmd save) Execute() (err error) {
 
 	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
-	list := responseTypes.SearchResultItem{URI: *uri, Name: name}
+	list := responsetypes.SearchResultItem{URI: *uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 
@@ -203,12 +203,12 @@ func (cmd importOwnPlaylists) GetHelp() commandtypes.CommandHelp {
 
 // Execute is execution command function.
 func (cmd importOwnPlaylists) Execute(token *string) (err error) {
-	res, err := request.CreateRequest(token, requestTypes.GET, "/me/playlists", nil)
+	res, err := request.CreateRequest(token, requesttypes.GET, "/me/playlists", nil)
 	if err != nil {
 		return
 	}
 
-	var userPlayLists responseTypes.UserPlaylists
+	var userPlayLists responsetypes.UserPlaylists
 	err = json.Unmarshal(res.GetBody(), &userPlayLists)
 	if err != nil {
 		return

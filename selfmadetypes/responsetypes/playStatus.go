@@ -1,4 +1,4 @@
-package responseTypes
+package responsetypes
 
 // Content is data struct when you execute GET to player
 type Content struct {

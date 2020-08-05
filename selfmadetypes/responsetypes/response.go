@@ -1,5 +1,5 @@
-// Package responseTypes is types for responseTypes
-package responseTypes
+// Package responsetypes is types for responseTypes
+package responsetypes
 
 import (
 	"bytes"

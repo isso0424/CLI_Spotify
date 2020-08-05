@@ -1,4 +1,4 @@
-package responseTypes
+package responsetypes
 
 // User is responseTypes when GET requestTypes to user
 type User struct {

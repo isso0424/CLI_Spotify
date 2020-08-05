@@ -2,7 +2,7 @@ package parse
 
 import (
 	"isso0424/spotify_CLI/selfmadetypes"
-	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,11 +10,11 @@ import (
 
 // TestPausingStatus is test function for CreatePlayinStatus
 func TestPausingStatus(t *testing.T) {
-	content := responseTypes.Content{
+	content := responsetypes.Content{
 		IsPlaying: false,
 	}
 
-	playList := responseTypes.PlayList{}
+	playList := responsetypes.PlayList{}
 
 	assert.Equal(
 		t,
@@ -25,11 +25,11 @@ func TestPausingStatus(t *testing.T) {
 
 // TestPlayingStatus is test function for CreatePlayingStatus
 func TestPlayingStatus(t *testing.T) {
-	content := responseTypes.Content{
+	content := responsetypes.Content{
 		IsPlaying: true,
-		Item: responseTypes.Item{
+		Item: responsetypes.Item{
 			Name: "name",
-			Artists: []responseTypes.Artists{
+			Artists: []responsetypes.Artists{
 				{
 					Name: "artist",
 				},
@@ -37,9 +37,9 @@ func TestPlayingStatus(t *testing.T) {
 		},
 	}
 
-	playList := responseTypes.PlayList{
+	playList := responsetypes.PlayList{
 		Name: "playList",
-		Owner: responseTypes.User{
+		Owner: responsetypes.User{
 			DisplayName: "user",
 		},
 	}

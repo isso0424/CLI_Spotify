@@ -7,8 +7,8 @@ import (
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
-	"isso0424/spotify_CLI/selfmadetypes/requestTypes"
-	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
+	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -30,12 +30,12 @@ func (cmd welcome) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd welcome) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, requestTypes.GET, "/me", nil)
+	response, err := request.CreateRequest(token, requesttypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	var userInfo responseTypes.User
+	var userInfo responsetypes.User
 	err = json.Unmarshal(response.GetBody(), &userInfo)
 	if err != nil {
 		return

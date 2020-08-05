@@ -7,7 +7,7 @@ import (
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
-	"isso0424/spotify_CLI/selfmadetypes/requestTypes"
+	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
 	"isso0424/spotify_CLI/util"
 	"strconv"
 )
@@ -30,7 +30,7 @@ func (cmd next) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd next) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, requestTypes.POST, "/me/player/next", nil)
+	_, err = request.CreateRequest(token, requesttypes.POST, "/me/player/next", nil)
 
 	if err != nil {
 		return
@@ -57,7 +57,7 @@ func (cmd pause) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd pause) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, requestTypes.PUT, "/me/player/pause", nil)
+	_, err = request.CreateRequest(token, requesttypes.PUT, "/me/player/pause", nil)
 
 	if err != nil {
 		return
@@ -113,7 +113,7 @@ func (cmd prev) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd prev) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, requestTypes.POST, "/me/player/previous", nil)
+	_, err = request.CreateRequest(token, requesttypes.POST, "/me/player/previous", nil)
 
 	if err != nil {
 		return
@@ -172,7 +172,7 @@ func (cmd repeat) Execute(token *string) (err error) {
 
 	state := util.SwitchRepeatState(status.RepeatState)
 
-	_, err = request.CreateRequest(token, requestTypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
+	_, err = request.CreateRequest(token, requesttypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
 	if err != nil {
 		return
@@ -209,7 +209,7 @@ func (cmd resume) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd resume) Execute(token *string) (err error) {
-	_, err = request.CreateRequest(token, requestTypes.PUT, "/me/player/play", nil)
+	_, err = request.CreateRequest(token, requesttypes.PUT, "/me/player/play", nil)
 
 	if err != nil {
 		return
@@ -243,7 +243,7 @@ func (cmd shuffle) Execute(token *string) (err error) {
 
 	state := !status.ShuffleState
 
-	_, err = request.CreateRequest(token, requestTypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
+	_, err = request.CreateRequest(token, requesttypes.PUT, fmt.Sprintf("/me/player/shuffle?state=%v", state), nil)
 	if err != nil {
 		return
 	}
@@ -292,7 +292,7 @@ func (cmd volume) Execute(token *string) (err error) {
 
 	_, err = request.CreateRequest(
 		token,
-		requestTypes.PUT,
+		requesttypes.PUT,
 		fmt.Sprintf(
 			"/me/player/volume?volume_percent=%s",
 			percent,

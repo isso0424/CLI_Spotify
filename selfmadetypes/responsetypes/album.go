@@ -1,4 +1,4 @@
-package responseTypes
+package responsetypes
 
 // Album is responseTypes type for album.
 type Album struct {
