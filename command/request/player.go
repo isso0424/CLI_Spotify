@@ -57,33 +57,42 @@ func PrintPlayingStatus(token *string) (err error) {
 		return
 	}
 
-	var contextName, contextUser string
+	contextName, contextUser, err := getContextInformation(token, id, kind)
+	if err != nil {
+		return
+	}
+
+	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
+
+	return
+}
+
+func getContextInformation(token, id, kind *string) (name string, user string, err error) {
 	switch *kind {
 	case "playlist":
 		listStatus, err := GetPlayListStatus(token, id)
 		if err != nil {
-			return err
+			return
 		}
-		contextName = listStatus.Name
-		contextUser = listStatus.Owner.DisplayName
+		name = listStatus.Name
+		user = listStatus.Owner.DisplayName
 	case "album":
 		albumStatus, err := GetAlbumStatus(token, id)
 		if err != nil {
-			return err
+			return
 		}
-		contextName = albumStatus.Name
-		contextUser = albumStatus.Artists[0].Name
+		name = albumStatus.Name
+		user = albumStatus.Artists[0].Name
 	case "artist":
 		artistStatus, err := GetArtistStatus(token, id)
 		if err != nil {
-			return err
+			return
 		}
-		contextName = artistStatus.Name
+		name = artistStatus.Name
 	default:
-		return errors.New("kind not found")
+		err = errors.New("kind not found")
+		return
 	}
-
-	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
 
 	return
 }
