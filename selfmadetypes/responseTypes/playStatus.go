@@ -1,4 +1,4 @@
-package response
+package responseTypes
 
 // Content is data struct when you execute GET to player
 type Content struct {
@@ -81,7 +81,7 @@ type CurrentPlayStatus struct {
 	Item SearchResultItem `json:"item"`
 }
 
-// RecentPlayedTracks is response of Get recently played track.
+// RecentPlayedTracks is responseTypes of Get recently played track.
 type RecentPlayedTracks struct {
 	Items []recentPlayedItem `json:"items"`
 }

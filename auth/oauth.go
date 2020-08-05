@@ -34,7 +34,7 @@ func oauth() (*string, error) {
 
 	http.HandleFunc("/callback", handler)
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		log.Println("Got request for:", request.URL.String())
+		log.Println("Got requestTypes for:", request.URL.String())
 	})
 
 	go func() {
@@ -88,6 +88,9 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	client := auth.NewClient(token)
-	fmt.Fprintf(writer, "Login!!!")
+	_, err = fmt.Fprintf(writer, "Login!!!")
+	if err != nil {
+		log.Fatal(err)
+	}
 	ch <- &client
 }

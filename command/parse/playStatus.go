@@ -1,14 +1,14 @@
-// Package parse is response parser.
+// Package parse is responseTypes parser.
 package parse
 
 import (
 	"isso0424/spotify_CLI/selfmadetypes"
-	"isso0424/spotify_CLI/selfmadetypes/response"
+	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
 )
 
 // CreatePlayingStatus is parsing play status function
 func CreatePlayingStatus(
-	content response.Content,
+	content responseTypes.Content,
 	contextName string,
 	contextUser string,
 	kind string,

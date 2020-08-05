@@ -1,18 +1,18 @@
-// Package response is types for response
-package response
+// Package responseTypes is types for responseTypes
+package responseTypes
 
 import (
 	"bytes"
 	"net/http"
 )
 
-// Response is interafce for HTTP request response.
+// Response is interafce for HTTP requestTypes responseTypes.
 type Response interface {
 	GetBody() []byte
 	GetStatusCode() int
 }
 
-// HTTPResponse is struct for HTTP request response.
+// HTTPResponse is struct for HTTP requestTypes responseTypes.
 type HTTPResponse struct {
 	Body       []byte
 	StatusCode int

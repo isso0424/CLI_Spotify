@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
-	request2 "isso0424/spotify_CLI/selfmadetypes/request"
-	response2 "isso0424/spotify_CLI/selfmadetypes/response"
+	"isso0424/spotify_CLI/selfmadetypes/requestTypes"
+	"isso0424/spotify_CLI/selfmadetypes/responseTypes"
 	"isso0424/spotify_CLI/util"
 )
 
@@ -33,7 +33,7 @@ func (cmd addToPlaylist) Execute(token *string) (err error) {
 
 	response, err := request.CreateRequest(
 		token,
-		request2.POST,
+		requestTypes.POST,
 		fmt.Sprintf(
 			"/playlists/%s/tracks?uris=%s",
 			playlistID,
@@ -69,12 +69,12 @@ func (cmd createPlaylist) GetHelp() commandtypes.CommandHelp {
 }
 
 func (cmd createPlaylist) Execute(token *string) (err error) {
-	response, err := request.CreateRequest(token, request2.GET, "/me", nil)
+	response, err := request.CreateRequest(token, requestTypes.GET, "/me", nil)
 	if err != nil {
 		return
 	}
 
-	var user response2.User
+	var user responseTypes.User
 	err = json.Unmarshal(response.GetBody(), &user)
 	if err != nil {
 		return
@@ -91,7 +91,7 @@ func (cmd createPlaylist) Execute(token *string) (err error) {
 
 	response, err = request.CreateRequest(
 		token,
-		request2.POST,
+		requestTypes.POST,
 		fmt.Sprintf("/users/%s/playlists", userID),
 		bytes.NewBuffer(values),
 	)
@@ -134,7 +134,7 @@ func (cmd deleteTrackFromPlaylist) Execute(token *string) (err error) {
 	}
 	response, err := request.CreateRequest(
 		token,
-		request2.DELETE,
+		requestTypes.DELETE,
 		fmt.Sprintf(
 			"/playlists/%s/tracks",
 			playlistID,
