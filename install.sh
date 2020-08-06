@@ -1,9 +1,9 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 function writeToPath() {
   if [ $(echo "$SHELL") = $(which "zsh") ]; then
-    echo "export PATH=\$PATH:$SCRIPT_DIR/bin" >> ~/.zsh_profile
+    cat ~/.zsh_profile | grep "export PATH=\$PATH:$SCRIPT_DIR/bin" || echo "export PATH=\$PATH:$SCRIPT_DIR/bin" >> ~/.zsh_profile
   elif [ $(echo "$SHELL") = $(which "bash") ]; then
-    echo "export PATH=\$PATH:$SCRIPT_DIR/bin" >> ~/.bash_profile
+    cat ~/.bash_profile | grep "export PATH=\$PATH:$SCRIPT_DIR/bin" || echo "export PATH=\$PATH:$SCRIPT_DIR/bin" >> ~/.bash_profile
   fi
 }
 function build() {
