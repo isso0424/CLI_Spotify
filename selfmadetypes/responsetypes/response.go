@@ -1,4 +1,4 @@
-// Package responseuktypes is types for responseTypes
+// Package responsetypes is types for responseTypes
 package responsetypes
 
 import (
