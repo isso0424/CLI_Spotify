@@ -72,7 +72,7 @@ func TestPlayingStatus(t *testing.T) {
 func TestCreateContextURISuccess(t *testing.T) {
 	url := "https://open.spotify.com/playlist/37i9dQZF1DXd8cPo2t5Hqf?si=X4SkTg0BTHKclOIlM0D8lA"
 	uri, _ := CreateContextURI(url)
-	assert.Equal(t, *uri, "spotify:playlist:37i9dQZF1DXd8cPo2t5Hqf")
+	assert.Equal(t, uri, "spotify:playlist:37i9dQZF1DXd8cPo2t5Hqf")
 }
 
 // TestCreateContextURIFailed is test functon for CreateContextURI
@@ -86,7 +86,7 @@ func TestCreateContextURIFailed(t *testing.T) {
 func TestGetPlaylistIDSuccess(t *testing.T) {
 	url := "https://open.spotify.com/playlist/37i9dQZF1DXd8cPo2t5Hqf?si=X4SkTg0BTHKclOIlM0D8lA"
 	uri, _ := GetIDFromURL(url)
-	assert.Equal(t, *uri, "37i9dQZF1DXd8cPo2t5Hqf")
+	assert.Equal(t, uri, "37i9dQZF1DXd8cPo2t5Hqf")
 }
 
 // TestGetPlaylistIDFailed is test function.

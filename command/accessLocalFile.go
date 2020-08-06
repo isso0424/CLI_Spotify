@@ -41,7 +41,7 @@ func (cmd save) Execute() (err error) {
 
 	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
-	list := responsetypes.SearchResultItem{URI: *uri, Name: name}
+	list := responsetypes.SearchResultItem{URI: uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 

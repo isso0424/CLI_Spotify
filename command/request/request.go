@@ -64,13 +64,13 @@ func CreateRequest(
 }
 
 // GetPlayListStatus is get user playlist status.
-func GetPlayListStatus(token *string, playlistID *string) (status responsetypes.PlayList, err error) {
+func GetPlayListStatus(token *string, playlistID string) (status responsetypes.PlayList, err error) {
 	res, err := CreateRequest(
 		token,
 		requesttypes.GET,
 		fmt.Sprintf(
 			"/playlists/%s?fields=name%%2Cowner",
-			*playlistID,
+			playlistID,
 		),
 		nil,
 	)
@@ -87,13 +87,13 @@ func GetPlayListStatus(token *string, playlistID *string) (status responsetypes.
 }
 
 // GetArtistStatus get artist status that is playing.
-func GetArtistStatus(token *string, artistID *string) (status responsetypes.Artists, err error) {
+func GetArtistStatus(token *string, artistID string) (status responsetypes.Artists, err error) {
 	res, err := CreateRequest(
 		token,
 		requesttypes.GET,
 		fmt.Sprintf(
 			"/artists/%s",
-			*artistID,
+			artistID,
 		),
 		nil,
 	)
@@ -110,13 +110,13 @@ func GetArtistStatus(token *string, artistID *string) (status responsetypes.Arti
 }
 
 // GetAlbumStatus get album status that is playing.
-func GetAlbumStatus(token *string, albumID *string) (status responsetypes.Album, err error) {
+func GetAlbumStatus(token *string, albumID string) (status responsetypes.Album, err error) {
 	res, err := CreateRequest(
 		token,
 		requesttypes.GET,
 		fmt.Sprintf(
 			"/albums/%s",
-			*albumID,
+			albumID,
 		),
 		nil,
 	)

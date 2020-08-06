@@ -90,7 +90,7 @@ func (cmd play) Execute(token *string) (err error) {
 	if err != nil {
 		return
 	}
-	err = request.PlayFromURL(token, *uri)
+	err = request.PlayFromURL(token, uri)
 
 	return
 }
