@@ -62,13 +62,13 @@ func PrintPlayingStatus(token *string) (err error) {
 		return
 	}
 
-	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, *kind))
+	util.Output(parse.CreatePlayingStatus(*status, contextName, contextUser, kind))
 
 	return
 }
 
-func getContextInformation(token, id, kind *string) (name string, user string, err error) {
-	switch *kind {
+func getContextInformation(token *string, id, kind string) (name string, user string, err error) {
+	switch kind {
 	case "playlist":
 		listStatus, err := GetPlayListStatus(token, id)
 		if err != nil {
