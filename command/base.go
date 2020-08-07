@@ -40,7 +40,8 @@ var (
 
 // MainLoop is function that is application's root loop.
 func MainLoop(token string) {
-	fmt.Println("if you wanna exit, you must type 'exit'")
+	fmt.Println("If you wanna exit, you must execute 'exit'")
+	fmt.Println("If you wanna get commands help, you must execute 'help'")
 	err := welcome{}.Execute(&token)
 	if err != nil {
 		fmt.Println("Error: ", err)

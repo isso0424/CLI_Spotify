@@ -88,7 +88,7 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	client := auth.NewClient(token)
-	_, err = fmt.Fprintf(writer, "Login!!!")
+	_, err = fmt.Fprintf(writer, "<h1>Login!!!</h1><h3>You can start this app!!!</h3>")
 	if err != nil {
 		log.Fatal(err)
 	}
