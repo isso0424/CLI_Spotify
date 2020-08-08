@@ -33,8 +33,8 @@ func getMaxLengthRow(message selfmadetypes.OutputMessage) (maxLength int) {
 
 func stringLengthCounter(str string) (length int) {
 	runes := []rune(str)
-	for _, charactor := range runes {
-		if charactor > 255 {
+	for _, character := range runes {
+		if character > 255 {
 			length++
 		}
 		length++
