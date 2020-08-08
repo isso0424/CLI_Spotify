@@ -5,6 +5,8 @@ import (
 	"isso0424/spotify_CLI/selfmadetypes"
 )
 
+const singleByteMax = 255
+
 // Output print to stdout.
 func Output(message selfmadetypes.OutputMessage) {
 	length := getMaxLengthRow(message)
@@ -32,9 +34,8 @@ func getMaxLengthRow(message selfmadetypes.OutputMessage) (maxLength int) {
 }
 
 func stringLengthCounter(str string) (length int) {
-	runes := []rune(str)
-	for _, character := range runes {
-		if character > 255 {
+	for _, character := range str {
+		if character > singleByteMax {
 			length++
 		}
 		length++
