@@ -63,6 +63,10 @@ func TestPlayingStatus(t *testing.T) {
 					"Playlist name: playList",
 					"Owner: user",
 				},
+				{
+					"Shuffle: false",
+					"Repeat: ",
+				},
 			},
 		},
 	)
