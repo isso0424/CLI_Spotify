@@ -21,3 +21,34 @@ func TestToProcessResponse(t *testing.T) {
 	assert.Equal(t, result[0].Name, "itemName")
 	assert.Equal(t, result[0].URI, "itemURI")
 }
+
+// TestParseAndPrint is test for ParseandPrint
+func TestParseAndPrint(t *testing.T) {
+	response := SearchResponse{
+		Artists: searchItem{
+			Item: []SearchResultItem{
+				{
+					Name: "Artist",
+					URI:  "ArtistURI",
+				},
+			},
+		},
+		Track: searchItem{
+			Item: []SearchResultItem{
+				{
+					Name: "Track",
+					URI:  "TrackURI",
+				},
+			},
+		},
+	}
+	kinds := []string{"artist", "track"}
+
+	searchResult := response.ParseAndPrint(kinds)
+
+	assert.Equal(t, searchResult[0].Name, "Artist")
+	assert.Equal(t, searchResult[0].URI, "ArtistURI")
+
+	assert.Equal(t, searchResult[1].Name, "Track")
+	assert.Equal(t, searchResult[1].URI, "TrackURI")
+}
