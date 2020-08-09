@@ -1,9 +1,10 @@
 package command
 
 import (
-	"github.com/stretchr/testify/assert"
 	"isso0424/spotify_CLI/util"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUpdateRepeatStatus(t *testing.T) {
