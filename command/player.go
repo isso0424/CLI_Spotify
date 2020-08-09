@@ -12,6 +12,19 @@ import (
 	"strconv"
 )
 
+var getRepeat func(token *string) (string, error)
+
+func init() {
+	getRepeat = func(token *string) (string, error) {
+		status, err := request.GetStatus(token)
+		if err != nil {
+			return "", err
+		}
+
+		return status.RepeatState, nil
+	}
+}
+
 type next struct{}
 
 // GetCommandName is getting command name function.
@@ -164,13 +177,10 @@ func (cmd repeat) GetHelp() commandtypes.CommandHelp {
 
 // Execute is excution command function.
 func (cmd repeat) Execute(token *string) (err error) {
-	status, err := request.GetStatus(token)
-
+	state, err := updateRepeatStatus(token)
 	if err != nil {
 		return
 	}
-
-	state := util.SwitchRepeatState(status.RepeatState)
 
 	_, err = request.CreateRequest(token, requesttypes.PUT, fmt.Sprintf("/me/player/repeat?state=%s", state), nil)
 
@@ -189,6 +199,18 @@ func (cmd repeat) Execute(token *string) (err error) {
 	)
 
 	return
+}
+
+func updateRepeatStatus(token *string) (string, error) {
+	status, err := getRepeat(token)
+
+	if err != nil {
+		return "", err
+	}
+
+	state := util.SwitchRepeatState(status)
+
+	return state, nil
 }
 
 type resume struct{}
@@ -301,4 +323,12 @@ func (cmd volume) Execute(token *string) (err error) {
 	)
 
 	return
+}
+
+func setRepeatFunc(newGetRepeat func(*string) (string, error)) func() {
+	tmpRepeat := getRepeat
+	getRepeat = newGetRepeat
+	return func() {
+		getRepeat = tmpRepeat
+	}
 }
