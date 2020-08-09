@@ -7,7 +7,7 @@ import (
 )
 
 // Choose is function that get 1 item from slice.
-func Choose(playlists []search.SearchResultItem) search.SearchResultItem {
+func Choose(playlists []search.ResultItem) search.ResultItem {
 	rand.Seed(time.Now().UnixNano())
 	index := rand.Intn(len(playlists))
 
@@ -15,7 +15,7 @@ func Choose(playlists []search.SearchResultItem) search.SearchResultItem {
 }
 
 // CheckDuplicateName is function that check to exist playlist name.
-func CheckDuplicateName(name string, playlistList []search.SearchResultItem) bool {
+func CheckDuplicateName(name string, playlistList []search.ResultItem) bool {
 	for _, content := range playlistList {
 		if content.Name == name {
 			return false

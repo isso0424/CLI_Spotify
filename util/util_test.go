@@ -22,9 +22,9 @@ func TestSwitchRepeat(t *testing.T) {
 
 // TestCheckDuplicateName is test function for CheckDuplicateName()
 func TestCheckDuplicateName(t *testing.T) {
-	var playlistList []search.SearchResultItem
+	var playlistList []search.ResultItem
 	var result bool
-	playlistList = []search.SearchResultItem{
+	playlistList = []search.ResultItem{
 		{
 			Name: "playlist",
 			URI:  "hogefuga",

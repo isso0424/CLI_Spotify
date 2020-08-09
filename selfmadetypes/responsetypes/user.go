@@ -14,5 +14,5 @@ type User struct {
 
 // UserPlaylists is user's all playlists.
 type UserPlaylists struct {
-	Item []search.SearchResultItem `json:"items"`
+	Item []search.ResultItem `json:"items"`
 }

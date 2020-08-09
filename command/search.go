@@ -64,7 +64,7 @@ func (cmd search) Execute(token *string) (err error) {
 		return
 	}
 
-	var searchResponse search2.SearchResponse
+	var searchResponse search2.Response
 	err = json.Unmarshal(response.GetBody(), &searchResponse)
 	if err != nil {
 		return
@@ -77,7 +77,7 @@ func (cmd search) Execute(token *string) (err error) {
 	return err
 }
 
-func saveSearchResult(searchResults []search2.SearchResultItem) (err error) {
+func saveSearchResult(searchResults []search2.ResultItem) (err error) {
 	isSave := util.Input("Want to save result?\n------------------------", "Want to save?")
 
 	if isSave != "yes" {

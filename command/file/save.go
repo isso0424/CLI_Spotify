@@ -11,7 +11,7 @@ import (
 
 var (
 	writeFile func(string, []byte, os.FileMode) error
-	loadFile  func() (playlistList []search.SearchResultItem, err error)
+	loadFile  func() (playlistList []search.ResultItem, err error)
 )
 
 func init() {
@@ -19,13 +19,13 @@ func init() {
 		return ioutil.WriteFile(fileName, fileDetail, permission)
 	}
 
-	loadFile = func() (playlistList []search.SearchResultItem, err error) {
+	loadFile = func() (playlistList []search.ResultItem, err error) {
 		return LoadPlayList()
 	}
 }
 
 // SavePlayList is function save playlist for json file
-func SavePlayList(target search.SearchResultItem) (err error) {
+func SavePlayList(target search.ResultItem) (err error) {
 	playlistList, err := loadFile()
 	if err != nil {
 		return
@@ -62,7 +62,7 @@ func SavePlayList(target search.SearchResultItem) (err error) {
 
 func setSavePlayList(
 	writeFileFunc func(string, []byte, os.FileMode) error,
-	loadFileFunc func() ([]search.SearchResultItem, error),
+	loadFileFunc func() ([]search.ResultItem, error),
 ) func() {
 	tmpWriteFile := writeFile
 	tmpLoadFile := loadFile

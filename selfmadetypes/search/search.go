@@ -1,9 +1,10 @@
+// Package search is
 package search
 
 import "fmt"
 
-// SearchResponse is searched responseTypes
-type SearchResponse struct {
+// Response is searched responseTypes
+type Response struct {
 	Album    searchItem `json:"albums"`
 	Artists  searchItem `json:"artists"`
 	Track    searchItem `json:"tracks"`
@@ -13,8 +14,8 @@ type SearchResponse struct {
 }
 
 // ParseAndPrint is function that responseTypes parse and print
-func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
-	var searchResults []SearchResultItem
+func (response Response) ParseAndPrint(kinds []string) []ResultItem {
+	var searchResults []ResultItem
 	for _, kind := range kinds {
 		switch kind {
 		case "album":
@@ -41,7 +42,7 @@ func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem 
 	return searchResults
 }
 
-func toProcessResponse(items searchItem, resultSlice []SearchResultItem) []SearchResultItem {
+func toProcessResponse(items searchItem, resultSlice []ResultItem) []ResultItem {
 	for _, item := range items.Item {
 		index := len(resultSlice)
 		fmt.Printf("ID: %d\nName: %s\nURI: %s\n---------------\n", index, item.Name, item.URI)
@@ -52,11 +53,11 @@ func toProcessResponse(items searchItem, resultSlice []SearchResultItem) []Searc
 }
 
 type searchItem struct {
-	Item []SearchResultItem `json:"items"`
+	Item []ResultItem `json:"items"`
 }
 
-// SearchResultItem is SearchResultItem's item
-type SearchResultItem struct {
+// ResultItem is SearchResultItem's item
+type ResultItem struct {
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }

@@ -80,7 +80,7 @@ type Artists struct {
 
 // CurrentPlayStatus is current playing song status.
 type CurrentPlayStatus struct {
-	Item search.SearchResultItem `json:"item"`
+	Item search.ResultItem `json:"item"`
 }
 
 // RecentPlayedTracks is responseTypes of Get recently played track.
