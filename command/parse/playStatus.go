@@ -2,6 +2,7 @@
 package parse
 
 import (
+	"fmt"
 	"isso0424/spotify_CLI/selfmadetypes"
 	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
 )
@@ -27,6 +28,10 @@ func CreatePlayingStatus(
 					"Playing " + kind,
 				},
 				getContextStatus(contextUser, contextName, kind),
+				{
+					fmt.Sprintf("Shuffle: %v", content.ShuffleState),
+					"Repeat: " + content.RepeatState,
+				},
 			},
 		}
 	} else {
