@@ -8,7 +8,7 @@ import (
 	"isso0424/spotify_CLI/command/request"
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
 	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
-	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	search2 "isso0424/spotify_CLI/selfmadetypes/search"
 	"isso0424/spotify_CLI/util"
 	"net/url"
 	"strconv"
@@ -64,7 +64,7 @@ func (cmd search) Execute(token *string) (err error) {
 		return
 	}
 
-	var searchResponse responsetypes.SearchResponse
+	var searchResponse search2.Response
 	err = json.Unmarshal(response.GetBody(), &searchResponse)
 	if err != nil {
 		return
@@ -77,7 +77,7 @@ func (cmd search) Execute(token *string) (err error) {
 	return err
 }
 
-func saveSearchResult(searchResults []responsetypes.SearchResultItem) (err error) {
+func saveSearchResult(searchResults []search2.ResultItem) (err error) {
 	isSave := util.Input("Want to save result?\n------------------------", "Want to save?")
 
 	if isSave != "yes" {

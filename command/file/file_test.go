@@ -3,7 +3,7 @@ package file
 import (
 	"encoding/json"
 	"errors"
-	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	"isso0424/spotify_CLI/selfmadetypes/search"
 	"os"
 	"testing"
 	"time"
@@ -19,7 +19,7 @@ func TestLoadPlayListSuccess(t *testing.T) {
 			return fileInfo, nil
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []responsetypes.SearchResultItem{
+			playlistList := []search.ResultItem{
 				{
 					Name: "SearchResultItem",
 					URI:  "URI",
@@ -33,7 +33,7 @@ func TestLoadPlayListSuccess(t *testing.T) {
 	successResult, _ := LoadPlayList()
 	assert.Equal(
 		t,
-		[]responsetypes.SearchResultItem{
+		[]search.ResultItem{
 			{
 				Name: "SearchResultItem",
 				URI:  "URI",
@@ -50,7 +50,7 @@ func TestLoadPlayListFail(t *testing.T) {
 			return nil, errors.New("file not exist")
 		},
 		func(fileName string) ([]byte, error) {
-			playlistList := []responsetypes.SearchResultItem{
+			playlistList := []search.ResultItem{
 				{
 					Name: "SearchResultItem",
 					URI:  "URI",
@@ -85,8 +85,8 @@ func TestSavePlayListSuccess(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]responsetypes.SearchResultItem, error) {
-			playlistList := []responsetypes.SearchResultItem{
+		func() ([]search.ResultItem, error) {
+			playlistList := []search.ResultItem{
 				{
 					Name: "SearchResultItem",
 					URI:  "URI",
@@ -98,7 +98,7 @@ func TestSavePlayListSuccess(t *testing.T) {
 	defer reset()
 
 	err := SavePlayList(
-		responsetypes.SearchResultItem{
+		search.ResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},
@@ -112,8 +112,8 @@ func TestSavePlayListFail(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return errors.New("cannot write a file")
 		},
-		func() ([]responsetypes.SearchResultItem, error) {
-			playlistList := []responsetypes.SearchResultItem{
+		func() ([]search.ResultItem, error) {
+			playlistList := []search.ResultItem{
 				{
 					Name: "SearchResultItem",
 					URI:  "URI",
@@ -124,7 +124,7 @@ func TestSavePlayListFail(t *testing.T) {
 	)
 
 	err := SavePlayList(
-		responsetypes.SearchResultItem{
+		search.ResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},
@@ -136,13 +136,13 @@ func TestSavePlayListFail(t *testing.T) {
 		func(fileName string, fileDetail []byte, permission os.FileMode) error {
 			return nil
 		},
-		func() ([]responsetypes.SearchResultItem, error) {
+		func() ([]search.ResultItem, error) {
 			return nil, errors.New("cannot load a file")
 		},
 	)
 
 	err = SavePlayList(
-		responsetypes.SearchResultItem{
+		search.ResultItem{
 			Name: "PlayList2",
 			URI:  "URI",
 		},

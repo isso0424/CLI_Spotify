@@ -1,5 +1,7 @@
 package responsetypes
 
+import "isso0424/spotify_CLI/selfmadetypes/search"
+
 // User is responseTypes when GET requestTypes to user
 type User struct {
 	DisplayName  string       `json:"display_name"`
@@ -12,5 +14,5 @@ type User struct {
 
 // UserPlaylists is user's all playlists.
 type UserPlaylists struct {
-	Item []SearchResultItem `json:"items"`
+	Item []search.ResultItem `json:"items"`
 }
