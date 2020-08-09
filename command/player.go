@@ -302,14 +302,9 @@ func (cmd volume) GetHelp() commandtypes.CommandHelp {
 // Execute is excution command function.
 func (cmd volume) Execute(token *string) (err error) {
 	percent := util.Input("please volume percent\n------------------------", "Volume")
-
-	percentInt, err := strconv.Atoi(percent)
+	err = validatePercent(percent)
 	if err != nil {
 		return
-	}
-
-	if percentInt < 0 || percentInt > 100 {
-		return errors.New("percent range is 0 to 100")
 	}
 
 	_, err = request.CreateRequest(
@@ -323,6 +318,19 @@ func (cmd volume) Execute(token *string) (err error) {
 	)
 
 	return
+}
+
+func validatePercent(input string) error {
+	percentInt, err := strconv.Atoi(input)
+	if err != nil {
+		return err
+	}
+
+	if percentInt < 0 || percentInt > 100 {
+		return errors.New("percent range is 0 to 100")
+	}
+
+	return nil
 }
 
 func setRepeatFunc(newGetRepeat func(*string) (string, error)) func() {

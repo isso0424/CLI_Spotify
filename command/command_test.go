@@ -29,3 +29,9 @@ func TestUpdateRepeatStatus(t *testing.T) {
 	state, _ = updateRepeatStatus(&context)
 	assert.Equal(t, state, "off")
 }
+
+func TestValidatePercent(t *testing.T) {
+	assert.Equal(t, validatePercent("50"), nil)
+	assert.NotEqual(t, validatePercent("101"), nil)
+	assert.NotEqual(t, validatePercent("unchi"), nil)
+}
