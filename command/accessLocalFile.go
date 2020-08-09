@@ -10,6 +10,7 @@ import (
 	"isso0424/spotify_CLI/selfmadetypes/commandtypes"
 	"isso0424/spotify_CLI/selfmadetypes/requesttypes"
 	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	search2 "isso0424/spotify_CLI/selfmadetypes/search"
 	commanderrors "isso0424/spotify_CLI/selfmadetypes/selfmadeerrors"
 	"isso0424/spotify_CLI/util"
 )
@@ -41,7 +42,7 @@ func (cmd save) Execute() (err error) {
 
 	name := util.Input("\nplease input playlist name\n", "PlayListName")
 
-	list := responsetypes.SearchResultItem{URI: uri, Name: name}
+	list := search2.SearchResultItem{URI: uri, Name: name}
 
 	playlistList, err := file.LoadPlayList()
 

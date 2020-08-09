@@ -1,7 +1,7 @@
 package util
 
 import (
-	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
+	"isso0424/spotify_CLI/selfmadetypes/search"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,9 +22,9 @@ func TestSwitchRepeat(t *testing.T) {
 
 // TestCheckDuplicateName is test function for CheckDuplicateName()
 func TestCheckDuplicateName(t *testing.T) {
-	var playlistList []responsetypes.SearchResultItem
+	var playlistList []search.SearchResultItem
 	var result bool
-	playlistList = []responsetypes.SearchResultItem{
+	playlistList = []search.SearchResultItem{
 		{
 			Name: "playlist",
 			URI:  "hogefuga",

@@ -1,5 +1,7 @@
 package responsetypes
 
+import "isso0424/spotify_CLI/selfmadetypes/search"
+
 // Content is data struct when you execute GET to player
 type Content struct {
 	IsPlaying            bool                   `json:"is_playing"`
@@ -78,7 +80,7 @@ type Artists struct {
 
 // CurrentPlayStatus is current playing song status.
 type CurrentPlayStatus struct {
-	Item SearchResultItem `json:"item"`
+	Item search.SearchResultItem `json:"item"`
 }
 
 // RecentPlayedTracks is responseTypes of Get recently played track.

@@ -1,4 +1,4 @@
-package responsetypes
+package search
 
 import "fmt"
 
@@ -14,7 +14,7 @@ type SearchResponse struct {
 
 // ParseAndPrint is function that responseTypes parse and print
 func (response SearchResponse) ParseAndPrint(kinds []string) []SearchResultItem {
-	searchResults := []SearchResultItem{}
+	var searchResults []SearchResultItem
 	for _, kind := range kinds {
 		switch kind {
 		case "album":
