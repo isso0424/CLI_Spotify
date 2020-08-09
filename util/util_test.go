@@ -1,8 +1,7 @@
-package command
+package util
 
 import (
 	"isso0424/spotify_CLI/selfmadetypes/responsetypes"
-	"isso0424/spotify_CLI/util"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,13 +10,13 @@ import (
 // TestSwitchRepeat is test function for switchRepeat()
 func TestSwitchRepeat(t *testing.T) {
 	var result string
-	result = util.SwitchRepeatState("off")
+	result = SwitchRepeatState("off")
 	assert.Equal(t, result, "context")
 
-	result = util.SwitchRepeatState("track")
+	result = SwitchRepeatState("track")
 	assert.Equal(t, result, "off")
 
-	result = util.SwitchRepeatState("context")
+	result = SwitchRepeatState("context")
 	assert.Equal(t, result, "track")
 }
 
@@ -36,9 +35,9 @@ func TestCheckDuplicateName(t *testing.T) {
 		},
 	}
 
-	result = util.CheckDuplicateName("playlist", playlistList)
+	result = CheckDuplicateName("playlist", playlistList)
 	assert.Equal(t, result, false)
 
-	result = util.CheckDuplicateName("not found", playlistList)
+	result = CheckDuplicateName("not found", playlistList)
 	assert.Equal(t, result, true)
 }
