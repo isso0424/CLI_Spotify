@@ -28,12 +28,19 @@ else
   fi
 fi
 
-touch .env
+if [[ -e $XDG_CONFIG_HOME ]]; then
+  configDir="$XDG_CONFIG_HOME/spotify_CLI"
+else
+  configDir="$HOME/.config/spotify_CLI"
+fi
+mkdir -p "$configDir"
+touch "$configDir/config"
+
 echo -n "Please input clientID (If you don't have clientID? You can get here!(https://developer.spotify.com/dashboard/applications):"
 read clientID
 echo -n "Please input secretID:"
 read secretID
 
-echo "SPOTIFY_ID=$clientID" > .env
-echo "SPOTIFY_SECRET=$secretID" >> .env
+echo "SPOTIFY_ID: $clientID" > "$configDir/config"
+echo "SPOTIFY_SECRET: $secretID" >> "$configDir/config"
 echo "... and you have to set to 'http://localhost:8888/callback' redirect url in spotify dashboard"
