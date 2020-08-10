@@ -41,6 +41,6 @@ read clientID
 echo -n "Please input secretID:"
 read secretID
 
-echo "SPOTIFY_ID: $clientID" > "$configDir/config"
-echo "SPOTIFY_SECRET: $secretID" >> "$configDir/config"
+echo "SpotifyID: $clientID" > "$configDir/config"
+echo "SpotifySecret: $secretID" >> "$configDir/config"
 echo "... and you have to set to 'http://localhost:8888/callback' redirect url in spotify dashboard"
