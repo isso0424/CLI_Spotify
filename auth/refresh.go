@@ -7,14 +7,10 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
-
-	"github.com/joho/godotenv"
 )
 
 func refresh(token string) (newToken *string, err error) {
-	err = godotenv.Load()
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +62,8 @@ func refresh(token string) (newToken *string, err error) {
 }
 
 func createEncodedID() string {
-	ids := fmt.Sprintf("%s:%s", os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
+	clientID, secretID := getClientID()
+	ids := fmt.Sprintf("%s:%s", clientID, secretID)
 
 	return base64.StdEncoding.EncodeToString([]byte(ids))
 }

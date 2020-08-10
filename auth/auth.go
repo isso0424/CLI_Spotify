@@ -2,11 +2,24 @@
 package auth
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 )
 
-const tokenFile = ".token"
+var (
+	tokenFile  string
+	configFile string
+)
+
+func init() {
+	configDir := os.Getenv("XDG_CONFIG_HOME")
+	if configDir == "" {
+		configDir = os.Getenv("HOME")
+	}
+	tokenFile = fmt.Sprintf("%s/.config/spotify_CLI/.token", configDir)
+	configFile = fmt.Sprintf("%s/.config/spotify_CLI/config", configDir)
+}
 
 // GetToken is function that get token from .token.
 func GetToken() (*string, error) {

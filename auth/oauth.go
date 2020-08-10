@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-yaml/yaml"
 	"github.com/joho/godotenv"
 	"github.com/zmb3/spotify"
 )
@@ -26,11 +27,9 @@ var (
 )
 
 func oauth() (*string, error) {
-	err := godotenv.Load()
-	if err != nil {
-		return nil, err
-	}
-	auth.SetAuthInfo(os.Getenv("SPOTIFY_ID"), os.Getenv("SPOTIFY_SECRET"))
+	clientID, secretID := getClientID()
+
+	auth.SetAuthInfo(clientID, secretID)
 
 	http.HandleFunc("/callback", handler)
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
@@ -93,4 +92,30 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 		log.Fatal(err)
 	}
 	ch <- &client
+}
+
+type configs struct {
+	ID     string `yaml:"SpotifyID"`
+	Secret string `yaml:"SpotifySecret"`
+}
+
+func getClientID() (clientID, secretID string) {
+	if err := godotenv.Load(); err == nil {
+		clientID = os.Getenv("SPOTIFY_ID")
+		secretID = os.Getenv("SPOTIFY_SECRET")
+	}
+
+	buf, err := ioutil.ReadFile(configFile)
+	if err != nil {
+		return
+	}
+	var ids configs
+	err = yaml.Unmarshal(buf, &ids)
+	if err != nil {
+		return
+	}
+	clientID = ids.ID
+	secretID = ids.Secret
+
+	return
 }
