@@ -2,6 +2,9 @@
 [![Build](https://github.com/isso0424/CLI_Spotify/workflows/Build/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ABuild)
 [![Test](https://github.com/isso0424/CLI_Spotify/workflows/Test/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ATest)
 [![Lint](https://github.com/isso0424/CLI_Spotify/workflows/Lint/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ALint)
+[![License](https://img.shields.io/github/license/isso0424/CLI_Spotify)](https://github.com/isso0424/CLI_Spotify/blob/master/LICENSE)
+[![Issues](https://img.shields.io/github/issues/isso0424/CLI_Spotify)](https://github.com/isso0424/CLI_Spotify/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+[![Size](https://img.shields.io/github/repo-size/isso0424/CLI_Spotify)](https://github.com/isso0424/CLI_Spotify)
 
 ## OverView
 Spotify Client in command line.
