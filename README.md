@@ -9,6 +9,13 @@
 ## OverView
 Spotify client in command line.(but playing music in GUI client.)  
 
+## What can you do
+- Get playing music status(ex: playlist name, artist name, song name and etc...)
+- Manage playlist.
+- Save context(playlist, artists and music) to local.
+- Play random context in saved one.
+- Manage play status.(ex: play, resume, pause and etc...)
+
 ## GetStarted
 1. Get spotify ClientID/ClientSercretID from [here](https://developer.spotify.com/dashboard/applications)
 2. Set redirect URI to `http://localhost:8888/callback`
