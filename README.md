@@ -1,4 +1,7 @@
 # Spotify\_CLI
+[![Build](https://github.com/isso0424/CLI_Spotify/workflows/Build/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ABuild)
+[![Test](https://github.com/isso0424/CLI_Spotify/workflows/Test/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ATest)
+[![Lint](https://github.com/isso0424/CLI_Spotify/workflows/Lint/badge.svg)](https://github.com/isso0424/CLI_Spotify/actions?query=workflow%3ALint)
 
 ## OverView
 Spotify Client in command line.
