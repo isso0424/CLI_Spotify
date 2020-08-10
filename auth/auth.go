@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-var(
-	tokenFile string
+var (
+	tokenFile  string
 	configFile string
 )
 
