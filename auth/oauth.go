@@ -105,12 +105,10 @@ func getClientID() (clientID, secretID string) {
 		secretID = os.Getenv("SPOTIFY_SECRET")
 	}
 
-	fmt.Println(configFile)
 	buf, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		return
 	}
-	fmt.Println(string(buf))
 	var ids configs
 	err = yaml.Unmarshal(buf, &ids)
 	if err != nil {
@@ -118,7 +116,6 @@ func getClientID() (clientID, secretID string) {
 	}
 	clientID = ids.ID
 	secretID = ids.Secret
-	fmt.Println(ids)
 
 	return
 }
