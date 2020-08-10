@@ -17,6 +17,7 @@ Spotify client in command line.(but playing music in GUI client.)
 - Manage play status.(ex: play, resume, pause and etc...)
 
 ## GetStarted
+0. Install golang for your computer.
 1. Get spotify ClientID/ClientSercretID from [here](https://developer.spotify.com/dashboard/applications)
 2. Set redirect URI to `http://localhost:8888/callback`
 3. Execute `sh install.sh`
